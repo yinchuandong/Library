@@ -1,19 +1,10 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Library</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="history">借阅历史</string>
     <string name="remind">还书提醒</string>
     <string name="remind_cancel">取消</string>
     <string name="remind_ok">徐洁</string>
-
-</resources>
-=======
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
 
     <string name="app_name">Library</string>
     <string name="action_settings">Settings</string>
@@ -26,4 +17,3 @@
     <string name="password">密码</string>
 
 </resources>
->>>>>>> 40aa7abe1f2b2c03f4bfb57e3c9b379b8fce9703

@@ -67,59 +67,46 @@ public final class R {
         public static final int login_bottom_repeat_bg=0x7f020004;
     }
     public static final class id {
-<<<<<<< HEAD
-        public static final int action_settings=0x7f08000c;
-        public static final int book_author=0x7f080001;
-        public static final int book_return_time=0x7f080002;
-        public static final int book_title=0x7f080000;
-        public static final int remind_book_return_data=0x7f080006;
-        public static final int remind_book_title=0x7f080005;
-        public static final int remind_cancel=0x7f080008;
-        public static final int remind_data=0x7f080004;
-        public static final int remind_list=0x7f08000b;
-        public static final int remind_main=0x7f080003;
-        public static final int remind_menu=0x7f080007;
-        public static final int remind_ok=0x7f080009;
-        public static final int remind_setting=0x7f08000a;
+        public static final int action_settings=0x7f09000f;
+        public static final int book_author=0x7f090001;
+        public static final int book_return_time=0x7f090002;
+        public static final int book_title=0x7f090000;
+        public static final int login=0x7f09000e;
+        public static final int password=0x7f09000d;
+        public static final int remind_book_return_data=0x7f090006;
+        public static final int remind_book_title=0x7f090005;
+        public static final int remind_cancel=0x7f090008;
+        public static final int remind_data=0x7f090004;
+        public static final int remind_list=0x7f09000b;
+        public static final int remind_main=0x7f090003;
+        public static final int remind_menu=0x7f090007;
+        public static final int remind_ok=0x7f090009;
+        public static final int remind_setting=0x7f09000a;
+        public static final int studentNumber=0x7f09000c;
     }
     public static final class layout {
         public static final int tpl_history_item=0x7f030000;
         public static final int tpl_remind_item=0x7f030001;
         public static final int ui_history=0x7f030002;
         public static final int ui_launcher=0x7f030003;
-        public static final int ui_remind=0x7f030004;
-=======
-        public static final int action_settings=0x7f090003;
-        public static final int login=0x7f090002;
-        public static final int password=0x7f090001;
-        public static final int studentNumber=0x7f090000;
-    }
-    public static final class layout {
-        public static final int ui_launcher=0x7f030000;
-        public static final int ui_login=0x7f030001;
->>>>>>> 40aa7abe1f2b2c03f4bfb57e3c9b379b8fce9703
+        public static final int ui_login=0x7f030004;
+        public static final int ui_remind=0x7f030005;
     }
     public static final class menu {
         public static final int launcher=0x7f080000;
     }
     public static final class string {
-<<<<<<< HEAD
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050002;
-        public static final int history=0x7f050003;
-        public static final int remind=0x7f050004;
-        public static final int remind_cancel=0x7f050005;
-        public static final int remind_ok=0x7f050006;
-=======
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
-        public static final int hello_world=0x7f060002;
-        public static final int login=0x7f060004;
-        public static final int password=0x7f060006;
-        public static final int studentNumber=0x7f060005;
-        public static final int title_login=0x7f060003;
->>>>>>> 40aa7abe1f2b2c03f4bfb57e3c9b379b8fce9703
+        public static final int action_settings=0x7f060005;
+        public static final int app_name=0x7f060004;
+        public static final int hello_world=0x7f060006;
+        public static final int history=0x7f060000;
+        public static final int login=0x7f060008;
+        public static final int password=0x7f06000a;
+        public static final int remind=0x7f060001;
+        public static final int remind_cancel=0x7f060002;
+        public static final int remind_ok=0x7f060003;
+        public static final int studentNumber=0x7f060009;
+        public static final int title_login=0x7f060007;
     }
     public static final class style {
         /** 
