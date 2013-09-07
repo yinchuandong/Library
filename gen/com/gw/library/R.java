@@ -58,6 +58,9 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
+        public static final int bottom_tab_font_size=0x7f050002;
+        public static final int bottom_tab_padding_drawable=0x7f050004;
+        public static final int bottom_tab_padding_up=0x7f050003;
     }
     public static final class drawable {
         public static final int bg_book=0x7f020000;
@@ -67,14 +70,18 @@ public final class R {
         public static final int login_bottom_repeat_bg=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f090003;
-        public static final int login=0x7f090002;
-        public static final int password=0x7f090001;
-        public static final int studentNumber=0x7f090000;
+        public static final int action_settings=0x7f090006;
+        public static final int login=0x7f090005;
+        public static final int password=0x7f090004;
+        public static final int studentNumber=0x7f090003;
+        public static final int tab_history=0x7f090001;
+        public static final int tab_loan=0x7f090000;
+        public static final int tab_recommend=0x7f090002;
     }
     public static final class layout {
-        public static final int ui_launcher=0x7f030000;
-        public static final int ui_login=0x7f030001;
+        public static final int main_tab=0x7f030000;
+        public static final int ui_launcher=0x7f030001;
+        public static final int ui_login=0x7f030002;
     }
     public static final class menu {
         public static final int launcher=0x7f080000;
@@ -115,5 +122,7 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int main_tab_bottom=0x7f070003;
+        public static final int noTitle=0x7f070002;
     }
 }
