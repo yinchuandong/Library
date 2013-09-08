@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="history">借阅历史</string>
+    <string name="remind">还书提醒</string>
+    <string name="remind_cancel">取消</string>
+    <string name="remind_ok">徐洁</string>
+
     <string name="app_name">Library</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
