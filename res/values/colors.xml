@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#f06939</color><!-- 橙色 背景颜色 -->
+    <color name="fontColor">#333333</color><!-- 字体颜色 -->
+    
+	<color name="red">#FF0000</color>
+	<color name="gray">#5A5D61</color>
+	<color name="black">#000000</color>
+	<color name="white">#FFFFFF</color>
+	<color name="sky_blue">#7EBEE9</color>
+	<color name="sky_blue2">#78B7F2</color>
+	
+	
+	<color name="text">#333333</color>
+	<color name="body1">#FFFFFF</color>
+	<color name="body2">#F9F9F9</color>
+	<color name="menu1">#EEEEEE</color>
+	<color name="menu2">#BBBBBB</color>
+	<color name="divider1">#DDDDDD</color>
+	<color name="divider2">#EEEEEE</color>
+	<color name="divider3">#FFFFFF</color>
+	<color name="loading">#99000000</color>
+	
+	
+	<color name="ivory">#FFFFF0</color><!--象牙色 -->
+	<color name="blanchedalmond">#FFEBCD</color><!--白杏色 -->
+	<color name="mistyrose">#FFE4E1</color><!--浅玫瑰色 -->
+	<color name="gainsboro">#DCDCDC</color><!--淡灰色 -->
+	<color name="bisque">#FFE4C4</color><!--桔黄色 -->
+	<color name="azure">#F0FFFF</color><!--天蓝色 -->
+	
+</resources>
