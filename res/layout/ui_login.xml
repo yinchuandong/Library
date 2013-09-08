@@ -95,7 +95,7 @@
 	    >
 	    <TextView 
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
+	        android:layout_height="67dp"
 	        android:background="@drawable/login_bottom_repeat_bg"
 	        android:layout_alignParentBottom="true"
 	        />
