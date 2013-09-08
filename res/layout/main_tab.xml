@@ -19,6 +19,7 @@
         <RadioButton 
             android:id="@+id/tab_recommend"
 			style="@style/main_tab_bottom" 
+		
             android:drawableTop="@drawable/hover_recommend"
             />
         

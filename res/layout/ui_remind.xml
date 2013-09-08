@@ -8,14 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Remind" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/remind" />
+    
 
-    <ImagineView android:id="@+id/remind_setting" />
+    <ImageView
+        android:id="@+id/remind_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ListView
         android:id="@+id/remind_list"
@@ -23,4 +21,8 @@
         android:layout_height="wrap_content" >
     </ListView>
 
+    <include
+        android:layout_alignParentBottom="true"
+        layout="@layout/main_tab" />
+        
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg">#f06939</color><!-- 橙色 背景颜色 -->
-    <color name="fontColor">#333333</color><!-- 字体颜色 -->
+    <color name="fontColor">#555555</color><!-- 字体颜色 -->
     
 	<color name="red">#FF0000</color>
 	<color name="gray">#5A5D61</color>
@@ -11,8 +11,8 @@
 	<color name="sky_blue2">#78B7F2</color>
 	
 	
-	<color name="text">#333333</color>
-	<color name="body1">#FFFFFF</color>
+	<color name="grey_bg">#f7f7f7</color>
+	<color name="tab_bg">#eaeaea</color>
 	<color name="body2">#F9F9F9</color>
 	<color name="menu1">#EEEEEE</color>
 	<color name="menu2">#BBBBBB</color>

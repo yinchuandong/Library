@@ -11,7 +11,7 @@ public class Launcher extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tpl_history_item);
+		setContentView(R.layout.ui_history);
 		//setContentView(R.layout.main_tab);
 	}
 
