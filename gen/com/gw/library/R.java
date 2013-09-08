@@ -65,9 +65,21 @@ public final class R {
     public static final class drawable {
         public static final int bg_book=0x7f020000;
         public static final int btn_login=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int input=0x7f020003;
-        public static final int login_bottom_repeat_bg=0x7f020004;
+        public static final int cover_01=0x7f020002;
+        public static final int cover_2=0x7f020003;
+        public static final int hover_bg_02=0x7f020004;
+        public static final int hover_history=0x7f020005;
+        public static final int hover_recommend=0x7f020006;
+        public static final int hover_remind=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int icon_backup=0x7f020009;
+        public static final int icon_setting=0x7f02000a;
+        public static final int icon_setting_hover=0x7f02000b;
+        public static final int input=0x7f02000c;
+        public static final int login_bottom_repeat_bg=0x7f02000d;
+        public static final int nomal_history=0x7f02000e;
+        public static final int nomal_recommend=0x7f02000f;
+        public static final int normal_remind=0x7f020010;
     }
     public static final class id {
         public static final int action_settings=0x7f090012;
