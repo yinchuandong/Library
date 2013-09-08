@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public abstract class BaseSqlite {
 
-	private static final String DB_NAME = "demos.db";
+	private static final String DB_NAME = "library.db";
 	private static final int DB_VERSION = 1;
 	
 	private DbHelper dbh = null;
