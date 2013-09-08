@@ -83,22 +83,19 @@ public final class R {
         public static final int normal_remind=0x7f020011;
     }
     public static final class id {
-        public static final int action_settings=0x7f090012;
-        public static final int book_author=0x7f090004;
-        public static final int book_return_time=0x7f090005;
-        public static final int book_title=0x7f090003;
-        public static final int login=0x7f090011;
-        public static final int password=0x7f090010;
-        public static final int remind_book_return_data=0x7f090009;
-        public static final int remind_book_title=0x7f090008;
-        public static final int remind_cancel=0x7f09000b;
-        public static final int remind_data=0x7f090007;
-        public static final int remind_list=0x7f09000e;
-        public static final int remind_main=0x7f090006;
-        public static final int remind_menu=0x7f09000a;
-        public static final int remind_ok=0x7f09000c;
-        public static final int remind_setting=0x7f09000d;
-        public static final int studentNumber=0x7f09000f;
+        public static final int action_settings=0x7f09000f;
+        public static final int login=0x7f09000e;
+        public static final int password=0x7f09000d;
+        public static final int remind_book_return_data=0x7f090006;
+        public static final int remind_book_title=0x7f090005;
+        public static final int remind_cancel=0x7f090008;
+        public static final int remind_data=0x7f090004;
+        public static final int remind_list=0x7f09000b;
+        public static final int remind_main=0x7f090003;
+        public static final int remind_menu=0x7f090007;
+        public static final int remind_ok=0x7f090009;
+        public static final int remind_setting=0x7f09000a;
+        public static final int studentNumber=0x7f09000c;
         public static final int tab_history=0x7f090002;
         public static final int tab_loan=0x7f090001;
         public static final int tab_recommend=0x7f090000;
@@ -157,5 +154,6 @@ public final class R {
         public static final int AppTheme=0x7f070001;
         public static final int main_tab_bottom=0x7f070003;
         public static final int noTitle=0x7f070002;
+        public static final int title_top=0x7f070004;
     }
 }
