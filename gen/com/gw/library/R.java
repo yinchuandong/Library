@@ -74,9 +74,9 @@ public final class R {
         public static final int login=0x7f090005;
         public static final int password=0x7f090004;
         public static final int studentNumber=0x7f090003;
-        public static final int tab_history=0x7f090001;
-        public static final int tab_loan=0x7f090000;
-        public static final int tab_recommend=0x7f090002;
+        public static final int tab_history=0x7f090002;
+        public static final int tab_loan=0x7f090001;
+        public static final int tab_recommend=0x7f090000;
     }
     public static final class layout {
         public static final int main_tab=0x7f030000;
