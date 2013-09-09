@@ -26,39 +26,39 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import com.gw.library.base.C;
-
 import android.util.Log;
+
+import com.gw.library.base.C;
 
 @SuppressWarnings("rawtypes")
 public class AppClient {
-	
+
 	// compress strategy
 	final private static int CS_NONE = 0;
 	final private static int CS_GZIP = 1;
-	
+
 	// logic variables
 	private String apiUrl;
 	private HttpParams httpParams;
 	private HttpClient httpClient;
 	private int timeoutConnection = 10000;
 	private int timeoutSocket = 10000;
-	private int compress = CS_NONE;
-	
+	private int compress = CS_NONE;// 设置zip与否
+
 	// charset default utf8
 	private String charset = HTTP.UTF_8;
-	
-	public AppClient (String url) {
+
+	public AppClient(String url) {
 		initClient(url);
 	}
-	
-	public AppClient (String url, String charset, int compress) {
+
+	public AppClient(String url, String charset, int compress) {
 		initClient(url);
 		this.charset = charset; // set charset
 		this.compress = compress; // set strategy
 	}
-	
-	private void initClient (String url) {
+
+	private void initClient(String url) {
 		// initialize API URL
 		this.apiUrl = C.api.base + url;
 		String apiSid = AppUtil.getSessionId();
@@ -67,18 +67,20 @@ public class AppClient {
 		}
 		// set client timeout
 		httpParams = new BasicHttpParams();
-		HttpConnectionParams.setConnectionTimeout(httpParams, timeoutConnection);
+		HttpConnectionParams
+				.setConnectionTimeout(httpParams, timeoutConnection);
 		HttpConnectionParams.setSoTimeout(httpParams, timeoutSocket);
 		// init client
 		httpClient = new DefaultHttpClient(httpParams);
 	}
-	
-	public void useWap () {
+
+	public void useWap() {
 		HttpHost proxy = new HttpHost("10.0.0.172", 80, "http");
-		httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
+				proxy);
 	}
-	
-	public String get () throws Exception {
+
+	public String get() throws Exception {
 		try {
 			HttpGet httpGet = headerFilter(new HttpGet(this.apiUrl));
 			Log.w("AppClient.get.url", this.apiUrl);
@@ -98,8 +100,8 @@ public class AppClient {
 		}
 		return null;
 	}
-	
-	public String post (HashMap urlParams) throws Exception {
+
+	public String post(HashMap urlParams) throws Exception {
 		try {
 			HttpPost httpPost = headerFilter(new HttpPost(this.apiUrl));
 			List<NameValuePair> postParams = new ArrayList<NameValuePair>();
@@ -107,11 +109,14 @@ public class AppClient {
 			Iterator it = urlParams.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry entry = (Map.Entry) it.next();
-				postParams.add(new BasicNameValuePair(entry.getKey().toString(), entry.getValue().toString()));
+				postParams
+						.add(new BasicNameValuePair(entry.getKey().toString(),
+								entry.getValue().toString()));
 			}
 			// set data charset
 			if (this.charset != null) {
-				httpPost.setEntity(new UrlEncodedFormEntity(postParams, this.charset));
+				httpPost.setEntity(new UrlEncodedFormEntity(postParams,
+						this.charset));
 			} else {
 				httpPost.setEntity(new UrlEncodedFormEntity(postParams));
 			}
@@ -133,39 +138,42 @@ public class AppClient {
 		}
 		return null;
 	}
-	
-	private HttpGet headerFilter (HttpGet httpGet) {
+
+	// 构造Get头部
+	private HttpGet headerFilter(HttpGet httpGet) {
 		switch (this.compress) {
-			case CS_GZIP:
-				httpGet.addHeader("Accept-Encoding", "gzip");
-				break;
-			default :
-				break;
+		case CS_GZIP:
+			httpGet.addHeader("Accept-Encoding", "gzip");
+			break;
+		default:
+			break;
 		}
 		return httpGet;
 	}
-	
-	private HttpPost headerFilter (HttpPost httpPost) {
+
+	// 构造Post头部
+	private HttpPost headerFilter(HttpPost httpPost) {
 		switch (this.compress) {
-			case CS_GZIP:
-				httpPost.addHeader("Accept-Encoding", "gzip");
-				break;
-			default :
-				break;
+		case CS_GZIP:
+			httpPost.addHeader("Accept-Encoding", "gzip");
+			break;
+		default:
+			break;
 		}
 		return httpPost;
 	}
-	
-	private String resultFilter(HttpEntity entity){
+
+	// 把response的HttpEntity处理成string格式
+	private String resultFilter(HttpEntity entity) {
 		String result = null;
 		try {
 			switch (this.compress) {
-				case CS_GZIP:
-					result = AppUtil.gzipToString(entity);
-					break;
-				default :
-					result = EntityUtils.toString(entity);
-					break;
+			case CS_GZIP:
+				result = AppUtil.gzipToString(entity);
+				break;
+			default:
+				result = EntityUtils.toString(entity);
+				break;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -8,14 +8,18 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.gw.library.ui.Launcher"
-            android:label="@string/app_name" android:theme="@style/noTitle" >
+            android:name="com.gw.library.ui.LauncherActivity"
+            android:label="@string/app_name"
+            android:theme="@style/noTitle" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
