@@ -14,12 +14,12 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/head_contentLayout"
-		android:paddingLeft="30dp"
+		android:paddingLeft="0dp"
 	>
 	
 	<!-- 箭头图像、进度条 -->
 		<FrameLayout
-		android:layout_width="wrap_content"
+		android:layout_width="60dp"
 		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
 		android:layout_centerVertical="true"
@@ -32,6 +32,7 @@
 			android:layout_gravity="center"
 			android:src="@drawable/arrow_down"
 			android:id="@+id/head_arrowImageView"
+			android:visibility="visible"
 			/>
 			
 			<!-- 进度条 -->
@@ -41,7 +42,7 @@
 			style="?android:attr/progressBarStyleSmall"
 			android:layout_gravity="center"
 			android:id="@+id/head_progressBar"
-			
+			android:layout_marginLeft="10dp"
 			android:visibility="gone"
 			/>
 		

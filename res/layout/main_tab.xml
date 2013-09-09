@@ -19,20 +19,19 @@
         <RadioButton 
             android:id="@+id/tab_recommend"
 			style="@style/main_tab_bottom" 
-		
-            android:drawableTop="@drawable/hover_recommend"
+            android:drawableTop="@drawable/tab_recommend_hover"
             />
         
           
         <RadioButton 
-            android:id="@+id/tab_loan"
+            android:id="@+id/tab_remind"
 			style="@style/main_tab_bottom" 
-			android:drawableTop="@drawable/normal_remind"     
+			android:drawableTop="@drawable/tab_remind_hover"     
             />
         <RadioButton 
             android:id="@+id/tab_history"
 			style="@style/main_tab_bottom"  
-			android:drawableTop="@drawable/normal_recommend"         
+			android:drawableTop="@drawable/tab_history_hover"         
             />
             
        
