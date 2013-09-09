@@ -5,53 +5,58 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.content.Context;
-import com.gw.library.util.HttpUtil;
 
 import com.gw.library.util.AppClient;
+import com.gw.library.util.HttpUtil;
 
 public class BaseTaskPool {
-	
+
 	// task thread pool
 	static private ExecutorService taskPool;
-	
+
 	// for HttpUtil.getNetType
 	private Context context;
-	
-	public BaseTaskPool (BaseUi ui) {
+
+	public BaseTaskPool(BaseUi ui) {
 		this.context = ui.getContext();
 		taskPool = Executors.newCachedThreadPool();
 	}
-	
+
 	// http post task with params
-	public void addTask (int taskId, String taskUrl, HashMap<String, String> taskArgs, BaseTask baseTask, int delayTime) {
+	public void addTask(int taskId, String taskUrl,
+			HashMap<String, String> taskArgs, BaseTask baseTask, int delayTime) {
 		baseTask.setId(taskId);
 		try {
-			taskPool.execute(new TaskThread(context, taskUrl, taskArgs, baseTask, delayTime));
+			taskPool.execute(new TaskThread(context, taskUrl, taskArgs,
+					baseTask, delayTime));
 		} catch (Exception e) {
 			taskPool.shutdown();
 		}
 	}
-	
+
 	// http post task without params
-	public void addTask (int taskId, String taskUrl, BaseTask baseTask, int delayTime) {
+	public void addTask(int taskId, String taskUrl, BaseTask baseTask,
+			int delayTime) {
 		baseTask.setId(taskId);
 		try {
-			taskPool.execute(new TaskThread(context, taskUrl, null, baseTask, delayTime));
+			taskPool.execute(new TaskThread(context, taskUrl, null, baseTask,
+					delayTime));
 		} catch (Exception e) {
 			taskPool.shutdown();
 		}
 	}
-	
-	// custom task
-	public void addTask (int taskId, BaseTask baseTask, int delayTime) {
+
+	// custom task(自定义任务类)
+	public void addTask(int taskId, BaseTask baseTask, int delayTime) {
 		baseTask.setId(taskId);
 		try {
-			taskPool.execute(new TaskThread(context, null, null, baseTask, delayTime));
+			taskPool.execute(new TaskThread(context, null, null, baseTask,
+					delayTime));
 		} catch (Exception e) {
 			taskPool.shutdown();
 		}
 	}
-	
+
 	// task thread logic
 	private class TaskThread implements Runnable {
 		private Context context;
@@ -59,13 +64,17 @@ public class BaseTaskPool {
 		private HashMap<String, String> taskArgs;
 		private BaseTask baseTask;
 		private int delayTime = 0;
-		public TaskThread(Context context, String taskUrl, HashMap<String, String> taskArgs, BaseTask baseTask, int delayTime) {
+
+		public TaskThread(Context context, String taskUrl,
+				HashMap<String, String> taskArgs, BaseTask baseTask,
+				int delayTime) {
 			this.context = context;
 			this.taskUrl = taskUrl;
 			this.taskArgs = taskArgs;
 			this.baseTask = baseTask;
 			this.delayTime = delayTime;
 		}
+
 		@Override
 		public void run() {
 			try {
@@ -86,7 +95,7 @@ public class BaseTaskPool {
 						// http get
 						if (taskArgs == null) {
 							httpResult = client.get();
-						// http post
+							// http post
 						} else {
 							httpResult = client.post(this.taskArgs);
 						}
@@ -94,7 +103,7 @@ public class BaseTaskPool {
 					// remote task
 					if (httpResult != null) {
 						baseTask.onComplete(httpResult);
-					// local task
+						// local task
 					} else {
 						baseTask.onComplete();
 					}
@@ -112,5 +121,5 @@ public class BaseTaskPool {
 			}
 		}
 	}
-	
+
 }

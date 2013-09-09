@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center" >
+    
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        >
+        
+        
+        <RadioButton 
+            android:id="@+id/tab_recommend"
+			style="@style/main_tab_bottom" 
+            android:drawableTop="@drawable/tab_recommend_hover"
+            />
+        
+          
+        <RadioButton 
+            android:id="@+id/tab_remind"
+			style="@style/main_tab_bottom" 
+			android:drawableTop="@drawable/tab_remind_hover"     
+            />
+        <RadioButton 
+            android:id="@+id/tab_history"
+			style="@style/main_tab_bottom"  
+			android:drawableTop="@drawable/tab_history_hover"         
+            />
+            
+       
+    </RadioGroup>
+    
+</LinearLayout>
