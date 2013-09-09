@@ -7,7 +7,7 @@ import com.gw.library.base.BaseTask;
 public class HistoryUpdate extends BaseTask {
 	private static final int id = 0001;
 	private static final String name = "HISTORY_UPDATE";
-	private static final String taskUrl = "http://www.baidu.com";
+	private static final String taskUrl = "http://lib.yinchuandong.com/index.php/Api/";
 
 	public HistoryUpdate() {
 		super();

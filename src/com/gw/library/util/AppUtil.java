@@ -110,14 +110,13 @@ public class AppUtil {
 		return gzipToString(entity, null);
 	}
 
-	// 应用基本的设置
 	public static SharedPreferences getSharedPreferences(Context ctx) {
-		return ctx.getSharedPreferences("com.app.demos.sp.global",
+		return ctx.getSharedPreferences("com.gw.library.sp.global",
 				Context.MODE_PRIVATE);
 	}
 
 	public static SharedPreferences getSharedPreferences(Service service) {
-		return service.getSharedPreferences("com.app.demos.sp.global",
+		return service.getSharedPreferences("com.gw.library.sp.global",
 				Context.MODE_PRIVATE);
 	}
 
@@ -140,9 +139,9 @@ public class AppUtil {
 		try {
 			jsonObject = new JSONObject(jsonStr);
 			if (jsonObject != null) {
-				message.setCode(jsonObject.getString("code"));
-				message.setMessage(jsonObject.getString("message"));
-				message.setResult(jsonObject.getString("result"));
+				message.setData(jsonObject.getString("data"));
+				message.setInfo(jsonObject.getString("info"));
+				message.setStatus(jsonObject.getString("status"));
 			}
 		} catch (JSONException e) {
 			throw new Exception("Json format error");

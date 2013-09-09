@@ -24,8 +24,13 @@
     android:layout_above="@+id/layout_main_tab"
   	>
   	
-    	<include layout="@layout/tpl_remind_item"    	    
-    	    /> 
+    	<com.gw.library.base.GwListView 
+    	    android:id="@+id/remind_list"
+    	    style="@style/gw_list_view"
+    	    >
+    	    
+    	</com.gw.library.base.GwListView>
+
 
     </LinearLayout>
     
