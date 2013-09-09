@@ -8,7 +8,11 @@ public class C {
 	 *
 	 */
 	public static final class api {
-		public static final String base = "";
+		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
+		public static final String historyList = "Loan/getHistoryList";
+		public static final String loanList = "Loan/getLoanList";
+		public static final String login = "User/login";
+		public static final String register = "User/register";
 	}
 	
 	/**

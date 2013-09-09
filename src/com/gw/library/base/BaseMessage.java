@@ -13,9 +13,9 @@ import com.gw.library.util.AppUtil;
 
 public class BaseMessage {
 	
-	private String code;
-	private String message;
-	private String resultSrc;
+	private String data;
+	private String info;
+	private String status;
 	private Map<String, BaseModel> resultMap;
 	private Map<String, ArrayList<? extends BaseModel>> resultList;
 	
@@ -26,30 +26,30 @@ public class BaseMessage {
 	
 	@Override
 	public String toString () {
-		return code + " | " + message + " | " + resultSrc;
+		return data + " | " + status + " | " + info;
 	}
 	
-	public String getCode () {
-		return this.code;
+	public String getStatus () {
+		return this.status;
 	}
 	
-	public void setCode (String code) {
-		this.code = code;
+	public void setStatus (String status) {
+		this.status = status;
 	}
 	
-	public String getMessage () {
-		return this.message;
+	public String getInfo () {
+		return this.info;
 	}
 	
-	public void setMessage (String message) {
-		this.message = message;
+	public void setInfo (String info) {
+		this.info = info;
 	}
 	
-	public String getResult () {
-		return this.resultSrc;
+	public String getData () {
+		return this.data;
 	}
 	
-	public Object getResult (String modelName) throws Exception {
+	public Object getData (String modelName) throws Exception {
 		Object model = this.resultMap.get(modelName);
 		// catch null exception
 		if (model == null) {
@@ -58,7 +58,7 @@ public class BaseMessage {
 		return model;
 	}
 	
-	public ArrayList<? extends BaseModel> getResultList (String modelName) throws Exception {
+	public ArrayList<? extends BaseModel> getDataList (String modelName) throws Exception {
 		ArrayList<? extends BaseModel> modelList = this.resultList.get(modelName);
 		// catch null exception
 		if (modelList == null || modelList.size() == 0) {
@@ -68,8 +68,8 @@ public class BaseMessage {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void setResult (String result) throws Exception {
-		this.resultSrc = result;
+	public void setData (String result) throws Exception {
+		this.data = result;
 		if (result.length() > 0) {
 			JSONObject jsonObject = null;
 			jsonObject = new JSONObject(result);
@@ -78,7 +78,7 @@ public class BaseMessage {
 				// initialize
 				String jsonKey = it.next();
 				String modelName = getModelName(jsonKey);
-				String modelClassName = "com.app.demos.model." + modelName;
+				String modelClassName = "com.gw.library.model." + modelName;
 				JSONArray modelJsonArray = jsonObject.optJSONArray(jsonKey);
 				// JSONObject
 				if (modelJsonArray == null) {
