@@ -2,10 +2,14 @@
 <resources>
     <color name="bg">#f06939</color><!-- 橙色 背景颜色 -->
     <color name="fontColor">#555555</color><!-- 字体颜色 -->
-    
-	<color name="red">#FF0000</color>
+
 	<color name="gray">#5A5D61</color>
-	<color name="black">#000000</color>
+	<color name="red">#ff0000</color> <!-- remind部分的文字提醒 -->
+	
+	
+	
+	
+	
 	<color name="white">#FFFFFF</color>
 	<color name="sky_blue">#7EBEE9</color>
 	<color name="sky_blue2">#78B7F2</color>
@@ -22,11 +26,11 @@
 	<color name="loading">#99000000</color>
 	
 	
-	<color name="ivory">#FFFFF0</color><!--象牙色 -->
-	<color name="blanchedalmond">#FFEBCD</color><!--白杏色 -->
-	<color name="mistyrose">#FFE4E1</color><!--浅玫瑰色 -->
-	<color name="gainsboro">#DCDCDC</color><!--淡灰色 -->
-	<color name="bisque">#FFE4C4</color><!--桔黄色 -->
-	<color name="azure">#F0FFFF</color><!--天蓝色 -->
+	<!--<color name="ivory">#FFFFF0</color>象牙色 -->
+	<!--<color name="blanchedalmond">#FFEBCD</color>白杏色 -->
+	<!--<color name="mistyrose">#FFE4E1</color>浅玫瑰色 -->
+	<!--<color name="gainsboro">#DCDCDC</color>淡灰色 -->
+	<!--<color name="bisque">#FFE4C4</color>桔黄色 -->
+	<!--<color name="azure">#F0FFFF</color>天蓝色 -->
 	
 </resources>

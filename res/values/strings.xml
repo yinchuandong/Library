@@ -17,4 +17,6 @@
     <string name="studentNumber">学号</string>
     <string name="password">密码</string>
 
+    <string name="remain">32</string>
+    
 </resources>

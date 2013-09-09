@@ -37,7 +37,7 @@
     <style name="title_top">
         <item name="android:gravity">center</item>    
         <item name="android:textColor">#ffffff</item> 
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:paddingRight">16dp</item>
         <item name="android:background">#f06939</item>
         <item name="android:layout_width">fill_parent</item>
@@ -49,10 +49,10 @@
         <!--<item name="android:fontFamily"></item>
         <item name="android:shadowDx">1dp</item>
         <item name="android:shadowDy">1dp</item>
-        <item name="android:shadowRadius">2dp</item>-->
-        
-        <item name="android:shadowColor">#d2d2d2</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:shadowRadius">2dp</item>
+        <item name="android:shadowColor">#d2d2d2</item>-->
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:background">#ffffff</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:padding">10dp</item>
