@@ -14,6 +14,7 @@
     	<include layout="@layout/main_header"/>
      </LinearLayout>
      
+    
     <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -22,10 +23,14 @@
     android:layout_below="@+id/layout_main_header"
     android:layout_above="@+id/layout_main_tab"
   	>
-  	
-    	<include layout="@layout/tpl_history_item"
-    	    android:layout_marginTop="16dp"
-    	    /> 
+
+  		<!-- 自定义的listview -->
+    	<com.gw.library.base.GwListView 
+    	    android:id="@+id/historyList"
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    >
+    	</com.gw.library.base.GwListView>
     </LinearLayout>
     
     <LinearLayout android:id="@+id/layout_main_tab"

@@ -36,7 +36,7 @@ public class BaseUi extends Activity {
 		// init task pool
 		this.taskPool = new BaseTaskPool(this);
 		// init application
-		this.app = (BaseApp) this.getApplicationContext();
+//		this.app = (BaseApp) this.getApplicationContext();
 	}
 	
 	@Override
