@@ -27,6 +27,7 @@
     	<include layout="@layout/tpl_remind_item"    	    
     	    /> 
 
+
     </LinearLayout>
     
     <LinearLayout android:id="@+id/layout_main_tab"
