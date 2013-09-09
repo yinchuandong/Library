@@ -1,6 +1,7 @@
 package com.gw.library.base;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -55,18 +56,18 @@ public abstract class BaseSqlite {
 		}
 	}
 	
-	public ArrayList<ArrayList<String>> query (String where, String[] params) {
-		ArrayList<ArrayList<String>> rList = new ArrayList<ArrayList<String>>();
+	public ArrayList<HashMap<String, String>> query (String sql, String[] args) {
+		ArrayList<HashMap<String, String>> rowList = new ArrayList<HashMap<String,String>>();
 		try {
 			db = dbh.getReadableDatabase();
-			cursor = db.query(tableName(), tableColumns(), where, params, null, null, null);
+			cursor = db.rawQuery(sql, args);
 			while (cursor.moveToNext()) {
-				int i = cursor.getColumnCount();
-				ArrayList<String> rRow = new ArrayList<String>();
-				while (i >= 0) {
-					rRow.add(i, cursor.getString(i));
+				HashMap<String, String> colList = new HashMap<String, String>();
+				int len = cursor.getColumnCount();
+				for (int i = 0; i < len; i++) {
+					colList.put(cursor.getColumnName(i), cursor.getString(i));
 				}
-				rList.add(rRow);
+				rowList.add(colList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,7 +75,36 @@ public abstract class BaseSqlite {
 			cursor.close();
 			db.close();
 		}
-		return rList;
+		return rowList;
+	}
+	
+	
+	public ArrayList<HashMap<String, String>> select(String where, String[] params){
+		ArrayList<HashMap<String, String>> rowList = new ArrayList<HashMap<String,String>>();
+		try {
+			db = dbh.getReadableDatabase();
+			cursor = db.query(tableName(), tableColumns(), where, params, null, null, null);
+			
+			while (cursor.moveToNext()) {
+				HashMap<String, String> colList = new HashMap<String, String>();
+				int len = cursor.getColumnCount();
+				for (int i = 0; i < len; i++) {
+					colList.put(cursor.getColumnName(i), cursor.getString(i));
+				}
+				rowList.add(colList);
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally{
+			cursor.close();
+			db.close();
+		}
+		
+		
+		return rowList;
+		
 	}
 	
 	public int count (String where, String[] params) {
