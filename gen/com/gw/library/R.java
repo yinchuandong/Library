@@ -69,25 +69,29 @@ public final class R {
         public static final int normal_recommend=0x7f020012;
         public static final int normal_remind=0x7f020013;
         public static final int pull_to_refresh_header_background=0x7f020014;
+        public static final int tab_history_hover=0x7f020015;
+        public static final int tab_recommend_hover=0x7f020016;
+        public static final int tab_remind_hover=0x7f020017;
     }
     public static final class id {
-        public static final int action_settings=0x7f090011;
+        public static final int action_settings=0x7f090012;
         public static final int head_arrowImageView=0x7f090006;
         public static final int head_contentLayout=0x7f090005;
         public static final int head_lastUpdatedTextView=0x7f090009;
         public static final int head_progressBar=0x7f090007;
         public static final int head_tipsTextView=0x7f090008;
-        public static final int historyList=0x7f09000d;
+        public static final int history_list=0x7f09000d;
         public static final int layout_main_header=0x7f09000b;
         public static final int layout_main_tab=0x7f09000c;
         public static final int login=0x7f090010;
         public static final int main_title=0x7f090000;
         public static final int password=0x7f09000f;
         public static final int r_number=0x7f09000a;
+        public static final int remind_list=0x7f090011;
         public static final int studentNumber=0x7f09000e;
         public static final int tab_history=0x7f090003;
-        public static final int tab_loan=0x7f090002;
         public static final int tab_recommend=0x7f090001;
+        public static final int tab_remind=0x7f090002;
         public static final int test=0x7f090004;
     }
     public static final class layout {
@@ -99,7 +103,8 @@ public final class R {
         public static final int ui_history=0x7f030005;
         public static final int ui_launcher=0x7f030006;
         public static final int ui_login=0x7f030007;
-        public static final int ui_remind=0x7f030008;
+        public static final int ui_recommend=0x7f030008;
+        public static final int ui_remind=0x7f030009;
     }
     public static final class menu {
         public static final int launcher=0x7f080000;
@@ -146,6 +151,7 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int gw_list_view=0x7f070006;
         public static final int h_item=0x7f070005;
         public static final int main_tab_bottom=0x7f070003;
         public static final int noTitle=0x7f070002;

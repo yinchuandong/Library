@@ -26,9 +26,8 @@
 
   		<!-- 自定义的listview -->
     	<com.gw.library.base.GwListView 
-    	    android:id="@+id/historyList"
-    	    android:layout_width="fill_parent"
-    	    android:layout_height="wrap_content"
+    	    android:id="@+id/history_list"
+    	   	style="@style/gw_list_view"
     	    >
     	</com.gw.library.base.GwListView>
     </LinearLayout>

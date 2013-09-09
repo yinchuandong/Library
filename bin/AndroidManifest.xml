@@ -14,12 +14,42 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.gw.library.ui.Launcher"
+            android:name="com.gw.library.ui.LauncherActivity"
             android:label="@string/app_name" android:theme="@style/noTitle" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name="com.gw.library.ui.HistoryActivity"
+            android:label="@string/app_name" android:theme="@style/noTitle"
+            >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name="com.gw.library.ui.RecommendActivity"
+            android:label="@string/app_name" android:theme="@style/noTitle"
+            >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity 
+            android:name="com.gw.library.ui.RemindActivity"
+            android:label="@string/app_name" android:theme="@style/noTitle"
+            >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
