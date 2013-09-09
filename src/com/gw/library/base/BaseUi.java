@@ -79,6 +79,7 @@ public class BaseUi extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         intent.setClass(this, classObj);
         startActivity(intent);
+        overridePendingTransition(0, 0); //去掉activity切换时的动画效果
 	}
 	
 	public void overlay (Class<?> classObj, Bundle params) {
@@ -87,6 +88,7 @@ public class BaseUi extends Activity {
         intent.setClass(this, classObj);
         intent.putExtras(params);
         startActivity(intent);
+        overridePendingTransition(0, 0);
 	}
 	
 	public void forward (Class<?> classObj) {
@@ -94,7 +96,9 @@ public class BaseUi extends Activity {
 		intent.setClass(this, classObj);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		this.startActivity(intent);
+		overridePendingTransition(0, 0);
 		this.finish();
+		overridePendingTransition(0, 0);
 	}
 	
 	public void forward (Class<?> classObj, Bundle params) {
@@ -103,7 +107,9 @@ public class BaseUi extends Activity {
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtras(params);
 		this.startActivity(intent);
+		overridePendingTransition(0, 0);
 		this.finish();
+		overridePendingTransition(0, 0);
 	}
 	
 	public Context getContext () {
