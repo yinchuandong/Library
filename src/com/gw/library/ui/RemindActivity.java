@@ -1,8 +1,10 @@
 package com.gw.library.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.gw.library.R;
+import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 
@@ -20,6 +22,10 @@ public class RemindActivity extends BaseUiAuth{
 		doTaskAsync(1, C.api.historyList + 
 				"?studentNumber=20111003632&password=yin543211&school_id=1"
 		);
+	}
+	
+	public void onTaskComplete(int taskId, BaseMessage message) {
+		Log.i("remindactivity====ontaskcomplete", taskId+"");
 	}
 
 }
