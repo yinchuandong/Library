@@ -2,24 +2,13 @@ package com.gw.library.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Set;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.gw.library.R;
-import com.gw.library.R.string;
 import com.gw.library.base.BaseMessage;
-import com.gw.library.base.BaseUi;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
@@ -106,3 +95,4 @@ public class HistoryActivity extends BaseUiAuth {
 	}
 
 }
+
