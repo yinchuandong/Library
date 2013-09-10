@@ -49,6 +49,12 @@ public class BaseMessage {
 		return this.data;
 	}
 
+	/**
+	 * 当服务器返回的data属性是一个json对象时，调用此方法
+	 * @param modelName
+	 * @return
+	 * @throws Exception
+	 */
 	public Object getData(String modelName) throws Exception {
 		Object model = this.resultMap.get(modelName);
 		// catch null exception
@@ -58,6 +64,12 @@ public class BaseMessage {
 		return model;
 	}
 
+	/**
+	 * 当服务器返回的data属性是一个json数组时，调用此方法
+	 * @param modelName
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<? extends BaseModel> getDataList(String modelName)
 			throws Exception {
 		ArrayList<? extends BaseModel> modelList = this.resultList

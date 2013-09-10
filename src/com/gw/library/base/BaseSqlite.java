@@ -3,6 +3,9 @@ package com.gw.library.base;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.gw.library.model.History;
+import com.gw.library.model.Loan;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -139,8 +142,7 @@ public abstract class BaseSqlite {
 	
 	abstract protected String tableName ();
 	abstract protected String[] tableColumns ();
-	abstract protected String createSql ();
-	abstract protected String upgradeSql ();
+	
 	
 	protected class DbHelper extends SQLiteOpenHelper {
 
@@ -150,13 +152,58 @@ public abstract class BaseSqlite {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL(createSql());
+			db.execSQL(createLoanSql());
+			db.execSQL(createHisotrySql());
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL(upgradeSql());
+			db.execSQL(upgradeLoanSql());
+			db.execSQL(upgradeHistorySql());
 			onCreate(db);
 		}
 	}
+	
+	protected String createLoanSql (){
+		String sql = "CREATE TABLE loan ("+
+				Loan.COL_ID + " text PRIMARY KEY, "+
+				Loan.COL_SCHOOLID + " text, " +
+				Loan.COL_STUDENTNUMBER + " text, " +
+				Loan.COL_TITLE + " text, " + 
+				Loan.COL_AUTHOR + " text, " +
+				Loan.COL_URL + " text, " +
+				Loan.COL_PUBLISHYEAR + " text, " +
+				Loan.COL_RETURNDATE + " text, " +
+				Loan.COL_PAYMENT + " text, " +
+				Loan.COL_LOCATION + " text, " +
+				Loan.COL_CALLNUMBER + " text" +
+			")";
+		return sql;
+	}
+	
+	protected String createHisotrySql() {
+		String sql = "CREATE TABLE history ("+
+				History.COL_ID + " text PRIARY KEY, "+
+				History.COL_STUDENTNUMBER + " text, " +
+				History.COL_SCHOOLID + " text, " +
+				History.COL_TITLE + " text, "+
+				History.COL_AUTHOR + " text, " +
+				History.COL_URL + " text, " +
+				History.COL_PUBLISHYEAR + " text, "+
+				History.COL_PAYMENT + " text, "+
+				History.COL_LIMITTIME + " text, "+
+				History.COL_RETURNTIME + " text, "+
+				History.COL_LOCATION + " text " +
+			")";
+		return sql;
+	}
+	
+	protected String upgradeLoanSql (){
+		return "DROP TABLE IF EXISTS loan";
+	}
+	
+	protected String upgradeHistorySql() {
+		return "DROP TABLE IF EXISTS history";
+	}
+	
 }

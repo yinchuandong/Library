@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
@@ -24,6 +25,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ParseException;
+import android.util.Log;
 
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseModel;
@@ -174,6 +176,37 @@ public class AppUtil {
 			e.printStackTrace();
 		}
 		return map;
+	}
+	
+	/**
+	 * 把从数据库查询的数据转为model的形式
+	 * @param className
+	 * @param mapList
+	 * @return
+	 * @throws Exception
+	 */
+	public static ArrayList<? extends BaseModel> hashMapToModel(
+			String className, 
+			ArrayList<HashMap<String, String>> mapList
+		) throws Exception{
+		
+		ArrayList<BaseModel> modelList = new ArrayList<BaseModel>();
+		
+		for (HashMap<String, String> temp : mapList) {
+			BaseModel modelObj = (BaseModel) Class.forName(className).newInstance();
+			Class<? extends BaseModel> modelClass = modelObj.getClass();
+			Iterator<String> it = temp.keySet().iterator();
+			while (it.hasNext()) {
+				String varField = it.next();
+				String varValue = temp.get(varField);
+//				Log.i("appUtil--hashmaptomodel--", varField+"==>"+varValue);
+				Field field = modelClass.getDeclaredField(varField);
+				field.setAccessible(true); // have private to be accessable
+				field.set(modelObj, varValue);
+			}
+			modelList.add(modelObj);
+		}
+		return modelList;
 	}
 
 	/* 判断int是否为空 */
