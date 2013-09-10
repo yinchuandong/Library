@@ -3,12 +3,13 @@ package com.gw.library.model;
 import com.gw.library.base.BaseModel;
 
 /**
+ * 因为服务器上是loan，所以model 从Remind改为Loan
  * 由于当前借阅的列表我们无法改变
  * 因此不提供set方法
  * @author yinchuandong
  *
  */
-public class Remind extends BaseModel{
+public class Loan extends BaseModel{
 
 	public final static String COL_ID = "id";
 	public final static String COL_TITLE = "title";
@@ -33,7 +34,7 @@ public class Remind extends BaseModel{
 	/**
 	 * 空构造函数
 	 */
-	public Remind(){
+	public Loan(){
 		
 	}
 	
