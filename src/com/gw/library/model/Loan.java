@@ -20,6 +20,8 @@ public class Loan extends BaseModel{
 	public final static String COL_PAYMENT = "payment";
 	public final static String COL_LOCATION = "location";
 	public final static String COL_CALLNUMBER = "callNumber";
+	public final static String COL_STUDENTNUMBER = "studentNumber";
+	public final static String COL_SCHOOLID = "schoolId";
 	
 	private String id;  //书的id
 	private String title; //标题
@@ -30,6 +32,8 @@ public class Loan extends BaseModel{
 	private String payment; //该书欠了多少钱
 	private String location; //位于那里
 	private String callNumber; //索书号
+	private String studentNumber;
+	private String schoolId;
 	
 	/**
 	 * 空构造函数
@@ -40,6 +44,14 @@ public class Loan extends BaseModel{
 	
 	public String getId(){
 		return id;
+	}
+	
+	public String getStudentNumber(){
+		return studentNumber;
+	}
+	
+	public String getSchoolId(){
+		return schoolId;
 	}
 	
 	public String getTitle(){

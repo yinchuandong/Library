@@ -1,5 +1,6 @@
 package com.gw.library.model;
 
+import com.gw.library.R.string;
 import com.gw.library.base.BaseModel;
 
 public class History extends BaseModel{
@@ -12,6 +13,8 @@ public class History extends BaseModel{
 	public final static String COL_RETURNTIME= "returnTime";
 	public final static String COL_PAYMENT = "payment";
 	public final static String COL_LOCATION = "location";
+	public final static String COL_STUDENTNUMBER = "studentNumber";
+	public final static String COL_SCHOOLID = "schoolId";
 	
 	private String id;  //书的id
 	private String title; //标题
@@ -22,6 +25,8 @@ public class History extends BaseModel{
 	private String returnTime; //实际归还日期
 	private String payment; //该书欠了多少钱
 	private String location; //位于那里
+	private String studentNumber;
+	private String schoolId;
 	
 	/**
 	 * 空构造函数
@@ -32,6 +37,14 @@ public class History extends BaseModel{
 	
 	public String getId(){
 		return id;
+	}
+	
+	public String getStudentNumber(){
+		return studentNumber;
+	}
+	
+	public String getSchoolId(){
+		return schoolId;
 	}
 	
 	public String getTitle(){
