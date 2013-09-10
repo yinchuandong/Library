@@ -12,44 +12,44 @@ import org.json.JSONObject;
 import com.gw.library.util.AppUtil;
 
 public class BaseMessage {
-	
+
 	private String data;
 	private String info;
 	private String status;
 	private Map<String, BaseModel> resultMap;
 	private Map<String, ArrayList<? extends BaseModel>> resultList;
-	
-	public BaseMessage () {
+
+	public BaseMessage() {
 		this.resultMap = new HashMap<String, BaseModel>();
 		this.resultList = new HashMap<String, ArrayList<? extends BaseModel>>();
 	}
-	
+
 	@Override
-	public String toString () {
+	public String toString() {
 		return data + " | " + status + " | " + info;
 	}
-	
-	public String getStatus () {
+
+	public String getStatus() {
 		return this.status;
 	}
-	
-	public void setStatus (String status) {
+
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	public String getInfo () {
+
+	public String getInfo() {
 		return this.info;
 	}
-	
-	public void setInfo (String info) {
+
+	public void setInfo(String info) {
 		this.info = info;
 	}
-	
-	public String getData () {
+
+	public String getData() {
 		return this.data;
 	}
-	
-	public Object getData (String modelName) throws Exception {
+
+	public Object getData(String modelName) throws Exception {
 		Object model = this.resultMap.get(modelName);
 		// catch null exception
 		if (model == null) {
@@ -57,18 +57,21 @@ public class BaseMessage {
 		}
 		return model;
 	}
-	
-	public ArrayList<? extends BaseModel> getDataList (String modelName) throws Exception {
-		ArrayList<? extends BaseModel> modelList = this.resultList.get(modelName);
+
+	public ArrayList<? extends BaseModel> getDataList(String modelName)
+			throws Exception {
+		ArrayList<? extends BaseModel> modelList = this.resultList
+				.get(modelName);
 		// catch null exception
 		if (modelList == null || modelList.size() == 0) {
 			throw new Exception("Message data list is empty");
 		}
 		return modelList;
 	}
-	
+
+	// 解析json数据格式，返回结果
 	@SuppressWarnings("unchecked")
-	public void setData (String result) throws Exception {
+	public void setData(String result) throws Exception {
 		this.data = result;
 		if (result.length() > 0) {
 			JSONObject jsonObject = null;
@@ -82,28 +85,35 @@ public class BaseMessage {
 				JSONArray modelJsonArray = jsonObject.optJSONArray(jsonKey);
 				// JSONObject
 				if (modelJsonArray == null) {
-					JSONObject modelJsonObject = jsonObject.optJSONObject(jsonKey);
+					JSONObject modelJsonObject = jsonObject
+							.optJSONObject(jsonKey);
 					if (modelJsonObject == null) {
 						throw new Exception("Message result is invalid");
 					}
-					this.resultMap.put(modelName, json2model(modelClassName, modelJsonObject));
-				// JSONArray
+					this.resultMap.put(modelName,
+							json2model(modelClassName, modelJsonObject));
+					// JSONArray
 				} else {
 					ArrayList<BaseModel> modelList = new ArrayList<BaseModel>();
 					for (int i = 0; i < modelJsonArray.length(); i++) {
-						JSONObject modelJsonObject = modelJsonArray.optJSONObject(i);
-						modelList.add(json2model(modelClassName, modelJsonObject));
+						JSONObject modelJsonObject = modelJsonArray
+								.optJSONObject(i);
+						modelList.add(json2model(modelClassName,
+								modelJsonObject));
 					}
 					this.resultList.put(modelName, modelList);
 				}
 			}
 		}
 	}
-	
+
+	// json数据转化为对应定义的BaseModel对象
 	@SuppressWarnings("unchecked")
-	private BaseModel json2model (String modelClassName, JSONObject modelJsonObject) throws Exception  {
+	private BaseModel json2model(String modelClassName,
+			JSONObject modelJsonObject) throws Exception {
 		// auto-load model class
-		BaseModel modelObj = (BaseModel) Class.forName(modelClassName).newInstance();
+		BaseModel modelObj = (BaseModel) Class.forName(modelClassName)
+				.newInstance();
 		Class<? extends BaseModel> modelClass = modelObj.getClass();
 		// auto-setting model fields
 		Iterator<String> it = modelJsonObject.keys();
@@ -116,13 +126,13 @@ public class BaseMessage {
 		}
 		return modelObj;
 	}
-	
-	private String getModelName (String str) {
+
+	private String getModelName(String str) {
 		String[] strArr = str.split("\\W");
 		if (strArr.length > 0) {
 			str = strArr[0];
 		}
 		return AppUtil.ucfirst(str);
 	}
-	
+
 }
