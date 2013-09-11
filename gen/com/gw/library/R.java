@@ -117,9 +117,12 @@ public final class R {
         public static final int hello_world=0x7f060007;
         public static final int history=0x7f060000;
         public static final int login=0x7f060009;
+        public static final int login_empty=0x7f06000f;
+        public static final int login_fail=0x7f06000c;
         public static final int password=0x7f06000b;
         public static final int recommend=0x7f060002;
-        public static final int remain=0x7f06000c;
+        public static final int remain=0x7f06000d;
+        public static final int remember=0x7f06000e;
         public static final int remind=0x7f060001;
         public static final int remind_cancel=0x7f060003;
         public static final int remind_ok=0x7f060004;

@@ -1,7 +1,6 @@
 package com.gw.library.ui;
 
 import java.util.HashMap;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +32,11 @@ public class LoginActivity extends BaseUi {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// 判断是否已经登录，跳转用户主页
+		if (BaseAuth.isLogin()) {
+			this.forward(HistoryActivity.class);
+		}
 		setContentView(R.layout.ui_login);
 		
 		//检查以前是否有登陆过
