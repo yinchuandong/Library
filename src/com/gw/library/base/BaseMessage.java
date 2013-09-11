@@ -45,6 +45,10 @@ public class BaseMessage {
 		this.info = info;
 	}
 
+	/**
+	 * 返回没有解析的json--->{data:""}
+	 * @return
+	 */
 	public String getData() {
 		return this.data;
 	}

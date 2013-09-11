@@ -38,7 +38,7 @@
 	        android:id="@+id/studentNumber"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:hint="@string/studentNumber"
+	        android:text="20111003632"
 	        android:layout_marginLeft="8dp"
 	        />
 	</LinearLayout>
@@ -64,7 +64,7 @@
 	        android:id="@+id/password"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:hint="@string/password"
+	        android:text="yin543211"
 	        android:inputType="textPassword"
 	        android:layout_marginLeft="8dp"
 	        />
