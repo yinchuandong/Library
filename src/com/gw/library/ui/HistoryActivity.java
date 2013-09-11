@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,13 +44,10 @@ public class HistoryActivity extends BaseUiAuth {
 		// 初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData();
 		pullToRefresh();
-<<<<<<< HEAD
+
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
 
-=======
-		
->>>>>>> de462430027292d72437ed02eb2d3a54da74389e
 	}
 
 	/**
@@ -87,7 +86,7 @@ public class HistoryActivity extends BaseUiAuth {
 				hSqlite.updateHistory(history);
 				Log.i("studentNumber", history.getStudentNumber());
 			}
-			hListAdapter.setData(hList); //必须调用这个方法来改变data，否者刷新无效
+			hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
 			hListAdapter.notifyDataSetChanged();
 			listView.onRefreshComplete(); // 刷新完成
 		} catch (Exception e) {
@@ -101,26 +100,44 @@ public class HistoryActivity extends BaseUiAuth {
 	public void pullToRefresh() {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
-				doTaskAsync(
-						1,
-						C.api.historyList
-								+ "?studentNumber=20111003632&password=yin543211&schoolId=1");
+				HashMap<String, String> userInfo = new HashMap<String, String>();
+				SharedPreferences preferences = AppUtil
+						.getSharedPreferences(HistoryActivity.this);
+				String studentNumber = preferences.getString("studentNumber",
+						"");
+				String password = preferences.getString("password", "");
+				String schoolId = preferences.getString("schoolId", "");
+				toast("学号：" + studentNumber + "\n密码：" + password + "\n学校"
+						+ schoolId);
+				HashMap<String, String> urlParams = new HashMap<String, String>();
+				urlParams.put("studentNumber", studentNumber);
+				urlParams.put("password", password);
+				urlParams.put("schoolId", schoolId);
+				doTaskAsync(1, C.api.historyList, urlParams);
 			}
 		});
 	}
 
 	/**
-	 * History列表item被点击后的动作事件，
+	 * History列表item被点击后的动作事件，逐项显示
 	 */
 	class HSItemListener implements OnItemClickListener {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			// toast("position--->" + position + "id----->" + id);
+			toast("position--->" + position + "id----->" + id);
+			// 在webView中显示相对应的历史具体信息
+			toast(hList.get((int) id).getUrl());
+
+			Intent intent = new Intent(HistoryActivity.this,
+					HistoryWebViewActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putString("url", hList.get(position).getUrl());
+			intent.putExtras(bundle);
+			startActivity(intent);
 
 		}
-
 	}
 
 }

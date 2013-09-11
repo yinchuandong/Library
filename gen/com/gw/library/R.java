@@ -75,6 +75,7 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f090015;
+        public static final int hSwebview=0x7f090010;
         public static final int head_arrowImageView=0x7f090008;
         public static final int head_contentLayout=0x7f090007;
         public static final int head_lastUpdatedTextView=0x7f09000b;
@@ -88,11 +89,10 @@ public final class R {
         public static final int layout_main_tab=0x7f09000e;
         public static final int login=0x7f090013;
         public static final int main_title=0x7f090000;
-        public static final int password=0x7f090011;
+        public static final int password=0x7f090012;
         public static final int r_number=0x7f09000c;
-        public static final int remember=0x7f090012;
         public static final int remind_list=0x7f090014;
-        public static final int studentNumber=0x7f090010;
+        public static final int studentNumber=0x7f090011;
         public static final int tab_history=0x7f090003;
         public static final int tab_recommend=0x7f090001;
         public static final int tab_remind=0x7f090002;
@@ -104,10 +104,11 @@ public final class R {
         public static final int tpl_pull_refresh_head=0x7f030003;
         public static final int tpl_remind_item=0x7f030004;
         public static final int ui_history=0x7f030005;
-        public static final int ui_launcher=0x7f030006;
-        public static final int ui_login=0x7f030007;
-        public static final int ui_recommend=0x7f030008;
-        public static final int ui_remind=0x7f030009;
+        public static final int ui_history_webview=0x7f030006;
+        public static final int ui_launcher=0x7f030007;
+        public static final int ui_login=0x7f030008;
+        public static final int ui_recommend=0x7f030009;
+        public static final int ui_remind=0x7f03000a;
     }
     public static final class menu {
         public static final int launcher=0x7f080000;
