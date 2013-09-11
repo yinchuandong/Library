@@ -12,7 +12,7 @@ public class LauncherActivity extends BaseUi {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ui_history);
+		setContentView(R.layout.ui_settings);
 		//setContentView(R.layout.main_tab);
 		
 //		new Thread(){

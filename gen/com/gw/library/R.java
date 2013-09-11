@@ -8,6 +8,9 @@
 package com.gw.library;
 
 public final class R {
+    public static final class array {
+        public static final int options=0x7f080000;
+    }
     public static final class attr {
     }
     public static final class color {
@@ -65,39 +68,43 @@ public final class R {
         public static final int icon_setting_hover=0x7f02000e;
         public static final int input=0x7f02000f;
         public static final int login_bottom_repeat_bg=0x7f020010;
-        public static final int normal_history=0x7f020011;
-        public static final int normal_recommend=0x7f020012;
-        public static final int normal_remind=0x7f020013;
-        public static final int pull_to_refresh_header_background=0x7f020014;
-        public static final int tab_history_hover=0x7f020015;
-        public static final int tab_recommend_hover=0x7f020016;
-        public static final int tab_remind_hover=0x7f020017;
+        public static final int logo=0x7f020011;
+        public static final int normal_history=0x7f020012;
+        public static final int normal_recommend=0x7f020013;
+        public static final int normal_remind=0x7f020014;
+        public static final int pull_to_refresh_header_background=0x7f020015;
+        public static final int select=0x7f020016;
+        public static final int tab_history_hover=0x7f020017;
+        public static final int tab_recommend_hover=0x7f020018;
+        public static final int tab_remind_hover=0x7f020019;
     }
     public static final class id {
-        public static final int action_settings=0x7f090017;
-        public static final int head_arrowImageView=0x7f090008;
-        public static final int head_contentLayout=0x7f090007;
-        public static final int head_lastUpdatedTextView=0x7f09000b;
-        public static final int head_progressBar=0x7f090009;
-        public static final int head_tipsTextView=0x7f09000a;
-        public static final int history_list=0x7f090012;
-        public static final int hs_author=0x7f090005;
-        public static final int hs_return_time=0x7f090006;
-        public static final int hs_title=0x7f090004;
-        public static final int layout_main_header=0x7f090010;
-        public static final int layout_main_tab=0x7f090011;
-        public static final int login=0x7f090015;
-        public static final int main_title=0x7f090000;
-        public static final int password=0x7f090014;
-        public static final int r_author=0x7f09000f;
-        public static final int r_number=0x7f09000c;
-        public static final int r_remain_day=0x7f09000d;
-        public static final int r_title=0x7f09000e;
-        public static final int remind_list=0x7f090016;
-        public static final int studentNumber=0x7f090013;
-        public static final int tab_history=0x7f090003;
-        public static final int tab_recommend=0x7f090001;
-        public static final int tab_remind=0x7f090002;
+        public static final int action_settings=0x7f0a0019;
+        public static final int head_arrowImageView=0x7f0a0008;
+        public static final int head_contentLayout=0x7f0a0007;
+        public static final int head_lastUpdatedTextView=0x7f0a000b;
+        public static final int head_progressBar=0x7f0a0009;
+        public static final int head_tipsTextView=0x7f0a000a;
+        public static final int history_list=0x7f0a0012;
+        public static final int hs_author=0x7f0a0005;
+        public static final int hs_return_time=0x7f0a0006;
+        public static final int hs_title=0x7f0a0004;
+        public static final int layout_main_header=0x7f0a0010;
+        public static final int layout_main_tab=0x7f0a0011;
+        public static final int login=0x7f0a0015;
+        public static final int loginout=0x7f0a0018;
+        public static final int main_title=0x7f0a0000;
+        public static final int password=0x7f0a0014;
+        public static final int r_author=0x7f0a000f;
+        public static final int r_number=0x7f0a000c;
+        public static final int r_remain_day=0x7f0a000d;
+        public static final int r_title=0x7f0a000e;
+        public static final int remind_list=0x7f0a0016;
+        public static final int select=0x7f0a0017;
+        public static final int studentNumber=0x7f0a0013;
+        public static final int tab_history=0x7f0a0003;
+        public static final int tab_recommend=0x7f0a0001;
+        public static final int tab_remind=0x7f0a0002;
     }
     public static final class layout {
         public static final int main_header=0x7f030000;
@@ -110,9 +117,10 @@ public final class R {
         public static final int ui_login=0x7f030007;
         public static final int ui_recommend=0x7f030008;
         public static final int ui_remind=0x7f030009;
+        public static final int ui_settings=0x7f03000a;
     }
     public static final class menu {
-        public static final int launcher=0x7f080000;
+        public static final int launcher=0x7f090000;
     }
     public static final class string {
         public static final int action_settings=0x7f060006;
@@ -120,15 +128,16 @@ public final class R {
         public static final int hello_world=0x7f060007;
         public static final int history=0x7f060000;
         public static final int login=0x7f060009;
-        public static final int login_empty=0x7f06000f;
         public static final int login_fail=0x7f06000c;
+        public static final int logout=0x7f06000f;
         public static final int password=0x7f06000b;
+        public static final int personalNumber=0x7f06000e;
         public static final int recommend=0x7f060002;
         public static final int remain=0x7f06000d;
-        public static final int remember=0x7f06000e;
         public static final int remind=0x7f060001;
         public static final int remind_cancel=0x7f060003;
         public static final int remind_ok=0x7f060004;
+        public static final int setting=0x7f060010;
         public static final int studentNumber=0x7f06000a;
         public static final int title_login=0x7f060008;
     }
