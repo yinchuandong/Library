@@ -42,6 +42,9 @@ public class HistoryActivity extends BaseUiAuth {
 		// 初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData();
 		pullToRefresh();
+		// 为每一个列表项添加动作事件
+		listView.setOnItemClickListener(new HSItemListener());
+
 		
 	}
 
@@ -56,7 +59,7 @@ public class HistoryActivity extends BaseUiAuth {
 					"com.gw.library.model.History", mapList);
 			// 无记录处理
 			if (hList == null || hList.size() == 0) {
-				toast("没有借阅记录,下拉刷新试试!!");
+				toast("没有借阅记录,去library看看吧");
 			}
 			hListAdapter = new HistoryList(this, hList);
 			listView.setAdapter(hListAdapter);
@@ -114,7 +117,6 @@ public class HistoryActivity extends BaseUiAuth {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			// toast("position--->" + position + "id----->" + id);
-
 		}
 
 	}

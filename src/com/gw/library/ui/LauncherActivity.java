@@ -27,7 +27,6 @@ public class LauncherActivity extends BaseUi {
 //			}
 //		}.start();
 		forward(LoginActivity.class);
-		
 	}
 
 	@Override

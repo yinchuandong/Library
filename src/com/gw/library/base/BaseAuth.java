@@ -1,7 +1,7 @@
 package com.gw.library.base;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -84,8 +84,6 @@ public class BaseAuth {
 		
 		return userInfo;
 	}
-	
-	
 	
 	
 	
