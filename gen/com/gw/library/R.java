@@ -74,7 +74,7 @@ public final class R {
         public static final int tab_remind_hover=0x7f020017;
     }
     public static final class id {
-        public static final int action_settings=0x7f090014;
+        public static final int action_settings=0x7f090015;
         public static final int head_arrowImageView=0x7f090008;
         public static final int head_contentLayout=0x7f090007;
         public static final int head_lastUpdatedTextView=0x7f09000b;
@@ -86,11 +86,12 @@ public final class R {
         public static final int hs_title=0x7f090004;
         public static final int layout_main_header=0x7f09000d;
         public static final int layout_main_tab=0x7f09000e;
-        public static final int login=0x7f090012;
+        public static final int login=0x7f090013;
         public static final int main_title=0x7f090000;
         public static final int password=0x7f090011;
         public static final int r_number=0x7f09000c;
-        public static final int remind_list=0x7f090013;
+        public static final int remember=0x7f090012;
+        public static final int remind_list=0x7f090014;
         public static final int studentNumber=0x7f090010;
         public static final int tab_history=0x7f090003;
         public static final int tab_recommend=0x7f090001;
@@ -117,9 +118,12 @@ public final class R {
         public static final int hello_world=0x7f060007;
         public static final int history=0x7f060000;
         public static final int login=0x7f060009;
+        public static final int login_empty=0x7f06000f;
+        public static final int login_fail=0x7f06000c;
         public static final int password=0x7f06000b;
         public static final int recommend=0x7f060002;
-        public static final int remain=0x7f06000c;
+        public static final int remain=0x7f06000d;
+        public static final int remember=0x7f06000e;
         public static final int remind=0x7f060001;
         public static final int remind_cancel=0x7f060003;
         public static final int remind_ok=0x7f060004;

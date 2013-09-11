@@ -2,104 +2,121 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg"
-     >
-    
+    android:orientation="vertical" >
+
     <!-- 页面标题 -->
-    <TextView 
+
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:text="@string/title_login"
-        android:gravity="center"
-        android:textSize="26sp"
-        android:textColor="@color/white"
         android:layout_marginTop="20dp"
-       />
-    
+        android:gravity="center"
+        android:text="@string/title_login"
+        android:textColor="@color/white"
+        android:textSize="26sp" />
+
     <!-- 学号框 -->
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:layout_marginTop="35dp"
-	    android:layout_marginLeft="20dp"
-	    android:layout_marginRight="20dp"
-	    android:background="@drawable/input"
-	    >
-	    <TextView 
-	        android:layout_width="70dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/studentNumber"
-	        android:textSize="20dp"
-	        android:gravity="center"
-	        />
-	    <EditText 
-	        android:id="@+id/studentNumber"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:hint="@string/studentNumber"
-	        android:layout_marginLeft="8dp"
-	        />
-	</LinearLayout>
-	
-	<!-- 密码框 -->
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:layout_marginLeft="20dp"
-	    android:layout_marginRight="20dp"
-	    android:layout_marginTop="20dp"
-	    android:background="@drawable/input"
-	    >
-	    <TextView 
-	        android:layout_width="70dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/password"
-	        android:textSize="20sp"
-	        android:gravity="center"
-	        />
-	    <EditText 
-	        android:id="@+id/password"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:hint="@string/password"
-	        android:inputType="textPassword"
-	        android:layout_marginLeft="8dp"
-	        />
-	</LinearLayout>
-	
-	<!-- 登陆框 -->
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="20dp"
-	    android:layout_marginRight="20dp"
-	    android:layout_marginTop="50dp"
-	    android:gravity="center_horizontal"
-	    >
-	    <Button 
-	        android:id="@+id/login"
-		    android:layout_width="160dp"
-		    android:layout_height="40dp"
-		    android:text="@string/login"
-		    android:textSize="20sp"
-		    android:background="@drawable/btn_login"
-	    />
-	</LinearLayout>
-	
-	<RelativeLayout 
-	    android:layout_width="fill_parent"
-	    android:layout_height="match_parent"
-	    >
-	    <TextView 
-	        android:layout_width="fill_parent"
-	        android:layout_height="67dp"
-	        android:background="@drawable/login_bottom_repeat_bg"
-	        android:layout_alignParentBottom="true"
-	        />
-	    
-	</RelativeLayout>
-	
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/input"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/studentNumber"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/studentNumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:hint="@string/studentNumber" />
+    </LinearLayout>
+
+    <!-- 密码框 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/password"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <!-- CheckBox框 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/remember"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:checked="false"
+            android:hint="@string/password"
+            android:text="@string/remember" />
+    </LinearLayout>
+
+    <!-- 登陆框 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_login"
+            android:text="@string/login"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="67dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/login_bottom_repeat_bg" />
+    </RelativeLayout>
+
 </LinearLayout>

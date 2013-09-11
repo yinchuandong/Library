@@ -36,6 +36,7 @@ public class C {
 	 */
 	public static final class task {
 		public static final int historyList = 0001;
+		public static final int login = 0002;
 	}
 
 }

@@ -6,6 +6,9 @@ import java.util.LinkedList;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseMessage;
@@ -21,78 +24,98 @@ import com.gw.library.util.AppUtil;
 public class HistoryActivity extends BaseUiAuth {
 
 	GwListView listView;
-//	BaseAdapter baseAdapter;
-	HistoryList hListAdapter; //listview 的adapter
-	ArrayList<History> hList; //具体数据
-	
+	// BaseAdapter baseAdapter;
+	HistoryList hListAdapter; // listview 的adapter
+	ArrayList<History> hList; // 具体数据
+
 	LinkedList<String> data = new LinkedList<String>();
 	HistorySqlite hSqlite;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_history);
-		
-		listView = (GwListView)findViewById(R.id.history_list);
-		//实例化数据库
+
+		listView = (GwListView) findViewById(R.id.history_list);
+		// 实例化数据库
 		hSqlite = new HistorySqlite(this);
-		//初始化数据，打开页面的时候从手机数据库里面获取数据
-		initData(); 
+		// 初始化数据，打开页面的时候从手机数据库里面获取数据
+		initData();
 		pullToRefresh();
+		// 为每一个列表项添加动作事件
+		listView.setOnItemClickListener(new HSItemListener());
+
 	}
-	
-	
+
 	/**
 	 * 从数据库里面加载数据
 	 */
 	@SuppressWarnings("unchecked")
-	public void initData(){
-		ArrayList<HashMap<String, String>> mapList = hSqlite.query("select * from history", null);
+	public void initData() {
+		ArrayList<HashMap<String, String>> mapList = hSqlite.query(
+				"select * from history", null);
 		try {
-			hList = (ArrayList<History>)AppUtil.hashMapToModel("com.gw.library.model.History", mapList);
+			hList = (ArrayList<History>) AppUtil.hashMapToModel(
+					"com.gw.library.model.History", mapList);
+			// 无记录处理
+			if (hList == null || hList.size() == 0) {
+				toast("没有借阅记录,去library看看吧");
+			}
 			hListAdapter = new HistoryList(this, hList);
 			listView.setAdapter(hListAdapter);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * 异步线程完成之后的回调方法
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
-		Log.i("remindactivity====ontaskcomplete", taskId+"");
+		Log.i("remindactivity====ontaskcomplete", taskId + "");
 		try {
-			hSqlite.delete(null, null); //清空当前历史列表
-			hList = (ArrayList<History>)message.getDataList("History");
+			hSqlite.delete(null, null); // 清空当前历史列表
+			hList = (ArrayList<History>) message.getDataList("History");
 			for (History history : hList) {
 				hSqlite.updateHistory(history);
 				Log.i("studentNumber", history.getStudentNumber());
 			}
 			hListAdapter.notifyDataSetChanged();
-			listView.onRefreshComplete(); //刷新完成
+			listView.onRefreshComplete(); // 刷新完成
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * 下拉刷新
 	 */
-	public void pullToRefresh(){
+	public void pullToRefresh() {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
-				doTaskAsync(1, C.api.historyList + 
-						"?studentNumber=20111003632&password=yin543211&schoolId=1"
-				);
+				doTaskAsync(
+						1,
+						C.api.historyList
+								+ "?studentNumber=20111003632&password=yin543211&schoolId=1");
 			}
 		});
 	}
 
-}
+	/**
+	 * History列表item被点击后的动作事件，
+	 */
+	class HSItemListener implements OnItemClickListener {
 
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			// toast("position--->" + position + "id----->" + id);
+
+		}
+
+	}
+
+}
