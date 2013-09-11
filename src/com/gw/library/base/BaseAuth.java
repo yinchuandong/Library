@@ -17,47 +17,6 @@ import com.gw.library.util.AppUtil;
  * 
  */
 public class BaseAuth {
-
-	// private static boolean is_login = false;// 默认没有登录
-	// private static String login_time;// 登录时间
-	// private static User user;// 当前用户
-	//
-	// public static boolean isLogin() {
-	// if (BaseAuth.is_login == false) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// }
-	//
-	// public static String getLogin_time() {
-	// return login_time;
-	// }
-	//
-	// public static void setLogin_time(String login_time) {
-	// BaseAuth.login_time = login_time;
-	// }
-	//
-	// public static void setLogin(boolean state) {
-	// BaseAuth.is_login = state;
-	// if (BaseAuth.is_login == true) {
-	// SimpleDateFormat formatter = new SimpleDateFormat(
-	// "yyyy年MM月dd日   HH:mm:ss     ");
-	// Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
-	// String date = formatter.format(curDate);
-	// setLogin_time(date);
-	// }
-	// }
-	//
-	// public static void setUser(User user) {
-	// BaseAuth.user = user;
-	// }
-	//
-	// public static User getUser() {
-	// return BaseAuth.user;
-	// }
-	// =======
-
 	/**
 	 * 获得用户单例
 	 * 
@@ -113,6 +72,7 @@ public class BaseAuth {
 	public static HashMap<String, String> getUserInfo(Context context) {
 		HashMap<String, String> userInfo = new HashMap<String, String>();
 		SharedPreferences preferences = AppUtil.getSharedPreferences(context);
+
 		userInfo.put(User.COL_STUDENTNUMBER,
 				preferences.getString(User.COL_STUDENTNUMBER, ""));
 		userInfo.put(User.COL_SCHOOLID,
@@ -122,6 +82,8 @@ public class BaseAuth {
 		userInfo.put(User.COL_ACADEMY,
 				preferences.getString(User.COL_ACADEMY, ""));
 		userInfo.put(User.COL_MAJOR, preferences.getString(User.COL_MAJOR, ""));
+		userInfo.put(User.COL_PASSWORD,
+				preferences.getString(User.COL_PASSWORD, ""));
 
 		return userInfo;
 	}

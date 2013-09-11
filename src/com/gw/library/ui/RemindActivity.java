@@ -1,44 +1,99 @@
 package com.gw.library.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.os.Bundle;
 import android.util.Log;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseMessage;
-import com.gw.library.base.BaseModel;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
-import com.gw.library.model.History;
+import com.gw.library.base.GwListView;
+import com.gw.library.base.GwListView.OnRefreshListener;
+import com.gw.library.list.RemindList;
+import com.gw.library.model.Loan;
+import com.gw.library.sqlite.RemindSqlite;
+import com.gw.library.util.AppUtil;
 
 public class RemindActivity extends BaseUiAuth{
+	
+	GwListView listView;
+	RemindList remindListAdapter;
+	RemindSqlite rSqlite;
+	ArrayList<Loan> rList;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_remind);
-		init();
+		listView = (GwListView)findViewById(R.id.remind_list);
+		
+		rSqlite = new RemindSqlite(this);
+		pullToRefresh();
+		initData();
 	}
 	
 	
 	
-	public void init(){
-		doTaskAsync(1, C.api.loanList + 
-				"?studentNumber=20111003632&password=yin543211&schoolId=1"
-		);
+	/**
+	 * 从数据库里面加载数据
+	 */
+	@SuppressWarnings("unchecked")
+	public void initData(){
+		ArrayList<HashMap<String, String>> mapList = rSqlite.query("select * from loan where studentNumber=?", new String[]{user.getStudentNumber()});
+		try {
+			rList = (ArrayList<Loan>) AppUtil.hashMapToModel(
+					"com.gw.library.model.Loan", mapList);
+			// 无记录处理
+			if (rList == null || rList.size() == 0) {
+				toast("没有借阅记录,去library看看吧");
+			}
+			remindListAdapter = new RemindList(this, rList);
+			listView.setAdapter(remindListAdapter);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
-	
+
+	/**
+	 * 异步线程完成之后的回调方法
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
-		Log.i("remindactivity====ontaskcomplete", taskId+"");
+		Log.i("remindactivity====ontaskcomplete", taskId + "");
 		try {
-			ArrayList<History> hList = (ArrayList<History>)message.getDataList("History");
-			Log.i("studentNumber", hList.get(0).getStudentNumber());
+			String whereSql = Loan.COL_STUDENTNUMBER + "=?";
+			String[] whereParams = new String[]{user.getStudentNumber()};
+			rSqlite.delete(whereSql, whereParams); //清空当前历史列表
+			rList = (ArrayList<Loan>)message.getDataList("Loan");
+			for (Loan loan : rList) {
+				rSqlite.updateloan(loan);
+				Log.i("studentNumber", loan.getStudentNumber());
+			}
+			remindListAdapter.setData(rList); //必须调用这个方法来改变data，否者刷新无效
+			remindListAdapter.notifyDataSetChanged();
+			listView.onRefreshComplete(); // 刷新完成
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 下拉刷新
+	 */
+	public void pullToRefresh() {
+		listView.setonRefreshListener(new OnRefreshListener() {
+			public void onRefresh() {
+				doTaskAsync(1, C.api.loanList + 
+						"?studentNumber=" + user.getStudentNumber()+
+						"&password=" + user.getPassword() + 
+						"&schoolId=" + user.getSchoolId()
+				);
+			}
+		});
 	}
 
 }

@@ -9,9 +9,11 @@ public class C {
 	 * 
 	 */
 	public static final class api {
+
+		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
 		// public static final String base =
-		// "http://lib.yinchuandong.com/index.php/Api/";
-		public static final String base = "http://192.168.233.101/libraryServer/index.php/Api/";
+		// "http://192.168.233.101/libraryServer/index.php/Api/";
+
 		public static final String historyList = "Loan/getHistoryList";
 		public static final String loanList = "Loan/getLoanList";
 		public static final String login = "User/login";
@@ -43,7 +45,6 @@ public class C {
 		public static final int historyList = 1003;
 		public static final int loanList = 1004;
 		public static final int notice = 1005;
-
 	}
 
 }

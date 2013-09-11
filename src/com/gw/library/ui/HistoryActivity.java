@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +55,8 @@ public class HistoryActivity extends BaseUiAuth {
 	@SuppressWarnings("unchecked")
 	public void initData() {
 		ArrayList<HashMap<String, String>> mapList = hSqlite.query(
-				"select * from history", null);
+				"select * from history where studentNumber=?",
+				new String[] { user.getStudentNumber() });
 		try {
 			hList = (ArrayList<History>) AppUtil.hashMapToModel(
 					"com.gw.library.model.History", mapList);
@@ -80,7 +80,9 @@ public class HistoryActivity extends BaseUiAuth {
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		Log.i("remindactivity====ontaskcomplete", taskId + "");
 		try {
-			hSqlite.delete(null, null); // 清空当前历史列表
+			String whereSql = History.COL_STUDENTNUMBER + "=?";
+			String[] whereParams = new String[] { user.getStudentNumber() };
+			hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
 			hList = (ArrayList<History>) message.getDataList("History");
 			for (History history : hList) {
 				hSqlite.updateHistory(history);
@@ -100,20 +102,14 @@ public class HistoryActivity extends BaseUiAuth {
 	public void pullToRefresh() {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
-				HashMap<String, String> userInfo = new HashMap<String, String>();
-				SharedPreferences preferences = AppUtil
-						.getSharedPreferences(HistoryActivity.this);
-				String studentNumber = preferences.getString("studentNumber",
-						"");
-				String password = preferences.getString("password", "");
-				String schoolId = preferences.getString("schoolId", "");
-				toast("学号：" + studentNumber + "\n密码：" + password + "\n学校"
-						+ schoolId);
-				HashMap<String, String> urlParams = new HashMap<String, String>();
-				urlParams.put("studentNumber", studentNumber);
-				urlParams.put("password", password);
-				urlParams.put("schoolId", schoolId);
-				doTaskAsync(1, C.api.historyList, urlParams);
+
+				doTaskAsync(
+						1,
+						C.api.historyList + "?studentNumber="
+								+ user.getStudentNumber() + "&password="
+								+ user.getPassword() + "&schoolId="
+								+ user.getSchoolId());
+
 			}
 		});
 	}
@@ -137,7 +133,8 @@ public class HistoryActivity extends BaseUiAuth {
 			intent.putExtras(bundle);
 			startActivity(intent);
 
+			// toast("position--->" + position + "id----->" + id);
 		}
-	}
 
+	}
 }
