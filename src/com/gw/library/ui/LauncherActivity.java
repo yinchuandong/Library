@@ -1,25 +1,11 @@
 package com.gw.library.ui;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-import com.gw.library.base.GwListView.OnRefreshListener;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseUi;
-import com.gw.library.base.GwListView;
-import com.gw.library.list.HistoryList;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 public class LauncherActivity extends BaseUi {
 
@@ -41,8 +27,6 @@ public class LauncherActivity extends BaseUi {
 //			}
 //		}.start();
 		forward(LoginActivity.class);
-		
-		
 	}
 
 	@Override
@@ -51,6 +35,5 @@ public class LauncherActivity extends BaseUi {
 		getMenuInflater().inflate(R.menu.launcher, menu);
 		return true;
 	}
-	
-	
+
 }

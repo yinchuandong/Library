@@ -1,7 +1,9 @@
 package com.gw.library.base;
 
 import com.gw.library.R;
+import com.gw.library.model.User;
 import com.gw.library.ui.HistoryActivity;
+import com.gw.library.ui.LoginActivity;
 import com.gw.library.ui.RecommendActivity;
 import com.gw.library.ui.RemindActivity;
 
@@ -24,11 +26,17 @@ public class BaseUiAuth extends BaseUi {
 	//当前界面的标题
 	public TextView mainTitle;
 	
+	public User user;
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (!BaseAuth.isLogin()) {
+			forward(LoginActivity.class);
+		}else{
+			user = BaseAuth.getUser();
+		}
 		
 	}
 	

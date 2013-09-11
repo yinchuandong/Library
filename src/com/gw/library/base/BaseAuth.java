@@ -1,5 +1,7 @@
 package com.gw.library.base;
 
+
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,9 +16,15 @@ import com.gw.library.model.User;
 import com.gw.library.util.AppUtil;
 
 
+import com.gw.library.model.User;
 
+/**
+ * 
+ * @author KELINK 用户登录验证信息的基类
+ * 
+ */
 public class BaseAuth {
-	
+
 	/**
 	 * 获得用户单例
 	 * @return
@@ -76,8 +84,6 @@ public class BaseAuth {
 		
 		return userInfo;
 	}
-	
-	
 	
 	
 	

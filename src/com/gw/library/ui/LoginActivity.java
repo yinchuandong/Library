@@ -1,17 +1,19 @@
 package com.gw.library.ui;
 
 import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.gw.library.R;
@@ -34,7 +36,7 @@ public class LoginActivity extends BaseUi {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
-		
+
 		//检查以前是否有登陆过
 		checkIsExistedCookie();
 		sNumberText = (EditText)findViewById(R.id.studentNumber);
@@ -75,6 +77,8 @@ public class LoginActivity extends BaseUi {
 			HashMap<String, String> userInfo = BaseAuth.getUserInfo(this);
 			String spStudentNumber = userInfo.get("studentNumber");
 			if ( spStudentNumber != "" && !spStudentNumber.equals("")) {
+				BaseAuth.setLogin(true);
+				BaseAuth.saveUserInfo(this, userInfo);
 				forward(HistoryActivity.class);
 			}
 		}

@@ -2,6 +2,7 @@ package com.gw.library.model;
 
 import com.gw.library.base.BaseModel;
 
+
 public class User extends BaseModel{
 	
 	public final static String COL_STUDENTNUMBER = "studentNumber";
