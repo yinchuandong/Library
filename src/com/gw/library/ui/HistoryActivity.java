@@ -39,6 +39,7 @@ public class HistoryActivity extends BaseUiAuth {
 		//初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData(); 
 		pullToRefresh();
+		
 	}
 	
 	
@@ -73,6 +74,7 @@ public class HistoryActivity extends BaseUiAuth {
 				hSqlite.updateHistory(history);
 				Log.i("studentNumber", history.getStudentNumber());
 			}
+			hListAdapter.setData(hList); //必须调用这个方法来改变data，否者刷新无效
 			hListAdapter.notifyDataSetChanged();
 			listView.onRefreshComplete(); //刷新完成
 		} catch (Exception e) {

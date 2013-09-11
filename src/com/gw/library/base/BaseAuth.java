@@ -33,6 +33,11 @@ public class BaseAuth {
 		return User.getInstance().getLogin();
 	}
 	
+	/**
+	 * 保存用户信息到sharepreferences
+	 * @param context
+	 * @param data
+	 */
 	public static void saveUserInfo(Context context, HashMap<String, String> data) {
 		User user = BaseAuth.getUser();
 		SharedPreferences preferences = AppUtil.getSharedPreferences(context);
@@ -52,6 +57,7 @@ public class BaseAuth {
 				e.printStackTrace();
 			}
 		}
+		editor.commit();
 	}
 	
 	/**

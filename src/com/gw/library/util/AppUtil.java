@@ -208,6 +208,29 @@ public class AppUtil {
 		}
 		return modelList;
 	}
+	
+	
+	/**
+	 * 把jsonObject转为hashmap的格式
+	 * @param jsonObject
+	 * @return
+	 */
+	public static HashMap<String, String> jsonObject2HashMap(JSONObject jsonObject){
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		Iterator<String> iterator = jsonObject.keys();
+		
+		try {
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+				String value = jsonObject.getString(key);
+				hashMap.put(key, value);
+				
+			}
+		} catch (Exception e) {
+			Log.w("baseMOdel", "jsonobject2hasmap");
+		}
+		return hashMap;
+	}
 
 	/* 判断int是否为空 */
 	static public boolean isEmptyInt(int v) {
