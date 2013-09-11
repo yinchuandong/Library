@@ -3,9 +3,6 @@ package com.gw.library.base;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.gw.library.R;
-
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -16,16 +13,21 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.gw.library.R;
+
 public class GwListView extends ListView implements OnScrollListener {
 
+	/**
+	 * 实现下拉刷新类
+	 */
 	private static final String TAG = "listview";
 
 	private final static int RELEASE_To_REFRESH = 0;
@@ -45,7 +47,6 @@ public class GwListView extends ListView implements OnScrollListener {
 	private TextView lastUpdatedTextView;
 	private ImageView arrowImageView;
 	private ProgressBar progressBar;
-
 
 	private RotateAnimation animation;
 	private RotateAnimation reverseAnimation;
@@ -78,10 +79,11 @@ public class GwListView extends ListView implements OnScrollListener {
 	}
 
 	private void init(Context context) {
-		//setCacheColorHint(context.getResources().getColor(R.color.transparent));
+		// setCacheColorHint(context.getResources().getColor(R.color.transparent));
 		inflater = LayoutInflater.from(context);
 
-		headView = (LinearLayout) inflater.inflate(R.layout.tpl_pull_refresh_head, null);
+		headView = (LinearLayout) inflater.inflate(
+				R.layout.tpl_pull_refresh_head, null);
 
 		arrowImageView = (ImageView) headView
 				.findViewById(R.id.head_arrowImageView);
@@ -127,11 +129,11 @@ public class GwListView extends ListView implements OnScrollListener {
 	public void onScroll(AbsListView arg0, int firstVisiableItem, int arg2,
 			int arg3) {
 		firstItemIndex = firstVisiableItem;
-		Log.i("firstvisibleItem", firstVisiableItem+"12123");
+		Log.i("firstvisibleItem", firstVisiableItem + "12123");
 	}
 
 	public void onScrollStateChanged(AbsListView arg0, int arg1) {
-		
+
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -334,8 +336,8 @@ public class GwListView extends ListView implements OnScrollListener {
 
 	public void onRefreshComplete() {
 		state = DONE;
-		SimpleDateFormat format=new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
-		String date=format.format(new Date());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
+		String date = format.format(new Date());
 		lastUpdatedTextView.setText("最近更新:" + date);
 		changeHeaderViewByState();
 	}
@@ -348,31 +350,30 @@ public class GwListView extends ListView implements OnScrollListener {
 
 	// 此方法直接照搬自网络上的一个下拉刷新的demo，此处是“估计”headView的width以及height
 	private void measureView(View child) {
-		 ViewGroup.LayoutParams p = child.getLayoutParams();
-	        if (p == null) {
-	            p = new ViewGroup.LayoutParams(
-	                    ViewGroup.LayoutParams.FILL_PARENT,
-	                    ViewGroup.LayoutParams.WRAP_CONTENT);
-	        }
+		ViewGroup.LayoutParams p = child.getLayoutParams();
+		if (p == null) {
+			p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
+		}
 
-	        int childWidthSpec = ViewGroup.getChildMeasureSpec(0,
-	                0 + 0, p.width);
-	        int lpHeight = p.height;
-	        int childHeightSpec;
-	        if (lpHeight > 0) {
-	            childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight, MeasureSpec.EXACTLY);
-	        } else {
-	            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-	        }
-	        child.measure(childWidthSpec, childHeightSpec);
+		int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);
+		int lpHeight = p.height;
+		int childHeightSpec;
+		if (lpHeight > 0) {
+			childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight,
+					MeasureSpec.EXACTLY);
+		} else {
+			childHeightSpec = MeasureSpec.makeMeasureSpec(0,
+					MeasureSpec.UNSPECIFIED);
+		}
+		child.measure(childWidthSpec, childHeightSpec);
 	}
 
 	public void setAdapter(BaseAdapter adapter) {
-		SimpleDateFormat format=new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
-		String date=format.format(new Date());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
+		String date = format.format(new Date());
 		lastUpdatedTextView.setText("最近更新:" + date);
 		super.setAdapter(adapter);
 	}
-	
 
 }

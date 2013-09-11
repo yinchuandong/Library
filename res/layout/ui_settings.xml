@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bg"
      >
-    
-    <!-- 页面标题 -->
+
     <TextView 
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:text="@string/title_login"
+        android:text="@string/setting"
         android:gravity="center"
         android:textSize="26sp"
         android:textColor="@color/white"
         android:layout_marginTop="20dp"
        />
     
-    <!-- 学号框 -->
+    <!-- 个人学号 -->
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -30,12 +30,11 @@
 	    <TextView 
 	        android:layout_width="70dp"
 	        android:layout_height="wrap_content"
-	        android:text="@string/studentNumber"
-	        android:textSize="20dp"
-	        android:gravity="center"
+	        android:text="@string/personalNumber"
+	        android:textSize="14sp"
+	        android:gravity="center"	        
 	        />
 	    <EditText 
-	        android:id="@+id/studentNumber"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:text="20111003632"
@@ -43,8 +42,7 @@
 	        android:textColor="@color/fontColor"
 	        />
 	</LinearLayout>
-	
-	<!-- 密码框 -->
+
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -57,22 +55,34 @@
 	    <TextView 
 	        android:layout_width="70dp"
 	        android:layout_height="wrap_content"
-	        android:text="@string/password"
-	        android:textSize="20sp"
+	        android:text="@string/remind"
+	        android:textSize="14sp"
 	        android:gravity="center"
 	        />
-	    <EditText 
-	        android:id="@+id/password"
-	        android:layout_width="fill_parent"
+	    <Spinner
+	        android:id="@+id/select"
 	        android:layout_height="wrap_content"
-	        android:text="yin543211"
-	        android:inputType="textPassword"
+	        android:layout_width="wrap_content"
+	        android:entries="@+array/options"
+	        />
+
+	   <!--   <EditText 
+	        android:layout_width="190dp"
+	        android:layout_height="wrap_content"
+	        android:text=""
+	        android:inputType="text"
 	        android:layout_marginLeft="8dp"
 	        android:textColor="@color/fontColor"
+	    />
+	    <Button 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+        	android:background="@drawable/select"
 	        />
+-->
 	</LinearLayout>
 	
-	<!-- 登陆框 -->
+	<!-- 退出登陆 -->
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
@@ -82,24 +92,27 @@
 	    android:gravity="center_horizontal"
 	    >
 	    <Button 
-	        android:id="@+id/login"
+	        android:id="@+id/loginout"
 		    android:layout_width="160dp"
 		    android:layout_height="40dp"
-		    android:text="@string/login"
+		    android:text="@string/logout"
 		    android:textSize="20sp"
 		    android:background="@drawable/btn_login"
+		    android:layout_marginBottom="50dp"
 	    />
 	</LinearLayout>
 	
 	<RelativeLayout 
-	    android:layout_width="fill_parent"
-	    android:layout_height="match_parent"
+	        android:layout_width="fill_parent"
+	        android:layout_height="match_parent"      
 	    >
 	    <TextView 
-	        android:layout_width="fill_parent"
-	        android:layout_height="67dp"
-	        android:background="@drawable/login_bottom_repeat_bg"
-	        android:layout_alignParentBottom="true"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/logo"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	       
 	        />
 	    
 	</RelativeLayout>
