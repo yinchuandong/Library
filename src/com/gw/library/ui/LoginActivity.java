@@ -75,6 +75,8 @@ public class LoginActivity extends BaseUi {
 			HashMap<String, String> userInfo = BaseAuth.getUserInfo(this);
 			String spStudentNumber = userInfo.get("studentNumber");
 			if ( spStudentNumber != "" && !spStudentNumber.equals("")) {
+				BaseAuth.setLogin(true);
+				BaseAuth.saveUserInfo(this, userInfo);
 				forward(HistoryActivity.class);
 			}
 		}

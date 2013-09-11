@@ -48,7 +48,7 @@ public class HistoryActivity extends BaseUiAuth {
 	 */
 	@SuppressWarnings("unchecked")
 	public void initData(){
-		ArrayList<HashMap<String, String>> mapList = hSqlite.query("select * from history", null);
+		ArrayList<HashMap<String, String>> mapList = hSqlite.query("select * from history where studentNumber=?", new String[]{user.getStudentNumber()});
 		try {
 			hList = (ArrayList<History>)AppUtil.hashMapToModel("com.gw.library.model.History", mapList);
 			hListAdapter = new HistoryList(this, hList);
@@ -68,7 +68,9 @@ public class HistoryActivity extends BaseUiAuth {
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		Log.i("remindactivity====ontaskcomplete", taskId+"");
 		try {
-			hSqlite.delete(null, null); //清空当前历史列表
+			String whereSql = History.COL_STUDENTNUMBER + "=?";
+			String[] whereParams = new String[]{user.getStudentNumber()};
+			hSqlite.delete(whereSql, whereParams); //清空当前历史列表
 			hList = (ArrayList<History>)message.getDataList("History");
 			for (History history : hList) {
 				hSqlite.updateHistory(history);
@@ -90,7 +92,9 @@ public class HistoryActivity extends BaseUiAuth {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
 				doTaskAsync(1, C.api.historyList + 
-						"?studentNumber=20111003632&password=yin543211&schoolId=1"
+						"?studentNumber=" + user.getStudentNumber()+
+						"&password=" + user.getPassword() + 
+						"&schoolId=" + user.getSchoolId()
 				);
 			}
 		});
