@@ -42,9 +42,13 @@ public class HistoryActivity extends BaseUiAuth {
 		// 初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData();
 		pullToRefresh();
+<<<<<<< HEAD
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
 
+=======
+		
+>>>>>>> de462430027292d72437ed02eb2d3a54da74389e
 	}
 
 	/**
@@ -83,6 +87,7 @@ public class HistoryActivity extends BaseUiAuth {
 				hSqlite.updateHistory(history);
 				Log.i("studentNumber", history.getStudentNumber());
 			}
+			hListAdapter.setData(hList); //必须调用这个方法来改变data，否者刷新无效
 			hListAdapter.notifyDataSetChanged();
 			listView.onRefreshComplete(); // 刷新完成
 		} catch (Exception e) {

@@ -59,4 +59,8 @@ public class HistoryList extends BaseList{
 		
 		return convertView;
 	}
+	
+	public void setData(ArrayList<History> historyList){
+		this.historyList = historyList;
+	}
 }
