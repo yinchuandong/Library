@@ -10,6 +10,7 @@
 		android:id="@+id/r_number"
         >
        <TextView 
+           android:id="@+id/r_remain_day"
            android:text="@string/remain"
            android:textStyle="bold" 
            android:textColor="@color/red"
@@ -29,14 +30,16 @@
 		android:layout_height="wrap_content"
 	 >
 		<TextView 
-		     android:text="@string/history"
-		     android:textColor="#000000"
-		     android:layout_width="fill_parent"
-		     android:layout_height="wrap_content"
+		    android:id="@+id/r_title"
+			android:text="@string/remind"
+			android:textColor="#000000"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
 		     />
 		
 		<TextView 
-		     android:text="@string/history"
+		     android:id="@+id/r_author"
+		     android:text="@string/remind"
 		     android:textColor="#000000"
 		     android:layout_width="fill_parent"
 		     android:layout_height="wrap_content"

@@ -81,6 +81,7 @@ public class BaseAuth {
 		userInfo.put(User.COL_USERNAME, preferences.getString(User.COL_USERNAME, ""));
 		userInfo.put(User.COL_ACADEMY, preferences.getString(User.COL_ACADEMY, ""));
 		userInfo.put(User.COL_MAJOR,preferences.getString(User.COL_MAJOR, ""));
+		userInfo.put(User.COL_PASSWORD, preferences.getString(User.COL_PASSWORD, ""));
 		
 		return userInfo;
 	}

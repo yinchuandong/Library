@@ -6,7 +6,6 @@ import com.gw.library.ui.HistoryActivity;
 import com.gw.library.ui.LoginActivity;
 import com.gw.library.ui.RecommendActivity;
 import com.gw.library.ui.RemindActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -37,7 +36,6 @@ public class BaseUiAuth extends BaseUi {
 		}else{
 			user = BaseAuth.getUser();
 		}
-		
 	}
 	
 	@Override
