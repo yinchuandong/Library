@@ -88,4 +88,18 @@ public class BaseAuth {
 		return userInfo;
 	}
 
+	public static void clearUserInfo(Context context) {
+		SharedPreferences preferences = AppUtil.getSharedPreferences(context);
+		SharedPreferences.Editor editor = preferences.edit();
+
+		editor.putString(User.COL_STUDENTNUMBER, "");
+		editor.putString(User.COL_SCHOOLID, "");
+		editor.putString(User.COL_USERNAME, "");
+		editor.putString(User.COL_ACADEMY, "");
+		editor.putString(User.COL_MAJOR, "");
+		editor.putString(User.COL_PASSWORD, "");
+
+		editor.commit();
+	}
+
 }

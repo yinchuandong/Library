@@ -42,7 +42,7 @@ public class HistoryWebViewActivity extends BaseUiAuth {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	// 重写OnTouch以适应两手缩放屏幕:网络例子
+	// 重写OnTouch以适应两手缩放屏幕
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		float oldX1 = 0, oldX2 = 0;

@@ -1,7 +1,11 @@
 package com.gw.library.list;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,15 +58,31 @@ public class RemindList extends BaseList{
 		remainDayView = (TextView)convertView.findViewById(R.id.r_remain_day);
 		
 		Loan loan = remindList.get(position);
+		String remainDays = getRemainsDay(loan.getReturnDate());
 		titleView.setText(loan.getTitle());
 		authorView.setText(loan.getAuthor());
-		remainDayView.setText("213");
+		remainDayView.setText(remainDays);
 		
 		return convertView;
 	}
 	
 	public void setData(ArrayList<Loan> remindList){
 		this.remindList = remindList;
+	}
+	
+	public String getRemainsDay(String resource){
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String remainDay = "";
+		try {
+			Date date = format.parse(resource);
+			Long nowTime = System.currentTimeMillis();
+			int days = (int)Math.ceil((double)(date.getTime() - nowTime)/(24*60*60*1000));
+//			Log.i("remindList",days + "/"+nowTime+"/"+date.getTime());
+			remainDay = String.valueOf(days);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return remainDay;
 	}
 	
 }

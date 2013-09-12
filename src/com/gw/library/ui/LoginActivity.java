@@ -2,7 +2,6 @@ package com.gw.library.ui;
 
 import java.util.HashMap;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
@@ -92,9 +91,7 @@ public class LoginActivity extends BaseUi {
 			} else {
 				toast(message.getInfo());
 			}
-			// Log.i("loginactivity-->ontaskcomplete", message.getData());
-		} catch (JSONException e) {
-			e.printStackTrace();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
