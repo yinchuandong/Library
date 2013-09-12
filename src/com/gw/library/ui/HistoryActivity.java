@@ -93,6 +93,7 @@ public class HistoryActivity extends BaseUiAuth {
 			listView.onRefreshComplete(); // 刷新完成
 		} catch (Exception e) {
 			e.printStackTrace();
+			toast(e.getMessage());
 		}
 	}
 
@@ -122,18 +123,14 @@ public class HistoryActivity extends BaseUiAuth {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			toast("position--->" + position + "id----->" + id);
-			// 在webView中显示相对应的历史具体信息
-			toast(hList.get((int) id).getUrl());
 
 			Intent intent = new Intent(HistoryActivity.this,
 					HistoryWebViewActivity.class);
 			Bundle bundle = new Bundle();
-			bundle.putString("url", hList.get(position).getUrl());
+			bundle.putString("url", hList.get(position - 1).getUrl());
 			intent.putExtras(bundle);
 			startActivity(intent);
 
-			// toast("position--->" + position + "id----->" + id);
 		}
 
 	}
