@@ -24,12 +24,11 @@ import com.gw.library.util.AppUtil;
 
 public class HistoryActivity extends BaseUiAuth {
 
-	GwListView listView;
+	public GwListView listView;
 	// BaseAdapter baseAdapter;
-	HistoryList hListAdapter; // listview 的adapter
-	ArrayList<History> hList; // 具体数据
+	public HistoryList hListAdapter; // listview 的adapter
+	public ArrayList<History> hList; // 具体数据
 
-	LinkedList<String> data = new LinkedList<String>();
 	HistorySqlite hSqlite;
 
 	@Override
