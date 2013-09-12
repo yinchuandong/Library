@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +24,11 @@ import com.gw.library.util.AppUtil;
 
 public class HistoryActivity extends BaseUiAuth {
 
-	GwListView listView;
+	public GwListView listView;
 	// BaseAdapter baseAdapter;
-	HistoryList hListAdapter; // listview 的adapter
-	ArrayList<History> hList; // 具体数据
+	public HistoryList hListAdapter; // listview 的adapter
+	public ArrayList<History> hList; // 具体数据
 
-	LinkedList<String> data = new LinkedList<String>();
 	HistorySqlite hSqlite;
 
 	@Override
@@ -42,18 +42,20 @@ public class HistoryActivity extends BaseUiAuth {
 		// 初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData();
 		pullToRefresh();
+
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
 
-		
 	}
 
 	/**
 	 * 从数据库里面加载数据
 	 */
 	@SuppressWarnings("unchecked")
-	public void initData(){
-		ArrayList<HashMap<String, String>> mapList = hSqlite.query("select * from history where studentNumber=?", new String[]{user.getStudentNumber()});
+	public void initData() {
+		ArrayList<HashMap<String, String>> mapList = hSqlite.query(
+				"select * from history where studentNumber=?",
+				new String[] { user.getStudentNumber() });
 		try {
 			hList = (ArrayList<History>) AppUtil.hashMapToModel(
 					"com.gw.library.model.History", mapList);
@@ -78,18 +80,19 @@ public class HistoryActivity extends BaseUiAuth {
 		Log.i("remindactivity====ontaskcomplete", taskId + "");
 		try {
 			String whereSql = History.COL_STUDENTNUMBER + "=?";
-			String[] whereParams = new String[]{user.getStudentNumber()};
-			hSqlite.delete(whereSql, whereParams); //清空当前历史列表
-			hList = (ArrayList<History>)message.getDataList("History");
+			String[] whereParams = new String[] { user.getStudentNumber() };
+			hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
+			hList = (ArrayList<History>) message.getDataList("History");
 			for (History history : hList) {
 				hSqlite.updateHistory(history);
 				Log.i("studentNumber", history.getStudentNumber());
 			}
-			hListAdapter.setData(hList); //必须调用这个方法来改变data，否者刷新无效
+			hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
 			hListAdapter.notifyDataSetChanged();
 			listView.onRefreshComplete(); // 刷新完成
 		} catch (Exception e) {
 			e.printStackTrace();
+			toast(e.getMessage());
 		}
 	}
 
@@ -99,26 +102,35 @@ public class HistoryActivity extends BaseUiAuth {
 	public void pullToRefresh() {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
-				doTaskAsync(1, C.api.historyList + 
-						"?studentNumber=" + user.getStudentNumber()+
-						"&password=" + user.getPassword() + 
-						"&schoolId=" + user.getSchoolId()
-				);
+
+				doTaskAsync(
+						1,
+						C.api.historyList + "?studentNumber="
+								+ user.getStudentNumber() + "&password="
+								+ user.getPassword() + "&schoolId="
+								+ user.getSchoolId());
+
 			}
 		});
 	}
 
 	/**
-	 * History列表item被点击后的动作事件，
+	 * History列表item被点击后的动作事件，逐项显示
 	 */
 	class HSItemListener implements OnItemClickListener {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			// toast("position--->" + position + "id----->" + id);
+
+			Intent intent = new Intent(HistoryActivity.this,
+					HistoryWebViewActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putString("url", hList.get(position - 1).getUrl());
+			intent.putExtras(bundle);
+			startActivity(intent);
+
 		}
 
 	}
-
 }

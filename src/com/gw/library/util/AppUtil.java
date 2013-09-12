@@ -135,7 +135,7 @@ public class AppUtil {
 	}
 
 	/* 获取 Message */
-	static public BaseMessage getMessage(String jsonStr) throws Exception {
+	static public BaseMessage getMessage(String jsonStr){
 		BaseMessage message = new BaseMessage();
 		JSONObject jsonObject = null;
 		try {
@@ -146,7 +146,9 @@ public class AppUtil {
 				message.setStatus(jsonObject.getString("status"));
 			}
 		} catch (JSONException e) {
-			throw new Exception("Json format error");
+//			throw new Exception("Json format error");
+			Log.e("AppUtil-->getMessage", "Json format error");
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

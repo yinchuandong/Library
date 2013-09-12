@@ -42,8 +42,8 @@ public class BaseService extends Service {
 	public void doTaskAsync(final int taskId, final String taskUrl) {
 		SharedPreferences sp = AppUtil.getSharedPreferences(this);
 		final int httpType = sp.getInt(HTTP_TYPE, 0);
-		ExecutorService es = Executors.newSingleThreadExecutor();
-		es.execute(new Runnable() {
+		ExecutorService es = Executors.newCachedThreadPool();
+		es.execute(new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -65,8 +65,8 @@ public class BaseService extends Service {
 			final HashMap<String, String> taskArgs) {
 		SharedPreferences sp = AppUtil.getSharedPreferences(this);
 		final int httpType = sp.getInt(HTTP_TYPE, 0);
-		ExecutorService es = Executors.newSingleThreadExecutor();
-		es.execute(new Runnable() {
+		ExecutorService es = Executors.newCachedThreadPool();
+		es.execute(new Thread() {
 			@Override
 			public void run() {
 				try {
