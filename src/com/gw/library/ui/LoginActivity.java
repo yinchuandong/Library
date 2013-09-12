@@ -101,7 +101,7 @@ public class LoginActivity extends BaseUi {
 			}else{
 				toast(message.getInfo());
 			}
-//			Log.i("loginactivity-->ontaskcomplete", message.getData());
+			Log.i("loginactivity-->ontaskcomplete", message.getData());
 		}catch(JSONException e){
 			e.printStackTrace();
 		}catch (Exception e) {
