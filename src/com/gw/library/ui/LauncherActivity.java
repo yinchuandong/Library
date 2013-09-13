@@ -1,7 +1,6 @@
 package com.gw.library.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 
 import com.gw.library.R;
@@ -12,20 +11,21 @@ public class LauncherActivity extends BaseUi {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.ui_settings);
-		//setContentView(R.layout.main_tab);
-		
-//		new Thread(){
-//			public void run(){
-//				try{
-//					Thread.sleep(400);
-//					Log.i("launcheer", "1");
-//					forward(HistoryActivity.class);
-//				}catch(Exception e){
-//					e.printStackTrace();
-//				}
-//			}
-//		}.start();
+		// setContentView(R.layout.main_tab);
+
+		// new Thread(){
+		// public void run(){
+		// try{
+		// Thread.sleep(400);
+		// Log.i("launcheer", "1");
+		// forward(HistoryActivity.class);
+		// }catch(Exception e){
+		// e.printStackTrace();
+		// }
+		// }
+		// }.start();
 		forward(LoginActivity.class);
 	}
 
