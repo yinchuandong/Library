@@ -1,9 +1,12 @@
 package com.gw.library.base;
 
 import com.gw.library.R;
+import com.gw.library.model.User;
 import com.gw.library.ui.HistoryActivity;
+import com.gw.library.ui.LoginActivity;
 import com.gw.library.ui.RecommendActivity;
 import com.gw.library.ui.RemindActivity;
+import com.gw.library.ui.SettingActivity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,11 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class BaseUiAuth extends BaseUi {
 	
+	public Button mainSettingBtn;
 	//底部mainTab 的几个button
 	public RadioButton recommendBtn;
 	public RadioButton remindBtn;
@@ -24,18 +29,25 @@ public class BaseUiAuth extends BaseUi {
 	//当前界面的标题
 	public TextView mainTitle;
 	
+	public User user;
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		if (!BaseAuth.isLogin()) {
+			forward(LoginActivity.class);
+		}else{
+			user = BaseAuth.getUser();
+		}
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
-		bindTabEvent();
+		
+		bindSettingEvent(); //绑定设置按钮的事件
+		bindTabEvent(); //绑定底部tab事件
 	}
 	
 	@Override
@@ -49,6 +61,24 @@ public class BaseUiAuth extends BaseUi {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * 绑定header设置按钮的事件
+	 */
+	public void bindSettingEvent(){
+		mainSettingBtn = (Button)findViewById(R.id.main_setting);
+		if (mainSettingBtn != null) {
+			mainSettingBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					overlay(SettingActivity.class);
+				}
+			});
+		}
+	}
+	
+	/**
+	 * 绑定底部tab的事件
+	 */
 	public void bindTabEvent(){
 		recommendBtn = (RadioButton)findViewById(R.id.tab_recommend);
 		remindBtn = (RadioButton)findViewById(R.id.tab_remind);
@@ -96,6 +126,8 @@ public class BaseUiAuth extends BaseUi {
 			remindBtn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.hover_remind, 0, 0);
 		}
 	}
+	
+	
 	
 	
 	

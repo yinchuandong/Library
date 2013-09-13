@@ -1,31 +1,41 @@
 package com.gw.library.list;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.gw.library.base.BaseList;
 import com.gw.library.base.BaseUi;
+import com.gw.library.model.Loan;
 import com.gw.library.model.Recommend;
 import com.gw.library.R;
 
 public class RemindList extends BaseList{
 	private BaseUi baseUi;
-	private ArrayList<Recommend> recommendList;
+	private ArrayList<Loan> remindList;
 	private LayoutInflater inflater;
 	
-	public RemindList(BaseUi baseUi, ArrayList<Recommend> recommendList){
+	TextView remainDayView;
+	TextView titleView;
+	TextView authorView;
+	
+	public RemindList(BaseUi baseUi, ArrayList<Loan> remindList){
 		this.baseUi = baseUi;
-		this.recommendList = recommendList;
+		this.remindList = remindList;
 		inflater = LayoutInflater.from(baseUi);
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return recommendList.size();
+		return remindList.size();
 	}
 
 	@Override
@@ -43,9 +53,61 @@ public class RemindList extends BaseList{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = inflater.inflate(R.layout.tpl_remind_item, null);
-		return null;
+		titleView = (TextView)convertView.findViewById(R.id.r_title);
+		authorView = (TextView)convertView.findViewById(R.id.r_author);
+		remainDayView = (TextView)convertView.findViewById(R.id.r_remain_day);
+		
+		Loan loan = remindList.get(position);
+		String remainDays = getRemainsDay(loan.getReturnDate());
+		String returnDate = getReturnDate(loan.getReturnDate());
+		titleView.setText(loan.getTitle());
+		authorView.setText("归还日期："+returnDate);
+		remainDayView.setText(remainDays);
+		
+		return convertView;
 	}
 	
+	public void setData(ArrayList<Loan> remindList){
+		this.remindList = remindList;
+	}
 	
+	/**
+	 * 获得倒计时
+	 * @param resource
+	 * @return
+	 */
+	public String getRemainsDay(String resource){
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		String remainDay = "";
+		try {
+			Date date = format.parse(resource);
+			Long nowTime = System.currentTimeMillis();
+			int days = (int)Math.ceil((double)(date.getTime() - nowTime)/(24*60*60*1000));
+//			Log.i("remindList",days + "/"+nowTime+"/"+date.getTime());
+			remainDay = String.valueOf(days);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return remainDay;
+	}
+	
+	/**
+	 * 把yyyyMMdd 转为 yyyy-MM-dd的格式
+	 * 获得归还的日期
+	 * @param date
+	 * @return
+	 */
+	public String getReturnDate(String date){
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+		String result = "";
+		
+		try {
+			result = format2.format(format1.parse(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

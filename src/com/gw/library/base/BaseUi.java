@@ -74,6 +74,11 @@ public class BaseUi extends Activity {
 		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * 不结束当前活动
+	 * activity间的切换
+	 * @param classObj
+	 */
 	public void overlay(Class<?> classObj) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -82,6 +87,12 @@ public class BaseUi extends Activity {
 		overridePendingTransition(0, 0); // 去掉activity切换时的动画效果
 	}
 
+	/**
+	 * 不结束当前活动
+	 * activity间的切换, 带参数
+	 * @param classObj
+	 * @param params
+	 */
 	public void overlay(Class<?> classObj, Bundle params) {
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -90,26 +101,97 @@ public class BaseUi extends Activity {
 		startActivity(intent);
 		overridePendingTransition(0, 0);
 	}
+	
+	/**
+	 * 不结束当前活动
+	 * activity间的切换 带动画
+	 * @param classObj
+	 * @param enterAnim
+	 * @param exitAnim
+	 */
+	public void overlay(Class<?> classObj, int enterAnim, int exitAnim) {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+		intent.setClass(this, classObj);
+		startActivity(intent);
+		overridePendingTransition(0, 0); // 去掉activity切换时的动画效果
+	}
 
+	/**
+	 * 不结束当前活动
+	 * activity间的切换 带参数 带动画
+	 * @param classObj
+	 * @param params
+	 * @param enterAnim
+	 * @param exitAnim
+	 */
+	public void overlay(Class<?> classObj, Bundle params, int enterAnim, int exitAnim) {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+		intent.setClass(this, classObj);
+		intent.putExtras(params);
+		startActivity(intent);
+		overridePendingTransition(0, 0);
+	}
+
+	/**
+	 * 原始的切换
+	 * @param classObj
+	 */
 	public void forward(Class<?> classObj) {
 		Intent intent = new Intent();
 		intent.setClass(this, classObj);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		this.startActivity(intent);
-		overridePendingTransition(0, 0);
 		this.finish();
 		overridePendingTransition(0, 0);
 	}
+	
+	/**
+	 * activity 之间带动画的切换
+	 * @param classObj
+	 * @param enterAnim
+	 * @param exitAnim
+	 */
+	public void forward(Class<?> classObj, int enterAnim, int exitAnim) {
+		Intent intent = new Intent();
+		intent.setClass(this, classObj);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		this.startActivity(intent);
+		this.finish();
+		overridePendingTransition(enterAnim, exitAnim);
+	}
 
+	/**
+	 * 带参数的切换
+	 * @param classObj
+	 * @param params
+	 */
 	public void forward(Class<?> classObj, Bundle params) {
 		Intent intent = new Intent();
 		intent.setClass(this, classObj);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtras(params);
 		this.startActivity(intent);
-		overridePendingTransition(0, 0);
 		this.finish();
 		overridePendingTransition(0, 0);
+	}
+	
+	/**
+	 * 带动画而且带参数的切换 
+	 * @param classObj
+	 * @param params
+	 * @param enterAnim
+	 * @param exitAnim
+	 */
+	public void forward(Class<?> classObj, Bundle params, int enterAnim, int exitAnim) {
+		Intent intent = new Intent();
+		intent.setClass(this, classObj);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.putExtras(params);
+		this.startActivity(intent);
+		this.finish();
+		overridePendingTransition(enterAnim, enterAnim);
 	}
 
 	public Context getContext() {
