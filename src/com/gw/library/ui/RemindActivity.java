@@ -3,8 +3,16 @@ package com.gw.library.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.StaticLayout;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseMessage;
@@ -24,14 +32,26 @@ public class RemindActivity extends BaseUiAuth{
 	RemindSqlite rSqlite;
 	ArrayList<Loan> rList;
 	
+	public static boolean isLoaded = false; //是否被加载的标志
+	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_remind);
 		listView = (GwListView)findViewById(R.id.remind_list);
 		
 		rSqlite = new RemindSqlite(this);
-		pullToRefresh();
-		initData();
+		pullToRefresh(); //绑定下拉刷新的事件
+		initData(); //初始化数据
+		
+		if (!isLoaded) {//如果是第一次进入页面，则开始从服务器上获取数据
+			listView.displayHeader();
+			doTaskAsync(1, C.api.loanList + 
+					"?studentNumber=" + user.getStudentNumber()+
+					"&password=" + user.getPassword() + 
+					"&schoolId=" + user.getSchoolId()
+			);
+		}
+		bindItemEvent();
 	}
 	
 	
@@ -76,6 +96,8 @@ public class RemindActivity extends BaseUiAuth{
 			remindListAdapter.setData(rList); //必须调用这个方法来改变data，否者刷新无效
 			remindListAdapter.notifyDataSetChanged();
 			listView.onRefreshComplete(); // 刷新完成
+			
+			isLoaded = true;//加载完成的标志设为true
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,5 +117,31 @@ public class RemindActivity extends BaseUiAuth{
 			}
 		});
 	}
+	
+	static int previousId = 0;
+	public void bindItemEvent(){
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int position,
+					long id) {
+				TextView titileView = (TextView)view.findViewById(R.id.r_title);
+				titileView.setText("12412");
+				View view2 = listView.getChildAt(position);
+				TextView titleView2 = (TextView)view2.findViewById(R.id.r_title);
+				if (previousId != position) {
+					Log.i("binditemevent", ""+previousId);
+					titleView2.setText("yyyyy");
+					previousId = position;
+				}
+				
+				
+				
+			}
+		});
+	}
+	
+	
 
 }
