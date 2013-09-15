@@ -8,8 +8,10 @@ import java.util.Date;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gw.library.base.BaseList;
@@ -26,6 +28,8 @@ public class RemindList extends BaseList{
 	TextView remainDayView;
 	TextView titleView;
 	TextView authorView;
+	RelativeLayout itemMainLayout;
+	RelativeLayout itemBottomLayout;
 	
 	public RemindList(BaseUi baseUi, ArrayList<Loan> remindList){
 		this.baseUi = baseUi;
@@ -57,6 +61,8 @@ public class RemindList extends BaseList{
 		titleView = (TextView)convertView.findViewById(R.id.r_title);
 		authorView = (TextView)convertView.findViewById(R.id.r_author);
 		remainDayView = (TextView)convertView.findViewById(R.id.r_remain_day);
+		itemMainLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_main);
+		itemBottomLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_bottom);
 		
 		Loan loan = remindList.get(position);
 		String remainDays = getRemainsDay(loan.getReturnDate());
@@ -65,6 +71,7 @@ public class RemindList extends BaseList{
 		authorView.setText("归还日期："+returnDate);
 		remainDayView.setText(remainDays);
 		
+//		bindEvent(position,convertView);
 		return convertView;
 	}
 	
@@ -109,6 +116,24 @@ public class RemindList extends BaseList{
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public void bindEvent(final int position, final View view){
+		itemMainLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (itemBottomLayout.getVisibility() == View.GONE) {
+					itemBottomLayout.setVisibility(View.VISIBLE);
+				}else{
+//					itemBottomLayout.setVisibility(View.GONE);
+					TextView textView = (TextView)view.findViewById(R.id.r_renew);
+					textView.setText("12312");
+				}
+				Log.i("remindlist-->onclick", ""+position);
+			}
+		});
+		
 	}
 	
 }

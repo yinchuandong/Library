@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseAuth;
+import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
@@ -26,6 +27,8 @@ public class LoginActivity extends BaseUi {
 	String studentNumber;
 	String password;
 
+	BaseDialog baseDialog;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
@@ -35,6 +38,9 @@ public class LoginActivity extends BaseUi {
 		pWordText = (EditText) findViewById(R.id.password);
 		loginBtn = (Button) findViewById(R.id.login);
 		bindLoginEvent();
+		Bundle bundle = new Bundle();
+		bundle.putString("text", "正在登录。。。");
+		baseDialog = new BaseDialog(this, bundle);
 	}
 
 	/**
@@ -44,6 +50,8 @@ public class LoginActivity extends BaseUi {
 		loginBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				baseDialog.show();
+				
 				studentNumber = sNumberText.getText().toString();
 				password = pWordText.getText().toString();
 
@@ -89,12 +97,17 @@ public class LoginActivity extends BaseUi {
 
 				forward(HistoryActivity.class);
 			} else {
+				baseDialog.close();
 				toast(message.getInfo());
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	@Override
+	public void onNetworkError(int taskId){
+		baseDialog.close();
 	}
 }

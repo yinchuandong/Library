@@ -5,10 +5,15 @@ import java.util.HashMap;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Layout;
 import android.text.StaticLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -118,7 +123,7 @@ public class RemindActivity extends BaseUiAuth{
 		});
 	}
 	
-	static int previousId = 0;
+	static int preItemId = 0;
 	public void bindItemEvent(){
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -126,18 +131,19 @@ public class RemindActivity extends BaseUiAuth{
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int position,
 					long id) {
-				TextView titileView = (TextView)view.findViewById(R.id.r_title);
-				titileView.setText("12412");
-				View view2 = listView.getChildAt(position);
-				TextView titleView2 = (TextView)view2.findViewById(R.id.r_title);
-				if (previousId != position) {
-					Log.i("binditemevent", ""+previousId);
-					titleView2.setText("yyyyy");
-					previousId = position;
+				RelativeLayout rItemBottom1 = (RelativeLayout)view.findViewById(R.id.r_item_bottom);
+				if (rItemBottom1.getVisibility() == View.GONE) {
+					rItemBottom1.setVisibility(View.VISIBLE);
 				}
 				
-				
-				
+//				if (preItemId != position) {
+//					View view2 = listView.getChildAt(preItemId);
+//					RelativeLayout rItemBottom = (RelativeLayout)view2.findViewById(R.id.r_item_bottom);
+//					if (rItemBottom.getVisibility() == View.VISIBLE) {
+//						rItemBottom.setVisibility(View.GONE);
+//					}
+//					preItemId = position;
+//				}
 			}
 		});
 	}
