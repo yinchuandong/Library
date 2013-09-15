@@ -57,29 +57,6 @@ public final class R {
         public static final int bg_book=0x7f020003;
         public static final int bg_book1=0x7f020004;
         public static final int btn_login=0x7f020005;
-<<<<<<< HEAD
-        public static final int cover_01=0x7f020006;
-        public static final int cover_2=0x7f020007;
-        public static final int hover_bg_02=0x7f020008;
-        public static final int hover_history=0x7f020009;
-        public static final int hover_recommend=0x7f02000a;
-        public static final int hover_remind=0x7f02000b;
-        public static final int ic_launcher=0x7f02000c;
-        public static final int icon_backup=0x7f02000d;
-        public static final int icon_setting=0x7f02000e;
-        public static final int icon_setting_hover=0x7f02000f;
-        public static final int input=0x7f020010;
-        public static final int login_bottom_repeat_bg=0x7f020011;
-        public static final int logo=0x7f020012;
-        public static final int normal_history=0x7f020013;
-        public static final int normal_recommend=0x7f020014;
-        public static final int normal_remind=0x7f020015;
-        public static final int pull_to_refresh_header_background=0x7f020016;
-        public static final int select=0x7f020017;
-        public static final int tab_history_hover=0x7f020018;
-        public static final int tab_recommend_hover=0x7f020019;
-        public static final int tab_remind_hover=0x7f02001a;
-=======
         public static final int close_t=0x7f020006;
         public static final int cover_01=0x7f020007;
         public static final int cover_2=0x7f020008;
@@ -102,7 +79,6 @@ public final class R {
         public static final int tab_history_hover=0x7f020019;
         public static final int tab_recommend_hover=0x7f02001a;
         public static final int tab_remind_hover=0x7f02001b;
->>>>>>> ce67b6498b0b7b1237a20e0b26228ea993e8a982
     }
     public static final class id {
         public static final int action_settings=0x7f0a0021;
