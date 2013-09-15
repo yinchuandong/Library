@@ -56,7 +56,6 @@ public class RemindActivity extends BaseUiAuth{
 					"&schoolId=" + user.getSchoolId()
 			);
 		}
-		bindItemEvent();
 	}
 	
 	
@@ -122,32 +121,5 @@ public class RemindActivity extends BaseUiAuth{
 			}
 		});
 	}
-	
-	static int preItemId = 0;
-	public void bindItemEvent(){
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position,
-					long id) {
-				RelativeLayout rItemBottom1 = (RelativeLayout)view.findViewById(R.id.r_item_bottom);
-				if (rItemBottom1.getVisibility() == View.GONE) {
-					rItemBottom1.setVisibility(View.VISIBLE);
-				}
-				
-//				if (preItemId != position) {
-//					View view2 = listView.getChildAt(preItemId);
-//					RelativeLayout rItemBottom = (RelativeLayout)view2.findViewById(R.id.r_item_bottom);
-//					if (rItemBottom.getVisibility() == View.VISIBLE) {
-//						rItemBottom.setVisibility(View.GONE);
-//					}
-//					preItemId = position;
-//				}
-			}
-		});
-	}
-	
-	
 
 }

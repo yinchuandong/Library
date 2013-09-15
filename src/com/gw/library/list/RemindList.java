@@ -25,11 +25,16 @@ public class RemindList extends BaseList{
 	private ArrayList<Loan> remindList;
 	private LayoutInflater inflater;
 	
-	TextView remainDayView;
-	TextView titleView;
-	TextView authorView;
-	RelativeLayout itemMainLayout;
-	RelativeLayout itemBottomLayout;
+	
+	
+	public final class RItem{
+		public TextView remainDayView;
+		public TextView titleView;
+		public TextView authorView;
+		public TextView rCloseView;
+		public RelativeLayout itemMainLayout;
+		public RelativeLayout itemBottomLayout;
+	}
 	
 	public RemindList(BaseUi baseUi, ArrayList<Loan> remindList){
 		this.baseUi = baseUi;
@@ -57,21 +62,41 @@ public class RemindList extends BaseList{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		convertView = inflater.inflate(R.layout.tpl_remind_item, null);
-		titleView = (TextView)convertView.findViewById(R.id.r_title);
-		authorView = (TextView)convertView.findViewById(R.id.r_author);
-		remainDayView = (TextView)convertView.findViewById(R.id.r_remain_day);
-		itemMainLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_main);
-		itemBottomLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_bottom);
+		
+		RItem rItem = null;
+		if (rItem == null) {
+			convertView = inflater.inflate(R.layout.tpl_remind_item, null);
+			rItem = new RItem();
+			rItem.titleView = (TextView)convertView.findViewById(R.id.r_title);
+			rItem.authorView = (TextView)convertView.findViewById(R.id.r_author);
+			rItem.remainDayView = (TextView)convertView.findViewById(R.id.r_remain_day);
+			rItem.rCloseView = (TextView)convertView.findViewById(R.id.r_close);
+			rItem.itemMainLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_main);
+			rItem.itemBottomLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_bottom);
+			convertView.setTag(rItem);
+		}else{
+			rItem = (RItem)convertView.getTag();
+		}
+		
 		
 		Loan loan = remindList.get(position);
 		String remainDays = getRemainsDay(loan.getReturnDate());
 		String returnDate = getReturnDate(loan.getReturnDate());
-		titleView.setText(loan.getTitle());
-		authorView.setText("归还日期："+returnDate);
-		remainDayView.setText(remainDays);
+		rItem.titleView.setText(loan.getTitle());
+		rItem.authorView.setText("归还日期："+returnDate);
+		rItem.remainDayView.setText(remainDays);
 		
-//		bindEvent(position,convertView);
+		bindEvent(position, rItem);
+//		rItem.rCloseView.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				Log.i("onclick",12+"");
+////				if (rItem.itemBottomLayout.getVisibility() == View.VISIBLE) {
+////					rItem.itemBottomLayout.setVisibility(View.GONE);
+////				}
+//			}
+//		});
 		return convertView;
 	}
 	
@@ -118,19 +143,30 @@ public class RemindList extends BaseList{
 		return result;
 	}
 	
-	public void bindEvent(final int position, final View view){
-		itemMainLayout.setOnClickListener(new OnClickListener() {
+	public void bindEvent(final int position, final RItem rItem){
+		//点击书弹出续借的框，再点一次收起
+		rItem.itemMainLayout.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				if (itemBottomLayout.getVisibility() == View.GONE) {
-					itemBottomLayout.setVisibility(View.VISIBLE);
+				if (rItem.itemBottomLayout.getVisibility() == View.GONE) {
+					rItem.itemBottomLayout.setVisibility(View.VISIBLE);
 				}else{
-//					itemBottomLayout.setVisibility(View.GONE);
-					TextView textView = (TextView)view.findViewById(R.id.r_renew);
-					textView.setText("12312");
+					rItem.itemBottomLayout.setVisibility(View.GONE);
 				}
 				Log.i("remindlist-->onclick", ""+position);
+			}
+		});
+		
+		//关闭的框框
+		rItem.rCloseView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.i("onclick",rItem.titleView.getText().toString());
+				if (rItem.itemBottomLayout.getVisibility() == View.VISIBLE) {
+					rItem.itemBottomLayout.setVisibility(View.GONE);
+				}
 			}
 		});
 		
