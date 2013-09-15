@@ -375,5 +375,14 @@ public class GwListView extends ListView implements OnScrollListener {
 		lastUpdatedTextView.setText("最近更新:" + date);
 		super.setAdapter(adapter);
 	}
+	
+	/**
+	 * 显示出headerView
+	 * 当页面刚开始加载时调用
+	 */
+	public void displayHeader(){
+		state = REFRESHING;
+		changeHeaderViewByState();
+	}
 
 }
