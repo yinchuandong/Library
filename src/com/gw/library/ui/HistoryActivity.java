@@ -37,6 +37,8 @@ public class HistoryActivity extends BaseUiAuth {
 
 	private static final String HISTORY_ACTION = NotifyService.SERVICE_HISTORY_ACTION;
 
+	public static boolean isLoaded = false; //是否被加载的标志
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,6 +59,15 @@ public class HistoryActivity extends BaseUiAuth {
 
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
+		
+		if (!isLoaded) {//如果是第一次进入页面，则开始从服务器上获取数据
+			listView.displayHeader();
+			doTaskAsync(1, C.api.historyList + 
+					"?studentNumber=" + user.getStudentNumber()+
+					"&password=" + user.getPassword() + 
+					"&schoolId=" + user.getSchoolId()
+			);
+		}
 
 	}
 
@@ -102,6 +113,8 @@ public class HistoryActivity extends BaseUiAuth {
 			hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
 			hListAdapter.notifyDataSetChanged();
 			listView.onRefreshComplete(); // 刷新完成
+			
+			isLoaded  = true; //加载完成的标志设为true
 		} catch (Exception e) {
 			e.printStackTrace();
 			toast(e.getMessage());

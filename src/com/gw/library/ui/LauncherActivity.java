@@ -12,7 +12,7 @@ public class LauncherActivity extends BaseUi {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.ui_settings);
+		setContentView(R.layout.tpl_remind_item);
 		// setContentView(R.layout.main_tab);
 
 		// new Thread(){
