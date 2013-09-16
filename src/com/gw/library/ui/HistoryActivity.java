@@ -2,9 +2,11 @@ package com.gw.library.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.gw.library.base.GwListView;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.HistoryList;
 import com.gw.library.model.History;
+import com.gw.library.service.NotifyService;
 import com.gw.library.sqlite.HistorySqlite;
 import com.gw.library.util.AppUtil;
 
@@ -30,6 +33,9 @@ public class HistoryActivity extends BaseUiAuth {
 	public ArrayList<History> hList; // 具体数据
 
 	HistorySqlite hSqlite;
+	HistoryReceiver historyReceiver;
+
+	private static final String HISTORY_ACTION = NotifyService.SERVICE_HISTORY_ACTION;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,12 @@ public class HistoryActivity extends BaseUiAuth {
 		// 初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData();
 		pullToRefresh();
+
+		// 注册HistoryReceiver
+		historyReceiver = new HistoryReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(HISTORY_ACTION);
+		registerReceiver(historyReceiver, filter);
 
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
@@ -133,4 +145,25 @@ public class HistoryActivity extends BaseUiAuth {
 		}
 
 	}
+
+	/**
+	 * 添加Receiver,接受来自后台的更新操作
+	 */
+	public class HistoryReceiver extends BroadcastReceiver {
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO 更新UI
+			if (intent.getAction().equals(
+					"com.gw.library.service.NotifyService.HISTORY")) {
+				hList = (ArrayList<History>) intent
+						.getSerializableExtra("hList");
+				hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
+				hListAdapter.notifyDataSetChanged();
+			}
+		}
+
+	}
+
 }
