@@ -10,8 +10,8 @@ public class C {
 	 */
 	public static final class api {
 
-//		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
-		public static final String base = "http://192.168.233.101/libraryServer/index.php/Api/";
+		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
+//		public static final String base = "http://192.168.233.101/libraryServer/index.php/Api/";
 
 		public static final String historyList = "Loan/getHistoryList";
 		public static final String loanList = "Loan/getLoanList";
