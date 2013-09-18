@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,10 @@ import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
+import com.gw.library.service.AlarmNotifyService;
+import com.gw.library.service.RemoteService;
 import com.gw.library.util.AppUtil;
+import com.gw.library.util.PollingUtils;
 
 public class LoginActivity extends BaseUi {
 
@@ -28,7 +32,7 @@ public class LoginActivity extends BaseUi {
 	String password;
 
 	BaseDialog baseDialog;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
@@ -51,7 +55,7 @@ public class LoginActivity extends BaseUi {
 			@Override
 			public void onClick(View view) {
 				baseDialog.show();
-				
+
 				studentNumber = sNumberText.getText().toString();
 				password = pWordText.getText().toString();
 
@@ -94,8 +98,8 @@ public class LoginActivity extends BaseUi {
 				userInfo.put("password", password);
 				BaseAuth.setLogin(true);
 				BaseAuth.saveUserInfo(this, userInfo);
-
-				forward(HistoryActivity.class);
+				startService();
+				forward(RemindActivity.class);
 			} else {
 				baseDialog.close();
 				toast(message.getInfo());
@@ -105,9 +109,18 @@ public class LoginActivity extends BaseUi {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
-	public void onNetworkError(int taskId){
+	public void onNetworkError(int taskId) {
 		baseDialog.close();
+	}
+
+	// 开启应用服务
+	public void startService() {
+		// 开启闹钟服务
+		startService(new Intent(this, AlarmNotifyService.class));
+		// 开启轮询服务
+		PollingUtils.startPollingService(this, 30, RemoteService.class,
+				C.action.remoteAction);
 	}
 }

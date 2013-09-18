@@ -18,7 +18,6 @@ import com.gw.library.base.GwListView;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.RemindList;
 import com.gw.library.model.Loan;
-import com.gw.library.service.NotifyService;
 import com.gw.library.sqlite.RemindSqlite;
 import com.gw.library.util.AppUtil;
 
@@ -30,7 +29,6 @@ public class RemindActivity extends BaseUiAuth {
 	ArrayList<Loan> rList;
 
 	RemindReceiver remindReceiver;
-	private static final String REMIND_ACTION = NotifyService.SERVICE_REMIND_ACTION;
 
 	public static boolean isLoaded = false; // 是否被加载的标志
 
@@ -45,11 +43,8 @@ public class RemindActivity extends BaseUiAuth {
 		// 注册remindReceiver
 		remindReceiver = new RemindReceiver();
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(REMIND_ACTION);
+		filter.addAction(C.action.remindAction);
 		registerReceiver(remindReceiver, filter);
-
-		pullToRefresh();
-		initData();
 
 		pullToRefresh(); // 绑定下拉刷新的事件
 		initData(); // 初始化数据
@@ -139,13 +134,7 @@ public class RemindActivity extends BaseUiAuth {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// TODO 更新UI
-			if (intent.getAction().equals(
-					"com.gw.library.service.NotifyService.HISTORY")) {
-				rList = (ArrayList<Loan>) intent.getSerializableExtra("rList");
-				remindListAdapter.setData(rList); // 必须调用这个方法来改变data，否者刷新无效
-				remindListAdapter.notifyDataSetChanged();
-			}
+			// TODO 显示有更新
 		}
 
 	}
