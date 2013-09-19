@@ -91,6 +91,33 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- Alarm Receiver -->
+        <receiver
+            android:name="com.gw.library.service.AlarmReceiver"
+            android:label="@string/app_name"
+            android:theme="@style/noTitle" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.action" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- service -->
+        <service android:name="com.gw.library.service.NotifyService" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.NotifyService" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
+        <service android:name="com.gw.library.service.QuerySqliteService" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.QuerySqliteService.action" />
+
+                <category android:name="android.intent.category.default" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

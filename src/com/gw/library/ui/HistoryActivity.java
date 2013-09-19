@@ -2,9 +2,11 @@ package com.gw.library.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.gw.library.base.GwListView;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.HistoryList;
 import com.gw.library.model.History;
+import com.gw.library.service.NotifyService;
 import com.gw.library.sqlite.HistorySqlite;
 import com.gw.library.util.AppUtil;
 
@@ -30,7 +33,12 @@ public class HistoryActivity extends BaseUiAuth {
 	public ArrayList<History> hList; // 具体数据
 
 	HistorySqlite hSqlite;
+	HistoryReceiver historyReceiver;
 
+	private static final String HISTORY_ACTION = NotifyService.SERVICE_HISTORY_ACTION;
+
+	public static boolean isLoaded = false; //是否被加载的标志
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,8 +51,23 @@ public class HistoryActivity extends BaseUiAuth {
 		initData();
 		pullToRefresh();
 
+		// 注册HistoryReceiver
+		historyReceiver = new HistoryReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(HISTORY_ACTION);
+		registerReceiver(historyReceiver, filter);
+
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
+		
+		if (!isLoaded) {//如果是第一次进入页面，则开始从服务器上获取数据
+			listView.displayHeader();
+			doTaskAsync(1, C.api.historyList + 
+					"?studentNumber=" + user.getStudentNumber()+
+					"&password=" + user.getPassword() + 
+					"&schoolId=" + user.getSchoolId()
+			);
+		}
 
 	}
 
@@ -90,6 +113,8 @@ public class HistoryActivity extends BaseUiAuth {
 			hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
 			hListAdapter.notifyDataSetChanged();
 			listView.onRefreshComplete(); // 刷新完成
+			
+			isLoaded  = true; //加载完成的标志设为true
 		} catch (Exception e) {
 			e.printStackTrace();
 			toast(e.getMessage());
@@ -133,4 +158,25 @@ public class HistoryActivity extends BaseUiAuth {
 		}
 
 	}
+
+	/**
+	 * 添加Receiver,接受来自后台的更新操作
+	 */
+	public class HistoryReceiver extends BroadcastReceiver {
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO 更新UI
+			if (intent.getAction().equals(
+					"com.gw.library.service.NotifyService.HISTORY")) {
+				hList = (ArrayList<History>) intent
+						.getSerializableExtra("hList");
+				hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
+				hListAdapter.notifyDataSetChanged();
+			}
+		}
+
+	}
+
 }
