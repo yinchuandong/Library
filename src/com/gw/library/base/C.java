@@ -1,5 +1,7 @@
 package com.gw.library.base;
 
+import android.R.integer;
+
 public class C {
 
 	/**
@@ -44,6 +46,12 @@ public class C {
 		public static final int historyList = 1003;
 		public static final int loanList = 1004;
 		public static final int notice = 1005;
+	}
+	
+	
+	public static final class dir{
+		public static final String base = "/sdcard/library";
+		public static final String cover = base + "/cover";
 	}
 
 }
