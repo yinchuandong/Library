@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.util.Log;
@@ -20,7 +21,10 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.gw.library.R;
+import com.gw.library.base.BaseHandler;
 import com.gw.library.base.BaseMessage;
+import com.gw.library.base.BaseTask;
+import com.gw.library.base.BaseUi;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
@@ -121,5 +125,6 @@ public class RemindActivity extends BaseUiAuth{
 			}
 		});
 	}
-
+	
+	
 }

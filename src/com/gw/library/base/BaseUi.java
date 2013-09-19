@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.Toast;
 
+import com.gw.library.base.BaseTask;
+import com.gw.library.util.AppCache;
 import com.gw.library.util.AppUtil;
 
 public class BaseUi extends Activity {
@@ -231,6 +233,20 @@ public class BaseUi extends Activity {
 
 	public void doLogout() {
 
+	}
+	
+	/**
+	 * 异步加载图片
+	 * @param url
+	 */
+	public void loadImage (final String url) {
+		taskPool.addTask(0, new BaseTask(){
+			@Override
+			public void onComplete(){
+				AppCache.getCachedImage(getContext(), url);
+				sendMessage(BaseTask.LOAD_IMAGE);
+			}
+		}, 0);
 	}
 
 	public void sendMessage(int what) {
