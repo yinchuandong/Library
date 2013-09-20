@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item  android:state_pressed="false"
+           android:text="收起"
+           android:drawable="@drawable/btn_left" />
+    <item android:state_pressed="true"
+          android:text="收起"  
+          android:drawable="@drawable/btn_right_hv" />  
+</selector>
