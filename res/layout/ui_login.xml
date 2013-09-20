@@ -15,14 +15,40 @@
         android:text="@string/title_login"
         android:textColor="@color/white"
         android:textSize="26sp" />
-    <!-- 学号框 -->
-
+    
+    <!-- 学校选择框 -->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="35dp"
+        android:background="@drawable/input"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/school"
+            android:textSize="20dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/school"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="广东外语外贸大学"
+            android:textColor="@color/fontColor" />
+    </LinearLayout>
+    
+    <!-- 学号框 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/input"
         android:orientation="horizontal" >
 

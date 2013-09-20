@@ -70,12 +70,14 @@ public class GwListView extends ListView implements OnScrollListener {
 
 	public GwListView(Context context) {
 		super(context);
-		init(context);
+		init(context); //加载头部下拉刷新
+		initLoadMoreView(context); //加载底部上拉更多
 	}
 
 	public GwListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
+		initLoadMoreView(context);
 	}
 
 	private void init(Context context) {
@@ -384,5 +386,125 @@ public class GwListView extends ListView implements OnScrollListener {
 		state = REFRESHING;
 		changeHeaderViewByState();
 	}
+	
+	
+	
+	
+	//================上拉加载更多====================================
+	private View mFootView;								
+	private View mLoadMoreView;
+	private TextView mLoadMoreTextView;
+	private View mLoadingView;
+	private OnLoadMoreListener mLoadMoreListener;
+	private int mLoadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
+	
+	
+	public interface OnLoadMoreViewState
+	{
+		int LMVS_NORMAL= 0;
+		int LMVS_LOADING = 1;				//  加载状态
+		int LMVS_OVER = 2;					//  结束状态
+	}
+	
+	public interface OnLoadMoreListener{
+		public void onLoadMore();
+	}
+	
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener){
+		this.mLoadMoreListener = onLoadMoreListener;
+	}
+	
+	// 初始化footview试图
+	private void initLoadMoreView(Context context)
+	{
+		mFootView= LayoutInflater.from(context).inflate(R.layout.tpl_load_more, null);
+		
+		mLoadMoreView = mFootView.findViewById(R.id.load_more_view);
+		
+		mLoadMoreTextView = (TextView) mFootView.findViewById(R.id.load_more_tv);
+		
+		mLoadingView = mFootView.findViewById(R.id.loading_layout);
+	
+		mLoadMoreView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				switch(v.getId())
+				{
+					case R.id.load_more_view:
+					{
+						if (mLoadMoreListener != null && mLoadMoreState == OnLoadMoreViewState.LMVS_NORMAL)
+						{
+							updateLoadMoreViewState(OnLoadMoreViewState.LMVS_LOADING);
+							mLoadMoreListener.onLoadMore();
+						}
+					}
+					break;
+				}
+			}
+		});
+		
+		addFooterView(mFootView);
+	}
+	
+	/**
+	 * 更新footview视图
+	 * @param state
+	 */
+	private void updateLoadMoreViewState(int state)
+	{
+		switch(state)
+		{
+			case OnLoadMoreViewState.LMVS_NORMAL:
+				mLoadingView.setVisibility(View.GONE);
+				mLoadMoreTextView.setVisibility(View.VISIBLE);
+				mLoadMoreTextView.setText("查看更多");
+				break;
+			case OnLoadMoreViewState.LMVS_LOADING:
+				mLoadingView.setVisibility(View.VISIBLE);
+				mLoadMoreTextView.setVisibility(View.GONE);
+				break;
+			case OnLoadMoreViewState.LMVS_OVER:
+				mLoadingView.setVisibility(View.GONE);
+				mLoadMoreTextView.setVisibility(View.VISIBLE);
+				mLoadMoreTextView.setText("尼玛的数据都加载完了！");
+				break;
+				default:
+					break;
+		}
+		
+		mLoadMoreState = state;
+	}
+
+		
+	public void removeFootView()
+	{
+		removeFooterView(mFootView);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
