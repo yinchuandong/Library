@@ -55,7 +55,7 @@
 	</RelativeLayout>
 	
 	
-	<RelativeLayout 
+	<LinearLayout
 	    android:id="@+id/r_item_bottom"
 	    android:layout_width="fill_parent"
 	    android:layout_height="25dp"
@@ -69,7 +69,6 @@
 			    android:id="@+id/r_close"
 			    android:layout_width="166dp"
 			    android:layout_height="30dp"
-			    android:layout_alignParentLeft="true"
 			    android:background="@drawable/remind_renew_hover"
 			    android:gravity="center"
 			    android:text="收起"
@@ -79,7 +78,6 @@
 
 			<TextView 
 			    android:id="@+id/r_string"
-			    android:layout_toRightOf="@+id/r_close"
 			    android:layout_width="wrap_content"
 			    android:layout_height="30dp"
 				android:textColor="#888888"
@@ -90,7 +88,6 @@
 
 			<TextView
 			    android:id="@+id/renew"
-			    android:layout_toRightOf="@+id/r_string"
 			    android:layout_width="166dp"
 			    android:layout_height="30dp"
 			    android:background="@drawable/remind_renew_hover"
@@ -99,7 +96,7 @@
 			    android:textColor="#888888"
 			    android:textSize="12sp" />
 
-	</RelativeLayout>
+	</LinearLayout>
 	
 	
 	

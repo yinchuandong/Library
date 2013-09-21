@@ -15,27 +15,28 @@ public final class R {
     }
     public static final class color {
         public static final int bg=0x7f040000;
-        public static final int body2=0x7f040009;
-        public static final int divider1=0x7f04000c;
-        public static final int divider2=0x7f04000d;
-        public static final int divider3=0x7f04000e;
+        public static final int body2=0x7f04000a;
+        public static final int divider1=0x7f04000d;
+        public static final int divider2=0x7f04000e;
+        public static final int divider3=0x7f04000f;
         /**  橙色 背景颜色 
          */
         public static final int fontColor=0x7f040001;
         /**  字体颜色 
          */
         public static final int gray=0x7f040002;
-        public static final int grey_bg=0x7f040007;
-        public static final int loading=0x7f04000f;
-        public static final int menu1=0x7f04000a;
-        public static final int menu2=0x7f04000b;
+        public static final int grey_bg=0x7f040008;
+        public static final int loading=0x7f040010;
+        public static final int menu1=0x7f04000b;
+        public static final int menu2=0x7f04000c;
         public static final int red=0x7f040003;
-        public static final int sky_blue=0x7f040005;
-        public static final int sky_blue2=0x7f040006;
-        public static final int tab_bg=0x7f040008;
+        public static final int sky_blue=0x7f040006;
+        public static final int sky_blue2=0x7f040007;
+        public static final int tab_bg=0x7f040009;
         /**  remind部分的文字提醒 
          */
-        public static final int white=0x7f040004;
+        public static final int transparent=0x7f040004;
+        public static final int white=0x7f040005;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -196,8 +197,6 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
-        /** <item name="android:backgroundDimEnabled">false</item> 
-         */
         public static final int base_dialog=0x7f070007;
         public static final int gw_list_view=0x7f070006;
         public static final int h_item=0x7f070005;
