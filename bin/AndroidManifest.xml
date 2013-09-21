@@ -92,7 +92,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gw.library.ui.AlarmActivity"
+            android:name="com.gw.library.ui.AlarmDetialActivity"
             android:label="@string/app_name"
             android:theme="@style/noTitle" >
             <intent-filter>
@@ -103,6 +103,7 @@
         </activity>
 
         <!-- activity Receiver -->
+
         <receiver
             android:name="com.gw.library.ui.HistoryActivity$HistoryReceiver"
             android:enabled="true"
@@ -119,6 +120,16 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.gw.library.service.action.remind" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.gw.library.service.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.action.alarmreceiver" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

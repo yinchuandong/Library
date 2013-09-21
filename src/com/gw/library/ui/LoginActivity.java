@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +16,6 @@ import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
-import com.gw.library.service.AlarmNotifyService;
 import com.gw.library.service.RemoteService;
 import com.gw.library.util.AppUtil;
 import com.gw.library.util.PollingUtils;
@@ -98,8 +96,8 @@ public class LoginActivity extends BaseUi {
 				userInfo.put("password", password);
 				BaseAuth.setLogin(true);
 				BaseAuth.saveUserInfo(this, userInfo);
-				startService();
 				forward(RemindActivity.class);
+				// startService();
 			} else {
 				baseDialog.close();
 				toast(message.getInfo());
@@ -117,10 +115,10 @@ public class LoginActivity extends BaseUi {
 
 	// 开启应用服务
 	public void startService() {
-		// 开启闹钟服务
-		startService(new Intent(this, AlarmNotifyService.class));
-		// 开启轮询服务
-		PollingUtils.startPollingService(this, 30, RemoteService.class,
-				C.action.remoteAction);
+
+		// TODO Auto-generated method stub
+		PollingUtils.startPollingService(LoginActivity.this, 5,
+				RemoteService.class, C.action.remoteAction);
+
 	}
 }

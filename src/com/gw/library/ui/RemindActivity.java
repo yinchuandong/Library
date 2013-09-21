@@ -8,10 +8,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Message;
+import android.text.Layout;
+import android.text.StaticLayout;
 import android.util.Log;
 
 import com.gw.library.R;
+import com.gw.library.base.BaseHandler;
 import com.gw.library.base.BaseMessage;
+import com.gw.library.base.BaseTask;
+import com.gw.library.base.BaseUi;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;

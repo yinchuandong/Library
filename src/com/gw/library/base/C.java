@@ -47,11 +47,18 @@ public class C {
 		public static final int notice = 1005;
 	}
 
+	public static final class dir {
+		public static final String base = "/sdcard/library";
+		public static final String cover = base + "/cover";
+	}
+
 	public static final class action {
 		public static final String remoteAction = "com.gw.library.service.action.remote";
 		public static final String remindAction = "com.gw.library.service.action.remind";
 		public static final String historyAction = "com.gw.library.service.action.history";
 		public static final String alarmAction = "com.gw.library.service.action.alarm";
+		public static final String alarmReceiverAction = "com.gw.library.service.action.alarmreceiver";
+
 	}
 
 }
