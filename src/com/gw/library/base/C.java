@@ -16,8 +16,10 @@ public class C {
 
 		public static final String historyList = "Loan/getHistoryList";
 		public static final String loanList = "Loan/getLoanList";
+		public static final String renew = "Loan/renew";
 		public static final String login = "User/login";
 		public static final String register = "User/register";
+		public static final String schoolList = "School/getSchoolList";
 	}
 
 	/**
@@ -41,10 +43,12 @@ public class C {
 	public static final class task {
 
 		public static final int index = 1001;
-		public static final int login = 1002;
-		public static final int historyList = 1003;
-		public static final int loanList = 1004;
-		public static final int notice = 1005;
+		public static final int login = 1002; //登陆
+		public static final int historyList = 1003; //借阅历史
+		public static final int loanList = 1004; //借阅列表
+		public static final int notice = 1005; //通知
+		public static final int schoolList = 1006; //获得学校的名称
+		public static final int renew = 1007; //续借
 	}
 
 	public static final class dir {

@@ -14,6 +14,7 @@ import android.text.StaticLayout;
 import android.util.Log;
 
 import com.gw.library.R;
+import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseHandler;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseTask;
@@ -36,6 +37,8 @@ public class RemindActivity extends BaseUiAuth {
 
 	RemindReceiver remindReceiver;
 
+	BaseDialog baseDialog; //基类对话框
+	
 	public static boolean isLoaded = false; // 是否被加载的标志
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,8 @@ public class RemindActivity extends BaseUiAuth {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_remind);
 		listView = (GwListView) findViewById(R.id.remind_list);
-
+		baseDialog = new BaseDialog(this);
+		
 		rSqlite = new RemindSqlite(this);
 
 		// 注册remindReceiver
@@ -58,7 +62,7 @@ public class RemindActivity extends BaseUiAuth {
 		if (!isLoaded) {// 如果是第一次进入页面，则开始从服务器上获取数据
 			listView.displayHeader();
 			doTaskAsync(
-					1,
+					C.task.loanList,
 					C.api.loanList + "?studentNumber="
 							+ user.getStudentNumber() + "&password="
 							+ user.getPassword() + "&schoolId="
@@ -96,24 +100,39 @@ public class RemindActivity extends BaseUiAuth {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
-		Log.i("remindactivity====ontaskcomplete", taskId + "");
-		try {
-			String whereSql = Loan.COL_STUDENTNUMBER + "=?";
-			String[] whereParams = new String[] { user.getStudentNumber() };
-			rSqlite.delete(whereSql, whereParams); // 清空当前历史列表
-			rList = (ArrayList<Loan>) message.getDataList("Loan");
-			for (Loan loan : rList) {
-				rSqlite.updateloan(loan);
-				Log.i("studentNumber", loan.getStudentNumber());
-			}
-			remindListAdapter.setData(rList); // 必须调用这个方法来改变data，否者刷新无效
-			remindListAdapter.notifyDataSetChanged();
-			listView.onRefreshComplete(); // 刷新完成
+		switch (taskId) {
+		
+		case C.task.loanList:
+			try {
+				String whereSql = Loan.COL_STUDENTNUMBER + "=?";
+				String[] whereParams = new String[] { user.getStudentNumber() };
+				rSqlite.delete(whereSql, whereParams); // 清空当前历史列表
+				rList = (ArrayList<Loan>) message.getDataList("Loan");
+				for (Loan loan : rList) {
+					rSqlite.updateloan(loan);
+					Log.i("studentNumber", loan.getStudentNumber());
+				}
+				remindListAdapter.setData(rList); // 必须调用这个方法来改变data，否者刷新无效
+				remindListAdapter.notifyDataSetChanged();
 
-			isLoaded = true;// 加载完成的标志设为true
-		} catch (Exception e) {
-			e.printStackTrace();
+				isLoaded = true;// 加载完成的标志设为true
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				listView.onRefreshComplete(); // 刷新完成
+			}
+			break;
+
+		case C.task.renew:
+			baseDialog.setData(1, message.getInfo());
+			baseDialog.show();
+			break;
 		}
+	}
+	
+	@Override
+	public void onNetworkError(int taskId) {
+		toast(C.err.network);
 	}
 
 	/**
@@ -123,7 +142,7 @@ public class RemindActivity extends BaseUiAuth {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
 				doTaskAsync(
-						1,
+						C.task.loanList,
 						C.api.loanList + "?studentNumber="
 								+ user.getStudentNumber() + "&password="
 								+ user.getPassword() + "&schoolId="

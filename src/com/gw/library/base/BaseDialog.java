@@ -2,6 +2,7 @@ package com.gw.library.base;
 
 import com.gw.library.R;
 
+import android.R.integer;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class BaseDialog {
 	private ImageView mImageClose;
 	private Dialog mDialog;
 
-	public BaseDialog(Context context, Bundle params) {
+	public BaseDialog(Context context) {
 		mDialog = new Dialog(context, R.style.base_dialog);
 		mDialog.setContentView(R.layout.main_dialog);
 		mDialog.setFeatureDrawableAlpha(Window.FEATURE_OPTIONS_PANEL, 0);
@@ -31,10 +32,11 @@ public class BaseDialog {
 		window.setAttributes(wl);
 //		window.setGravity(Gravity.CENTER);
 		window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		window.setLayout(200, ViewGroup.LayoutParams.WRAP_CONTENT);
+		window.setLayout(350, ViewGroup.LayoutParams.WRAP_CONTENT);
 		
-		mTextMessage = (TextView) mDialog.findViewById(R.id.cs_main_dialog_text);
-		mTextMessage.setText(params.getString("text"));
+		
+		
+		
 		
 		mImageClose = (ImageView) mDialog.findViewById(R.id.cs_main_dialog_close);
 		mImageClose.setOnClickListener(new ImageView.OnClickListener() {
@@ -43,6 +45,23 @@ public class BaseDialog {
 				mDialog.dismiss();
 			}
 		});
+	}
+	
+	/**
+	 * 设置对话框数据
+	 * @param type 类型  1为加载完成; 0为正在加载，有个菊花在转
+	 * @param text 提示的文字
+	 */
+	public void setData(int type, String text){
+		switch (type) {
+		case 1:
+			mTextMessage = (TextView) mDialog.findViewById(R.id.cs_main_dialog_text);
+			mTextMessage.setText(text);
+			break;
+		default:
+			//显示loading的菊花
+			break;
+		}
 	}
 
 	public void show() {

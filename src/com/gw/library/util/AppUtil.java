@@ -18,6 +18,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.CharArrayBuffer;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -229,9 +230,41 @@ public class AppUtil {
 				
 			}
 		} catch (Exception e) {
-			Log.w("baseMOdel", "jsonobject2hasmap");
+			Log.w("apputil", "jsonobject2hasmap");
 		}
 		return hashMap;
+	}
+	
+	
+	/**
+	 * 把url返回的json格式转换为arrayList<Hash<key,map>>形式
+	 * @param jsonArray
+	 * @return arrayList
+	 */
+	@SuppressWarnings("null")
+	public static ArrayList<HashMap<String, String>> jsonArray2ArrayList(JSONArray jsonArray){
+		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String,String>>();
+		JSONObject jsonObject = null;
+		try {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				HashMap<String, String> hashMap = new HashMap<String, String>();
+				jsonObject = jsonArray.getJSONObject(i);
+				@SuppressWarnings("unchecked")
+				Iterator<String> iterator = jsonObject.keys();
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+					String value = jsonObject.getString(key);
+					hashMap.put(key, value);
+				}
+				arrayList.add(hashMap);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			Log.e("json", "json转换为arrayList时候错误");
+		} catch (Exception e) {
+			Log.e("json", "错误");
+		}
+		return arrayList;
 	}
 
 	/* 判断int是否为空 */
