@@ -43,12 +43,12 @@ public class C {
 	public static final class task {
 
 		public static final int index = 1001;
-		public static final int login = 1002; //登陆
-		public static final int historyList = 1003; //借阅历史
-		public static final int loanList = 1004; //借阅列表
-		public static final int notice = 1005; //通知
-		public static final int schoolList = 1006; //获得学校的名称
-		public static final int renew = 1007; //续借
+		public static final int login = 1002; // 登陆
+		public static final int historyList = 1003; // 借阅历史
+		public static final int loanList = 1004; // 借阅列表
+		public static final int notice = 1005; // 通知
+		public static final int schoolList = 1006; // 获得学校的名称
+		public static final int renew = 1007; // 续借
 	}
 
 	public static final class dir {
@@ -56,6 +56,12 @@ public class C {
 		public static final String cover = base + "/cover";
 	}
 
+	/**
+	 * 定义接收器的属性
+	 * 
+	 * @author kelink
+	 * 
+	 */
 	public static final class action {
 		public static final String remoteAction = "com.gw.library.service.action.remote";
 		public static final String remindAction = "com.gw.library.service.action.remind";
@@ -63,6 +69,14 @@ public class C {
 		public static final String alarmAction = "com.gw.library.service.action.alarm";
 		public static final String alarmReceiverAction = "com.gw.library.service.action.alarmreceiver";
 
+	}
+
+	/**
+	 * 定义服务时间
+	 */
+	public static final class time {
+		public static final int pollTime = 30;
+		public static final long alarmTime = 24 * 60 * 60 * 1000;
 	}
 
 }

@@ -135,6 +135,14 @@
             </intent-filter>
         </receiver>
 
+        <!-- 系统启动完成后会调用 -->
+        <receiver android:name="com.gw.library.service.BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
+
         <!-- service -->
         <service
             android:name="com.gw.library.service.RemoteService"

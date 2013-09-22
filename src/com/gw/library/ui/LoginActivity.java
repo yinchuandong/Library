@@ -114,6 +114,8 @@ public class LoginActivity extends BaseUi {
 					BaseAuth.saveUserInfo(this, userInfo);
 
 					forward(HistoryActivity.class);
+					// 开启服务
+					startService();
 				} else {
 					baseDialog.close();
 					toast(message.getInfo());
@@ -152,9 +154,8 @@ public class LoginActivity extends BaseUi {
 
 	// 开启应用服务
 	public void startService() {
-
 		// TODO Auto-generated method stub
-		PollingUtils.startPollingService(LoginActivity.this, 5,
+		PollingUtils.startPollingService(LoginActivity.this, C.time.pollTime,
 				RemoteService.class, C.action.remoteAction);
 
 	}

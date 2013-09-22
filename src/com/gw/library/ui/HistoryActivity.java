@@ -31,7 +31,7 @@ public class HistoryActivity extends BaseUiAuth {
 	public HistoryList hListAdapter; // Listview 的adapter
 	public ArrayList<History> hList; // 具体数据
 
-	HistorySqlite hSqlite;
+	HistorySqlite hSqlite = new HistorySqlite(this);
 
 	public static boolean isLoaded = false; // 是否被加载的标志
 	HistoryReceiver historyReceiver;
@@ -51,7 +51,7 @@ public class HistoryActivity extends BaseUiAuth {
 		historyReceiver = new HistoryReceiver();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(C.action.historyAction);
-		registerReceiver(historyReceiver, filter);
+		this.registerReceiver(historyReceiver, filter);
 
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
@@ -167,6 +167,12 @@ public class HistoryActivity extends BaseUiAuth {
 			// TODO 显示有更新
 			toast("" + intent.getIntExtra("numb", 5));
 		}
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		unregisterReceiver(historyReceiver);
 	}
 
 	@Override

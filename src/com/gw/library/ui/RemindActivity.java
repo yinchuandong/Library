@@ -8,17 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Message;
-import android.text.Layout;
-import android.text.StaticLayout;
 import android.util.Log;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseDialog;
-import com.gw.library.base.BaseHandler;
 import com.gw.library.base.BaseMessage;
-import com.gw.library.base.BaseTask;
-import com.gw.library.base.BaseUi;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
@@ -35,10 +29,8 @@ public class RemindActivity extends BaseUiAuth {
 	RemindSqlite rSqlite;
 	ArrayList<Loan> rList;
 
+	BaseDialog baseDialog; // 基类对话框
 	RemindReceiver remindReceiver;
-
-	BaseDialog baseDialog; //基类对话框
-	
 	public static boolean isLoaded = false; // 是否被加载的标志
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,18 +39,16 @@ public class RemindActivity extends BaseUiAuth {
 		setContentView(R.layout.ui_remind);
 		listView = (GwListView) findViewById(R.id.remind_list);
 		baseDialog = new BaseDialog(this);
-		
-		rSqlite = new RemindSqlite(this);
 
-		// 注册remindReceiver
-		remindReceiver = new RemindReceiver();
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(C.action.remindAction);
-		registerReceiver(remindReceiver, filter);
+		rSqlite = new RemindSqlite(this);
 
 		pullToRefresh(); // 绑定下拉刷新的事件
 		initData(); // 初始化数据
-
+		// 注册historyReceiver
+		remindReceiver = new RemindReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(C.action.remindAction);
+		this.registerReceiver(remindReceiver, filter);
 		if (!isLoaded) {// 如果是第一次进入页面，则开始从服务器上获取数据
 			listView.displayHeader();
 			doTaskAsync(
@@ -101,7 +91,7 @@ public class RemindActivity extends BaseUiAuth {
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		switch (taskId) {
-		
+
 		case C.task.loanList:
 			try {
 				String whereSql = Loan.COL_STUDENTNUMBER + "=?";
@@ -118,7 +108,7 @@ public class RemindActivity extends BaseUiAuth {
 				isLoaded = true;// 加载完成的标志设为true
 			} catch (Exception e) {
 				e.printStackTrace();
-			}finally{
+			} finally {
 				listView.onRefreshComplete(); // 刷新完成
 			}
 			break;
@@ -129,7 +119,7 @@ public class RemindActivity extends BaseUiAuth {
 			break;
 		}
 	}
-	
+
 	@Override
 	public void onNetworkError(int taskId) {
 		toast(C.err.network);
@@ -160,8 +150,14 @@ public class RemindActivity extends BaseUiAuth {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO 显示有更新
+			toast("" + intent.getIntExtra("numb", 5));
 		}
+	}
 
+	@Override
+	public void onStop() {
+		super.onStop();
+		unregisterReceiver(remindReceiver);
 	}
 
 }

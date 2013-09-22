@@ -28,10 +28,12 @@ public class RemoteService extends BaseService {
 	private User user = BaseAuth.getUser();
 	// 数据和数据库
 	public ArrayList<History> hList;
-	public HistorySqlite hSqlite;
-	ArrayList<Loan> rList;
-	RemindSqlite rSqlite;
 
+	ArrayList<Loan> rList;
+	RemindSqlite rSqlite = new RemindSqlite(this);
+	HistorySqlite hSqlite = new HistorySqlite(this);
+	boolean updateFlag = false;// 标记更新情况
+	boolean alarmFlag = false;// 标记Alarm开启情况
 	// 更新的条目
 	private int numb;
 
@@ -53,12 +55,18 @@ public class RemoteService extends BaseService {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
 		update();
+		if (updateFlag == true && alarmFlag == false && BaseAuth.isLogin()) {
+			PollingUtils.startAlarmService(RemoteService.this,
+					AlarmNotifyService.class, C.action.alarmAction);
+			alarmFlag = true;// 仅仅创建 一次
+		}
 	}
 
 	// 更新
 	public void update() {
-		getHistoryList();
 		getLoanList();
+		getHistoryList();
+		updateFlag = true;
 	}
 
 	// 远程获取历史消息
@@ -83,6 +91,7 @@ public class RemoteService extends BaseService {
 		super.onTaskComplete(taskId, message);
 		switch (taskId) {
 		case C.task.historyList:
+
 			try {
 				String whereSql = History.COL_STUDENTNUMBER + "=?";
 				String[] whereParams = new String[] { user.getStudentNumber() };
@@ -92,13 +101,15 @@ public class RemoteService extends BaseService {
 						new String[] { user.getStudentNumber() });
 				hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
 				hList = (ArrayList<History>) message.getDataList("History");
-				if (mapList.size() > rList.size()) {
-					numb = mapList.size() - rList.size();
+				if (mapList.size() > hList.size()) {
+					numb = mapList.size() - hList.size();
 					sendIntent(hList);
 				}
-				for (History history : hList) {
-					hSqlite.updateHistory(history);
-					Log.i("studentNumber", history.getStudentNumber());
+				if (hList.size() > 0) {
+					for (History history : hList) {
+						hSqlite.updateHistory(history);
+						Log.i("studentNumber", history.getStudentNumber());
+					}
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -121,17 +132,12 @@ public class RemoteService extends BaseService {
 					numb = mapList.size() - rList.size();
 					sendIntent(rList);
 				}
-				for (Loan loan : rList) {
-					rSqlite.updateloan(loan);
-					Log.i("studentNumber", loan.getStudentNumber());
+				if (rList.size() > 0) {
+					for (Loan loan : rList) {
+						rSqlite.updateloan(loan);
+						Log.i("studentNumber", loan.getStudentNumber());
+					}
 				}
-
-				// 开启闹钟服务
-				if (BaseAuth.isLogin()) {
-					PollingUtils.startAlarmService(RemoteService.this,
-							AlarmNotifyService.class, C.action.alarmAction);
-				}
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

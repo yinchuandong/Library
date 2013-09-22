@@ -28,12 +28,11 @@ public class AlarmNotifyService extends BaseService {
 	private User user = BaseAuth.getUser();
 	// 数据和数据库
 	ArrayList<Loan> rList;
-	RemindSqlite rSqlite;
+	RemindSqlite rSqlite = new RemindSqlite(this);
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		getReturnList();
 
 	}
 
@@ -42,9 +41,12 @@ public class AlarmNotifyService extends BaseService {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
 
-		Intent alarmIntent = new Intent(C.action.alarmReceiverAction);
-		sendBroadcast(alarmIntent);
-		showNotification();
+		getReturnList();
+		if (rList != null && rList.size() > 0) {
+			Intent alarmIntent = new Intent(C.action.alarmReceiverAction);
+			sendBroadcast(alarmIntent);
+			showNotification();
+		}
 
 	}
 
@@ -95,6 +97,8 @@ public class AlarmNotifyService extends BaseService {
 
 		Intent notificationIntent = new Intent(AlarmNotifyService.this,
 				AlarmDetialActivity.class);
+
+		notificationIntent.putExtra("rList", rList);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
