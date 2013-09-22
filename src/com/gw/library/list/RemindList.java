@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
+import org.w3c.dom.UserDataHandler;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,13 +14,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gw.library.base.BaseAuth;
 import com.gw.library.base.BaseList;
 import com.gw.library.base.BaseUi;
+import com.gw.library.base.C;
 import com.gw.library.model.Loan;
 import com.gw.library.model.Recommend;
+import com.gw.library.model.User;
 import com.gw.library.R;
 
 public class RemindList extends BaseList{
@@ -32,8 +39,9 @@ public class RemindList extends BaseList{
 		public TextView titleView;
 		public TextView authorView;
 		public TextView rCloseView;
+		public TextView renewView;
 		public RelativeLayout itemMainLayout;
-		public RelativeLayout itemBottomLayout;
+		public LinearLayout itemBottomLayout;
 	}
 	
 	public RemindList(BaseUi baseUi, ArrayList<Loan> remindList){
@@ -60,6 +68,7 @@ public class RemindList extends BaseList{
 		return position;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
@@ -71,8 +80,9 @@ public class RemindList extends BaseList{
 			rItem.authorView = (TextView)convertView.findViewById(R.id.r_author);
 			rItem.remainDayView = (TextView)convertView.findViewById(R.id.r_remain_day);
 			rItem.rCloseView = (TextView)convertView.findViewById(R.id.r_close);
+			rItem.renewView = (TextView)convertView.findViewById(R.id.renew);
 			rItem.itemMainLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_main);
-			rItem.itemBottomLayout = (RelativeLayout)convertView.findViewById(R.id.r_item_bottom);
+			rItem.itemBottomLayout = (LinearLayout)convertView.findViewById(R.id.r_item_bottom);
 			convertView.setTag(rItem);
 		}else{
 			rItem = (RItem)convertView.getTag();
@@ -87,16 +97,6 @@ public class RemindList extends BaseList{
 		rItem.remainDayView.setText(remainDays);
 		
 		bindEvent(position, rItem);
-//		rItem.rCloseView.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				Log.i("onclick",12+"");
-////				if (rItem.itemBottomLayout.getVisibility() == View.VISIBLE) {
-////					rItem.itemBottomLayout.setVisibility(View.GONE);
-////				}
-//			}
-//		});
 		return convertView;
 	}
 	
@@ -151,8 +151,6 @@ public class RemindList extends BaseList{
 			public void onClick(View v) {
 				if (rItem.itemBottomLayout.getVisibility() == View.GONE) {
 					rItem.itemBottomLayout.setVisibility(View.VISIBLE);
-				}else{
-					rItem.itemBottomLayout.setVisibility(View.GONE);
 				}
 				Log.i("remindlist-->onclick", ""+position);
 			}
@@ -167,6 +165,20 @@ public class RemindList extends BaseList{
 				if (rItem.itemBottomLayout.getVisibility() == View.VISIBLE) {
 					rItem.itemBottomLayout.setVisibility(View.GONE);
 				}
+			}
+		});
+		
+		rItem.renewView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				HashMap<String, String> form = new HashMap<String, String>();
+				User user = BaseAuth.getUser();
+				form.put("studentNumber", user.getStudentNumber());
+				form.put("schoolId", user.getSchoolId());
+				form.put("password", user.getPassword());
+				form.put("books", remindList.get(position).getId());
+				baseUi.doTaskAsync(C.task.renew, C.api.renew, form);
 			}
 		});
 		

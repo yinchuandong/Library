@@ -6,9 +6,13 @@
   android:orientation="vertical" 
   android:layout_margin="0dp"
   android:padding="0dp"
-  android:background="@color/gray">
+  >
   
-  
+  <RelativeLayout
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:background="@color/gray"    
+       >
     <TextView android:id="@+id/cs_main_dialog_text" 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -24,4 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         />
+    
+    </RelativeLayout>
 </RelativeLayout>
