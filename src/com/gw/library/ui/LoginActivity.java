@@ -47,14 +47,14 @@ public class LoginActivity extends BaseUi {
 		setContentView(R.layout.ui_login);
 
 		checkIsExistedCookie();
+
 		schoolText = (AutoCompleteTextView) findViewById(R.id.school);
+
 		sNumberText = (EditText) findViewById(R.id.studentNumber);
 		pWordText = (EditText) findViewById(R.id.password);
 		loginBtn = (Button) findViewById(R.id.login);
 		bindLoginEvent();
 		baseDialog = new BaseDialog(this);
-		baseDialog.setData(1, "正在登陆...");
-		baseDialog.show();
 		doTaskAsync(C.task.schoolList, C.api.schoolList);
 	}
 
@@ -65,6 +65,7 @@ public class LoginActivity extends BaseUi {
 		loginBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				baseDialog.setData(0, "login.....");
 				baseDialog.show();
 
 				studentNumber = sNumberText.getText().toString();
@@ -117,8 +118,7 @@ public class LoginActivity extends BaseUi {
 					// 开启服务
 					startService();
 				} else {
-					baseDialog.close();
-					toast(message.getInfo());
+					baseDialog.setData(1, message.getInfo());
 				}
 
 			} catch (Exception e) {
