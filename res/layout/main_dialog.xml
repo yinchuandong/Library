@@ -41,7 +41,7 @@
 	       android:textColor="#ffffff" 
 	       android:textSize="18sp"
 	       android:gravity="center" 
-	       android:visibility="visible"
+	       android:visibility="gone"
 	        />
     </RelativeLayout>
         

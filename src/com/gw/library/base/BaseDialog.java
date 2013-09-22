@@ -59,14 +59,14 @@ public class BaseDialog {
 		
 		switch (type) {
 		case 0:
-			mTextMessage.setVisibility(View.INVISIBLE);
+			mTextMessage.setVisibility(View.GONE);
 			//显示loading的
 			mLoading.setVisibility(View.VISIBLE);
 			Log.i("basedialog-->setdata", "text"+mTextMessage.getVisibility()+"/mloading:"+mLoading.getVisibility());
 			break;
 			
 		case 1:
-			mLoading.setVisibility(View.INVISIBLE);
+			mLoading.setVisibility(View.GONE);
 			mTextMessage.setText(text);
 			mTextMessage.setVisibility(View.VISIBLE);
 			Log.i("basedialog-->setdata", text);
