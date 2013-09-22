@@ -29,7 +29,7 @@ public class RemindActivity extends BaseUiAuth {
 	RemindSqlite rSqlite;
 	ArrayList<Loan> rList;
 
-	BaseDialog baseDialog; // 基类对话框
+	
 	RemindReceiver remindReceiver;
 	public static boolean isLoaded = false; // 是否被加载的标志
 
@@ -38,7 +38,6 @@ public class RemindActivity extends BaseUiAuth {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_remind);
 		listView = (GwListView) findViewById(R.id.remind_list);
-		baseDialog = new BaseDialog(this);
 
 		rSqlite = new RemindSqlite(this);
 
@@ -104,12 +103,13 @@ public class RemindActivity extends BaseUiAuth {
 				}
 				remindListAdapter.setData(rList); // 必须调用这个方法来改变data，否者刷新无效
 				remindListAdapter.notifyDataSetChanged();
-
+				
 				isLoaded = true;// 加载完成的标志设为true
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
 				listView.onRefreshComplete(); // 刷新完成
+				baseDialog.close();
 			}
 			break;
 

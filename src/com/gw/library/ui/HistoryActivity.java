@@ -18,6 +18,7 @@ import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
+import com.gw.library.base.GwListView.OnLoadMoreListener;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.HistoryList;
 import com.gw.library.model.History;
@@ -134,6 +135,15 @@ public class HistoryActivity extends BaseUiAuth {
 
 			}
 		});
+		
+		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
+			
+			@Override
+			public void onLoadMore() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	/**
@@ -172,7 +182,11 @@ public class HistoryActivity extends BaseUiAuth {
 	@Override
 	public void onStop() {
 		super.onStop();
-		unregisterReceiver(historyReceiver);
+		try{
+			unregisterReceiver(historyReceiver);
+		}catch (Exception e) {
+			Log.i("Historyactivity-->onstop", "false");
+		}
 	}
 
 	@Override

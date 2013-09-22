@@ -40,8 +40,6 @@ public class LoginActivity extends BaseUi {
 	ArrayList<String> schoolList = new ArrayList<String>();// 学校的列表
 	ArrayAdapter<String> schoolAdapter; // 学校列表的适配器
 
-	BaseDialog baseDialog; // 对话框
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
@@ -54,7 +52,6 @@ public class LoginActivity extends BaseUi {
 		pWordText = (EditText) findViewById(R.id.password);
 		loginBtn = (Button) findViewById(R.id.login);
 		bindLoginEvent();
-		baseDialog = new BaseDialog(this);
 		doTaskAsync(C.task.schoolList, C.api.schoolList);
 	}
 
@@ -65,7 +62,7 @@ public class LoginActivity extends BaseUi {
 		loginBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				baseDialog.setData(0, "login.....");
+				baseDialog.setData(0, null);
 				baseDialog.show();
 
 				studentNumber = sNumberText.getText().toString();
