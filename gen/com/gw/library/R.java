@@ -92,7 +92,7 @@ public final class R {
         public static final int tab_remind_hover=0x7f020025;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0027;
+        public static final int action_settings=0x7f0a0028;
         public static final int hSwebview=0x7f0a0020;
         public static final int head_arrowImageView=0x7f0a000f;
         public static final int head_contentLayout=0x7f0a000e;
@@ -109,7 +109,7 @@ public final class R {
         public static final int load_more_view=0x7f0a000b;
         public static final int loading_layout=0x7f0a000d;
         public static final int login=0x7f0a0024;
-        public static final int logout=0x7f0a0026;
+        public static final int logout=0x7f0a0027;
         public static final int main_dialog_close=0x7f0a0000;
         public static final int main_dialog_loading=0x7f0a0001;
         public static final int main_dialog_text=0x7f0a0002;
@@ -124,10 +124,11 @@ public final class R {
         public static final int r_remain_day=0x7f0a0015;
         public static final int r_string=0x7f0a001a;
         public static final int r_title=0x7f0a0016;
+        public static final int recommend_list=0x7f0a0025;
         public static final int remind_list=0x7f0a001e;
         public static final int renew=0x7f0a001b;
         public static final int school=0x7f0a0021;
-        public static final int select=0x7f0a0025;
+        public static final int select=0x7f0a0026;
         public static final int studentNumber=0x7f0a0022;
         public static final int tab_history=0x7f0a0007;
         public static final int tab_recommend=0x7f0a0005;
@@ -140,15 +141,16 @@ public final class R {
         public static final int tpl_history_item=0x7f030003;
         public static final int tpl_load_more=0x7f030004;
         public static final int tpl_pull_refresh_head=0x7f030005;
-        public static final int tpl_remind_item=0x7f030006;
-        public static final int ui_alarmdetial=0x7f030007;
-        public static final int ui_history=0x7f030008;
-        public static final int ui_history_webview=0x7f030009;
-        public static final int ui_launcher=0x7f03000a;
-        public static final int ui_login=0x7f03000b;
-        public static final int ui_recommend=0x7f03000c;
-        public static final int ui_remind=0x7f03000d;
-        public static final int ui_settings=0x7f03000e;
+        public static final int tpl_recommend_item=0x7f030006;
+        public static final int tpl_remind_item=0x7f030007;
+        public static final int ui_alarmdetial=0x7f030008;
+        public static final int ui_history=0x7f030009;
+        public static final int ui_history_webview=0x7f03000a;
+        public static final int ui_launcher=0x7f03000b;
+        public static final int ui_login=0x7f03000c;
+        public static final int ui_recommend=0x7f03000d;
+        public static final int ui_remind=0x7f03000e;
+        public static final int ui_settings=0x7f03000f;
     }
     public static final class menu {
         public static final int launcher=0x7f090000;
