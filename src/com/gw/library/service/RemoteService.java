@@ -1,18 +1,15 @@
 package com.gw.library.service;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashMap;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.gw.library.base.BaseAuth;
 import com.gw.library.base.BaseMessage;
+import com.gw.library.base.BaseModel;
 import com.gw.library.base.BaseService;
 import com.gw.library.base.C;
 import com.gw.library.model.History;
@@ -20,29 +17,25 @@ import com.gw.library.model.Loan;
 import com.gw.library.model.User;
 import com.gw.library.sqlite.HistorySqlite;
 import com.gw.library.sqlite.RemindSqlite;
+import com.gw.library.util.PollingUtils;
 
-public class NotifyService extends BaseService {
+public class RemoteService extends BaseService {
 	/**
 	 * 后台网络刷新服务，定时轮询刷新数据,保存到数据库
 	 */
-	private static final int when = 1000;// 轮询时间
 
-	// 后台服务的action
-	public static String SERVICE_HISTORY_ACTION = "com.gw.library.service.NotifyService.HISTORY";// history的action
-	public static String SERVICE_REMIND_ACTION = "com.gw.library.service.NotifyService.LOAN";// loan的action
-	public static String SERVICE_APP_ACTION = "com.gw.library.service.APPSERVER";
 	// 用户
 	private User user = BaseAuth.getUser();
 	// 数据和数据库
 	public ArrayList<History> hList;
-	public HistorySqlite hSqlite;
-	ArrayList<Loan> rList;
-	RemindSqlite rSqlite;
 
-	// 定时器
-	private Timer timer = new Timer();
-	// 广播接收器
-	APPReceiver appReceiver;
+	ArrayList<Loan> rList;
+	RemindSqlite rSqlite = new RemindSqlite(this);
+	HistorySqlite hSqlite = new HistorySqlite(this);
+	boolean updateFlag = false;// 标记更新情况
+	boolean alarmFlag = false;// 标记Alarm开启情况
+	// 更新的条目
+	private int numb;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -54,11 +47,6 @@ public class NotifyService extends BaseService {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		// 注册接收器
-		appReceiver = new APPReceiver();
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(SERVICE_APP_ACTION);
-		registerReceiver(appReceiver, filter);
 
 	}
 
@@ -66,36 +54,30 @@ public class NotifyService extends BaseService {
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
-		if (intent.getAction().equals("")) {
-			// 当登陆进入后，马上执行刷新
-			getHistoryList();
-			getLoanList();
-		} else {
-			// 定时刷新
-			timer.schedule(new TimerSerivceTask(), when);
+		update();
+		if (updateFlag == true && alarmFlag == false && BaseAuth.isLogin()) {
+			PollingUtils.startAlarmService(RemoteService.this,
+					AlarmNotifyService.class, C.action.alarmAction);
+			alarmFlag = true;// 仅仅创建 一次
 		}
 	}
 
-	// Timer 定时任务
-	private class TimerSerivceTask extends TimerTask {
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			getHistoryList();
-			getLoanList();
-		}
-
+	// 更新
+	public void update() {
+		getLoanList();
+		getHistoryList();
+		updateFlag = true;
 	}
 
-	// 获取历史消息
-	public void getHistoryList() {
+	// 远程获取历史消息
+	private void getHistoryList() {
 		doTaskAsync(C.task.historyList, C.api.historyList + "?studentNumber="
 				+ user.getStudentNumber() + "&password=" + user.getPassword()
 				+ "&schoolId=" + user.getSchoolId());
 	}
 
-	// 获取借阅消息
-	public void getLoanList() {
+	// 远程获取借阅消息
+	private void getLoanList() {
 		doTaskAsync(C.task.loanList,
 				C.api.loanList + "?studentNumber=" + user.getStudentNumber()
 						+ "&password=" + user.getPassword() + "&schoolId="
@@ -109,22 +91,26 @@ public class NotifyService extends BaseService {
 		super.onTaskComplete(taskId, message);
 		switch (taskId) {
 		case C.task.historyList:
+
 			try {
 				String whereSql = History.COL_STUDENTNUMBER + "=?";
 				String[] whereParams = new String[] { user.getStudentNumber() };
+				// 判断是否有更新
+				ArrayList<HashMap<String, String>> mapList = hSqlite.query(
+						"select * from history where studentNumber=?",
+						new String[] { user.getStudentNumber() });
 				hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
 				hList = (ArrayList<History>) message.getDataList("History");
-				for (History history : hList) {
-					hSqlite.updateHistory(history);
-					Log.i("studentNumber", history.getStudentNumber());
+				if (mapList.size() > hList.size()) {
+					numb = mapList.size() - hList.size();
+					sendIntent(hList);
 				}
-
-				// 发送消息，通知刷新界面
-				Intent sendIntent = new Intent();
-				sendIntent.setAction(SERVICE_HISTORY_ACTION);
-				sendIntent.putExtra("HList", hList);
-				sendBroadcast(sendIntent);
-
+				if (hList.size() > 0) {
+					for (History history : hList) {
+						hSqlite.updateHistory(history);
+						Log.i("studentNumber", history.getStudentNumber());
+					}
+				}
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -136,37 +122,45 @@ public class NotifyService extends BaseService {
 			try {
 				String whereSql = Loan.COL_STUDENTNUMBER + "=?";
 				String[] whereParams = new String[] { user.getStudentNumber() };
+				// 判断是否有更新
+				ArrayList<HashMap<String, String>> mapList = rSqlite.query(
+						"select * from loan where studentNumber=?",
+						new String[] { user.getStudentNumber() });
 				rSqlite.delete(whereSql, whereParams); // 清空当前历史列表
 				rList = (ArrayList<Loan>) message.getDataList("Loan");
-				for (Loan loan : rList) {
-					rSqlite.updateloan(loan);
-					Log.i("studentNumber", loan.getStudentNumber());
+				if (mapList.size() > rList.size()) {
+					numb = mapList.size() - rList.size();
+					sendIntent(rList);
 				}
-
-				// 发送消息，通知刷新界面
-				Intent sendIntent = new Intent();
-				sendIntent.setAction(SERVICE_REMIND_ACTION);
-				sendIntent.putExtra("rList", rList);
-				sendBroadcast(sendIntent);
-
+				if (rList.size() > 0) {
+					for (Loan loan : rList) {
+						rSqlite.updateloan(loan);
+						Log.i("studentNumber", loan.getStudentNumber());
+					}
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 			break;
 		default:
 			break;
 		}
 	}
 
-	// 服务的接收器
-	public class APPReceiver extends BroadcastReceiver {
+	// 有更新信息，发送消息(用于以后)
+	private void sendIntent(ArrayList<? extends BaseModel> list) {
+		// 发送消息，通知本地的Service数据库已经修改
+		Intent sendIntent = new Intent();
 
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
-
+		if (list.get(0).getClass().getName().equals("History")) {
+			sendIntent.setAction(C.action.historyAction);
+			sendIntent.putExtra("numb", numb);
+		} else if (list.get(0).getClass().getName().equals("Loan")) {
+			sendIntent.setAction(C.action.remindAction);
+			sendIntent.putExtra("numb", numb);
 		}
-
+		sendBroadcast(sendIntent);
 	}
 
 }

@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,7 +21,9 @@ import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
+import com.gw.library.service.RemoteService;
 import com.gw.library.util.AppUtil;
+import com.gw.library.util.PollingUtils;
 
 public class LoginActivity extends BaseUi {
 
@@ -33,21 +34,22 @@ public class LoginActivity extends BaseUi {
 
 	String studentNumber;
 	String password;
+
 	String schoolName;
-	
-	ArrayList<String> schoolList = new ArrayList<String>();//学校的列表
-	ArrayAdapter<String> schoolAdapter; //学校列表的适配器
-	
-	BaseDialog baseDialog; //对话框
-	
+
+	ArrayList<String> schoolList = new ArrayList<String>();// 学校的列表
+	ArrayAdapter<String> schoolAdapter; // 学校列表的适配器
+
+	BaseDialog baseDialog; // 对话框
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
 
-		
 		checkIsExistedCookie();
-		
-		schoolText = (AutoCompleteTextView)findViewById(R.id.school);
+
+		schoolText = (AutoCompleteTextView) findViewById(R.id.school);
+
 		sNumberText = (EditText) findViewById(R.id.studentNumber);
 		pWordText = (EditText) findViewById(R.id.password);
 		loginBtn = (Button) findViewById(R.id.login);
@@ -65,7 +67,7 @@ public class LoginActivity extends BaseUi {
 			public void onClick(View view) {
 				baseDialog.setData(0, "login.....");
 				baseDialog.show();
-				
+
 				studentNumber = sNumberText.getText().toString();
 				password = pWordText.getText().toString();
 				schoolName = schoolText.getText().toString();
@@ -100,7 +102,7 @@ public class LoginActivity extends BaseUi {
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		switch (taskId) {
-		case C.task.login: //登陆的任务
+		case C.task.login: // 登陆的任务
 			try {
 				if (message.getStatus().equals("1")) {
 					JSONObject jsonObject = new JSONObject(message.getData());
@@ -113,6 +115,8 @@ public class LoginActivity extends BaseUi {
 					BaseAuth.saveUserInfo(this, userInfo);
 
 					forward(HistoryActivity.class);
+					// 开启服务
+					startService();
 				} else {
 					baseDialog.setData(1, message.getInfo());
 				}
@@ -120,28 +124,39 @@ public class LoginActivity extends BaseUi {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			break;
-		case C.task.schoolList: //获得学校的列表
+		case C.task.schoolList: // 获得学校的列表
 			try {
 				JSONObject jsonObject = new JSONObject(message.getData());
 				JSONArray jsonArray = jsonObject.getJSONArray("School");
-				ArrayList<HashMap<String, String>> sTempList = AppUtil.jsonArray2ArrayList(jsonArray);
+				ArrayList<HashMap<String, String>> sTempList = AppUtil
+						.jsonArray2ArrayList(jsonArray);
 				for (HashMap<String, String> hashMap : sTempList) {
 					schoolList.add(hashMap.get("schoolName"));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
+
 			}
-			schoolAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, schoolList);
+			schoolAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_dropdown_item_1line, schoolList);
 			schoolText.setAdapter(schoolAdapter);
 			break;
 		}
-		
+
 	}
-	
+
 	@Override
-	public void onNetworkError(int taskId){
+	public void onNetworkError(int taskId) {
 		baseDialog.close();
+	}
+
+	// 开启应用服务
+	public void startService() {
+		// TODO Auto-generated method stub
+		PollingUtils.startPollingService(LoginActivity.this, C.time.pollTime,
+				RemoteService.class, C.action.remoteAction);
+
 	}
 }

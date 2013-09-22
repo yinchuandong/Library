@@ -93,13 +93,13 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f0a0027;
-        public static final int hSwebview=0x7f0a001f;
+        public static final int hSwebview=0x7f0a0020;
         public static final int head_arrowImageView=0x7f0a000f;
         public static final int head_contentLayout=0x7f0a000e;
         public static final int head_lastUpdatedTextView=0x7f0a0012;
         public static final int head_progressBar=0x7f0a0010;
         public static final int head_tipsTextView=0x7f0a0011;
-        public static final int history_list=0x7f0a001e;
+        public static final int history_list=0x7f0a001f;
         public static final int hs_author=0x7f0a0009;
         public static final int hs_return_time=0x7f0a000a;
         public static final int hs_title=0x7f0a0008;
@@ -108,14 +108,14 @@ public final class R {
         public static final int load_more_tv=0x7f0a000c;
         public static final int load_more_view=0x7f0a000b;
         public static final int loading_layout=0x7f0a000d;
-        public static final int login=0x7f0a0023;
+        public static final int login=0x7f0a0024;
         public static final int logout=0x7f0a0026;
         public static final int main_dialog_close=0x7f0a0000;
         public static final int main_dialog_loading=0x7f0a0001;
         public static final int main_dialog_text=0x7f0a0002;
         public static final int main_setting=0x7f0a0004;
         public static final int main_title=0x7f0a0003;
-        public static final int password=0x7f0a0022;
+        public static final int password=0x7f0a0023;
         public static final int r_author=0x7f0a0017;
         public static final int r_close=0x7f0a0019;
         public static final int r_item_bottom=0x7f0a0018;
@@ -124,11 +124,11 @@ public final class R {
         public static final int r_remain_day=0x7f0a0015;
         public static final int r_string=0x7f0a001a;
         public static final int r_title=0x7f0a0016;
-        public static final int remind_list=0x7f0a0024;
+        public static final int remind_list=0x7f0a001e;
         public static final int renew=0x7f0a001b;
-        public static final int school=0x7f0a0020;
+        public static final int school=0x7f0a0021;
         public static final int select=0x7f0a0025;
-        public static final int studentNumber=0x7f0a0021;
+        public static final int studentNumber=0x7f0a0022;
         public static final int tab_history=0x7f0a0007;
         public static final int tab_recommend=0x7f0a0005;
         public static final int tab_remind=0x7f0a0006;
@@ -141,36 +141,38 @@ public final class R {
         public static final int tpl_load_more=0x7f030004;
         public static final int tpl_pull_refresh_head=0x7f030005;
         public static final int tpl_remind_item=0x7f030006;
-        public static final int ui_history=0x7f030007;
-        public static final int ui_history_webview=0x7f030008;
-        public static final int ui_launcher=0x7f030009;
-        public static final int ui_login=0x7f03000a;
-        public static final int ui_recommend=0x7f03000b;
-        public static final int ui_remind=0x7f03000c;
-        public static final int ui_settings=0x7f03000d;
+        public static final int ui_alarmdetial=0x7f030007;
+        public static final int ui_history=0x7f030008;
+        public static final int ui_history_webview=0x7f030009;
+        public static final int ui_launcher=0x7f03000a;
+        public static final int ui_login=0x7f03000b;
+        public static final int ui_recommend=0x7f03000c;
+        public static final int ui_remind=0x7f03000d;
+        public static final int ui_settings=0x7f03000e;
     }
     public static final class menu {
         public static final int launcher=0x7f090000;
     }
     public static final class string {
-        public static final int action_settings=0x7f060006;
+        public static final int action_settings=0x7f060007;
         public static final int app_name=0x7f060005;
-        public static final int hello_world=0x7f060007;
+        public static final int hello_world=0x7f060008;
         public static final int history=0x7f060000;
-        public static final int login=0x7f060009;
-        public static final int login_fail=0x7f06000d;
-        public static final int logout=0x7f060010;
-        public static final int password=0x7f06000c;
-        public static final int personalNumber=0x7f06000f;
+        public static final int login=0x7f06000a;
+        public static final int login_fail=0x7f06000e;
+        public static final int logout=0x7f060011;
+        public static final int password=0x7f06000d;
+        public static final int personalNumber=0x7f060010;
         public static final int recommend=0x7f060002;
-        public static final int remain=0x7f06000e;
+        public static final int remain=0x7f06000f;
         public static final int remind=0x7f060001;
         public static final int remind_cancel=0x7f060003;
         public static final int remind_ok=0x7f060004;
-        public static final int school=0x7f06000a;
-        public static final int setting=0x7f060011;
-        public static final int studentNumber=0x7f06000b;
-        public static final int title_login=0x7f060008;
+        public static final int remote_serivice=0x7f060006;
+        public static final int school=0x7f06000b;
+        public static final int setting=0x7f060012;
+        public static final int studentNumber=0x7f06000c;
+        public static final int title_login=0x7f060009;
     }
     public static final class style {
         /** 
@@ -199,6 +201,9 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        /** <item name="android:windowBackground">@null</item>
+		<item name="android:backgroundDimEnabled">false</item> 
+         */
         public static final int base_dialog=0x7f070007;
         public static final int gw_list_view=0x7f070006;
         public static final int h_item=0x7f070005;

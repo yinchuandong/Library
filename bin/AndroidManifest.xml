@@ -91,29 +91,77 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- Alarm Receiver -->
-        <receiver
-            android:name="com.gw.library.service.AlarmReceiver"
+        <activity
+            android:name="com.gw.library.ui.AlarmDetialActivity"
             android:label="@string/app_name"
             android:theme="@style/noTitle" >
             <intent-filter>
-                <action android:name="com.gw.library.service.action" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- activity Receiver -->
+
+        <receiver
+            android:name="com.gw.library.ui.HistoryActivity$HistoryReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.action.history" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.gw.library.ui.RemindActivity$RemindReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.action.remind" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.gw.library.service.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.action.alarmreceiver" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <!-- service -->
-        <service android:name="com.gw.library.service.NotifyService" >
+        <!-- 系统启动完成后会调用 -->
+        <receiver android:name="com.gw.library.service.BootReceiver" >
             <intent-filter>
-                <action android:name="com.gw.library.service.NotifyService" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </receiver>
+
+        <!-- service -->
+        <service
+            android:name="com.gw.library.service.RemoteService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/remote_serivice" >
+            <intent-filter>
+                <action android:name="com.gw.library.service.action.remote" />
 
                 <category android:name="android.intent.category.default" />
             </intent-filter>
         </service>
-        <service android:name="com.gw.library.service.QuerySqliteService" >
+        <service
+            android:name="com.gw.library.service.AlarmNotifyService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/remote_serivice" >
             <intent-filter>
-                <action android:name="com.gw.library.service.QuerySqliteService.action" />
+                <action android:name="com.gw.library.service.action.alarm" />
 
                 <category android:name="android.intent.category.default" />
             </intent-filter>
