@@ -53,7 +53,7 @@ public class BaseDialog {
 	/**
 	 * 设置对话框数据
 	 * @param type 类型  1为加载完成; 0为正在加载，有个菊花在转
-	 * @param text 提示的文字
+	 * @param text 提示的文字, type为1时文字有效
 	 */
 	public void setData(int type, String text){
 		
@@ -77,10 +77,16 @@ public class BaseDialog {
 		}
 	}
 
+	/**
+	 * 显示对话框
+	 */
 	public void show() {
 		mDialog.show();
 	}
 	
+	/**
+	 * 关闭对话框
+	 */
 	public void close(){
 		mDialog.dismiss();
 	}

@@ -26,6 +26,8 @@ public class BaseUi extends Activity {
 	protected BaseTaskPool taskPool;
 	protected boolean showLoadBar = false;
 	protected boolean showDebugMsg = true;
+	
+	public BaseDialog baseDialog; // 基类对话框
 
 	/** Called when the activity is first created. */
 	@Override
@@ -39,6 +41,7 @@ public class BaseUi extends Activity {
 		this.taskPool = new BaseTaskPool(this);
 		// init application
 		// this.app = (BaseApp) this.getApplicationContext();
+		baseDialog = new BaseDialog(this);//实例化基类对话框
 	}
 
 	@Override
