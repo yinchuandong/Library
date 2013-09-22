@@ -6,17 +6,20 @@ import android.R.integer;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class BaseDialog {
 
 	private TextView mTextMessage;
 	private ImageView mImageClose;
+	private ProgressBar mLoading;
 	private Dialog mDialog;
 
 	public BaseDialog(Context context) {
@@ -36,9 +39,9 @@ public class BaseDialog {
 		
 		
 		
-		
-		
-		mImageClose = (ImageView) mDialog.findViewById(R.id.cs_main_dialog_close);
+		mLoading = (ProgressBar)mDialog.findViewById(R.id.main_dialog_loading);
+		mTextMessage = (TextView) mDialog.findViewById(R.id.main_dialog_text);
+		mImageClose = (ImageView) mDialog.findViewById(R.id.main_dialog_close);
 		mImageClose.setOnClickListener(new ImageView.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -53,14 +56,24 @@ public class BaseDialog {
 	 * @param text 提示的文字
 	 */
 	public void setData(int type, String text){
+		
 		switch (type) {
+		case 0:
+//			mTextMessage.setVisibility(View.GONE);
+			//显示loading的
+//			mLoading.setVisibility(View.VISIBLE);
+			Log.i("basedialog-->setdata", "text"+mTextMessage.getVisibility()+"/mloading:"+mLoading.getVisibility());
+			break;
+			
 		case 1:
-			mTextMessage = (TextView) mDialog.findViewById(R.id.cs_main_dialog_text);
+//			mLoading.setVisibility(View.GONE);
 			mTextMessage.setText(text);
+//			mTextMessage.setVisibility(View.VISIBLE);
+			Log.i("basedialog-->setdata", text);
+			Log.i("basedialog-->setdata", "text"+mTextMessage.getVisibility()+"/mloading:"+mLoading.getVisibility());
+
 			break;
-		default:
-			//显示loading的菊花
-			break;
+		
 		}
 	}
 
