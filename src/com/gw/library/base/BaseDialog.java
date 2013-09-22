@@ -35,7 +35,7 @@ public class BaseDialog {
 		window.setAttributes(wl);
 //		window.setGravity(Gravity.CENTER);
 		window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		window.setLayout(350, ViewGroup.LayoutParams.WRAP_CONTENT);
+		window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		
 		
 		
@@ -59,16 +59,16 @@ public class BaseDialog {
 		
 		switch (type) {
 		case 0:
-//			mTextMessage.setVisibility(View.GONE);
+			mTextMessage.setVisibility(View.INVISIBLE);
 			//显示loading的
-//			mLoading.setVisibility(View.VISIBLE);
+			mLoading.setVisibility(View.VISIBLE);
 			Log.i("basedialog-->setdata", "text"+mTextMessage.getVisibility()+"/mloading:"+mLoading.getVisibility());
 			break;
 			
 		case 1:
-//			mLoading.setVisibility(View.GONE);
+			mLoading.setVisibility(View.INVISIBLE);
 			mTextMessage.setText(text);
-//			mTextMessage.setVisibility(View.VISIBLE);
+			mTextMessage.setVisibility(View.VISIBLE);
 			Log.i("basedialog-->setdata", text);
 			Log.i("basedialog-->setdata", "text"+mTextMessage.getVisibility()+"/mloading:"+mLoading.getVisibility());
 

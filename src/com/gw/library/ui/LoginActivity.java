@@ -63,7 +63,7 @@ public class LoginActivity extends BaseUi {
 		loginBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				baseDialog.setData(1, "login.....");
+				baseDialog.setData(0, "login.....");
 				baseDialog.show();
 				
 				studentNumber = sNumberText.getText().toString();
