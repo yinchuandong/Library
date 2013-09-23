@@ -48,11 +48,6 @@ public class HistoryActivity extends BaseUiAuth {
 		// 初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData();
 		pullToRefresh();
-		// 注册historyReceiver
-		historyReceiver = new HistoryReceiver();
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(C.action.historyAction);
-		this.registerReceiver(historyReceiver, filter);
 
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
@@ -80,10 +75,6 @@ public class HistoryActivity extends BaseUiAuth {
 		try {
 			hList = (ArrayList<History>) AppUtil.hashMapToModel(
 					"com.gw.library.model.History", mapList);
-			// 无记录处理
-			if (hList == null || hList.size() == 0) {
-				toast("没有借阅记录,去library看看吧");
-			}
 			hListAdapter = new HistoryList(this, hList);
 			listView.setAdapter(hListAdapter);
 		} catch (Exception e) {
@@ -135,13 +126,13 @@ public class HistoryActivity extends BaseUiAuth {
 
 			}
 		});
-		
+		// 加载更多
 		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
-			
+
 			@Override
 			public void onLoadMore() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
@@ -166,12 +157,23 @@ public class HistoryActivity extends BaseUiAuth {
 
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		// 注册historyReceiver
+		historyReceiver = new HistoryReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(C.action.historyAction);
+		this.registerReceiver(historyReceiver, filter);
+
+	}
+
 	/**
 	 * 添加Receiver,接受来自后台的更新操作
 	 */
 	public class HistoryReceiver extends BroadcastReceiver {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO 显示有更新
@@ -180,19 +182,14 @@ public class HistoryActivity extends BaseUiAuth {
 	}
 
 	@Override
-	public void onStop() {
-		super.onStop();
-		try{
-			unregisterReceiver(historyReceiver);
-		}catch (Exception e) {
-			Log.i("Historyactivity-->onstop", "false");
-		}
-	}
-
-	@Override
-	protected void onDestroy() {
+	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		try {
+			unregisterReceiver(historyReceiver);
+		} catch (Exception e) {
+			Log.i("Historyactivity-->onPause", "false");
+		}
 	}
 
 }

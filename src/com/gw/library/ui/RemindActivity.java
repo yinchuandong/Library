@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.gw.library.R;
-import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
@@ -29,7 +28,6 @@ public class RemindActivity extends BaseUiAuth {
 	RemindSqlite rSqlite;
 	ArrayList<Loan> rList;
 
-	
 	RemindReceiver remindReceiver;
 	public static boolean isLoaded = false; // 是否被加载的标志
 
@@ -43,11 +41,7 @@ public class RemindActivity extends BaseUiAuth {
 
 		pullToRefresh(); // 绑定下拉刷新的事件
 		initData(); // 初始化数据
-		// 注册historyReceiver
-		remindReceiver = new RemindReceiver();
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(C.action.remindAction);
-		this.registerReceiver(remindReceiver, filter);
+
 		if (!isLoaded) {// 如果是第一次进入页面，则开始从服务器上获取数据
 			listView.displayHeader();
 			doTaskAsync(
@@ -71,10 +65,7 @@ public class RemindActivity extends BaseUiAuth {
 		try {
 			rList = (ArrayList<Loan>) AppUtil.hashMapToModel(
 					"com.gw.library.model.Loan", mapList);
-			// 无记录处理
-			if (rList == null || rList.size() == 0) {
-				toast("没有借阅记录,去library看看吧");
-			}
+
 			remindListAdapter = new RemindList(this, rList);
 			listView.setAdapter(remindListAdapter);
 		} catch (Exception e) {
@@ -103,7 +94,7 @@ public class RemindActivity extends BaseUiAuth {
 				}
 				remindListAdapter.setData(rList); // 必须调用这个方法来改变data，否者刷新无效
 				remindListAdapter.notifyDataSetChanged();
-				
+
 				isLoaded = true;// 加载完成的标志设为true
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -141,12 +132,23 @@ public class RemindActivity extends BaseUiAuth {
 		});
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		// 注册remindReceiver
+		remindReceiver = new RemindReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(C.action.remindAction);
+		this.registerReceiver(remindReceiver, filter);
+
+	}
+
 	/**
 	 * 添加Receiver,接受来自后台的更新操作
 	 */
 	public class RemindReceiver extends BroadcastReceiver {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO 显示有更新
@@ -155,9 +157,14 @@ public class RemindActivity extends BaseUiAuth {
 	}
 
 	@Override
-	public void onStop() {
+	public void onPause() {
 		super.onStop();
-		unregisterReceiver(remindReceiver);
+		try {
+			unregisterReceiver(remindReceiver);
+		} catch (Exception e) {
+			Log.i("Historyactivity-->onPause", "false");
+		}
+
 	}
 
 }
