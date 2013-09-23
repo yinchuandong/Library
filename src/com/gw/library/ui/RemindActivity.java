@@ -15,6 +15,7 @@ import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
+import com.gw.library.base.GwListView.OnLoadMoreListener;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.RemindList;
 import com.gw.library.model.Loan;
@@ -129,6 +130,16 @@ public class RemindActivity extends BaseUiAuth {
 								+ user.getPassword() + "&schoolId="
 								+ user.getSchoolId());
 			}
+		});
+		// 加载更多
+		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+			@Override
+			public void onLoadMore() {
+				// TODO Auto-generated method stub
+				toast("点击进行刷新");
+			}
+
 		});
 	}
 

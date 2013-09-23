@@ -28,11 +28,11 @@ public class HistorySqlite extends BaseSqlite{
 				History.COL_TITLE ,
 				History.COL_AUTHOR ,
 				History.COL_URL ,
-				History.COL_PUBLISHYEAR ,
-				History.COL_PAYMENT ,
-				History.COL_LIMITTIME ,
-				History.COL_RETURNTIME ,
-				History.COL_LOCATION ,
+//				History.COL_PUBLISHYEAR ,
+//				History.COL_PAYMENT ,
+//				History.COL_LIMITTIME ,
+//				History.COL_RETURNTIME ,
+//				History.COL_LOCATION ,
 		};
 		return tableColumns;
 	}
@@ -45,11 +45,11 @@ public class HistorySqlite extends BaseSqlite{
 		values.put(History.COL_TITLE, history.getTitle());
 		values.put(History.COL_AUTHOR, history.getAuthor());
 		values.put(History.COL_URL, history.getUrl());
-		values.put(History.COL_PUBLISHYEAR, history.getPublishYear());
-		values.put(History.COL_PAYMENT, history.getPayment());
-		values.put(History.COL_LIMITTIME, history.getLimitTime());
-		values.put(History.COL_RETURNTIME, history.getReturnTime());
-		values.put(History.COL_LOCATION, history.getLocation());
+//		values.put(History.COL_PUBLISHYEAR, history.getPublishYear());
+//		values.put(History.COL_PAYMENT, history.getPayment());
+//		values.put(History.COL_LIMITTIME, history.getLimitTime());
+//		values.put(History.COL_RETURNTIME, history.getReturnTime());
+//		values.put(History.COL_LOCATION, history.getLocation());
 		
 		// prepare sql
 		String whereSql = History.COL_ID + "=?";

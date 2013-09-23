@@ -17,7 +17,6 @@ import android.widget.EditText;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseAuth;
-import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;

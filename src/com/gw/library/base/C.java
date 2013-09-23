@@ -75,7 +75,7 @@ public class C {
 	 * 定义服务时间
 	 */
 	public static final class time {
-		public static final int pollTime = 30;
+		public static final long pollTime = 12 * 60 * 60 * 1000;
 		public static final long alarmTime = 24 * 60 * 60 * 1000;
 	}
 

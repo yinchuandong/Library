@@ -13,7 +13,7 @@ import com.gw.library.base.C;
 public class PollingUtils {
 
 	// 开启轮询服务
-	public static void startPollingService(Context context, int seconds,
+	public static void startPollingService(Context context, long time,
 			Class<?> cls, String action) {
 		// 获取AlarmManager系统服务
 		AlarmManager manager = (AlarmManager) context
@@ -30,7 +30,7 @@ public class PollingUtils {
 
 		// 使用AlarmManger的setRepeating方法设置定期执行的时间间隔（seconds秒）和需要执行的Service
 		manager.setRepeating(AlarmManager.ELAPSED_REALTIME, triggerAtTime,
-				seconds * 1000, pendingIntent);
+				time, pendingIntent);
 	}
 
 	// 停止轮询服务
