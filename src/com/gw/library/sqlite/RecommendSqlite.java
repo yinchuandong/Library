@@ -26,7 +26,9 @@ public class RecommendSqlite extends BaseSqlite{
 				Recommend.COL_CALLNUMBER,
 				Recommend.COL_RECOMMENDTIME,
 				Recommend.COL_URL,
-				Recommend.COL_IMAGENAME
+				Recommend.COL_COVER,
+				Recommend.COL_SCHOOLID,
+				Recommend.COL_STUDENTNUMBER
 		};
 		return columns;
 	}

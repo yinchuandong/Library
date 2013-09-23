@@ -26,11 +26,11 @@ public class RemindSqlite extends BaseSqlite{
 			Loan.COL_TITLE ,
 			Loan.COL_AUTHOR ,
 			Loan.COL_URL ,
-			Loan.COL_PUBLISHYEAR ,
-			Loan.COL_RETURNDATE ,
-			Loan.COL_PAYMENT ,
-			Loan.COL_LOCATION ,
-			Loan.COL_CALLNUMBER 
+//			Loan.COL_PUBLISHYEAR ,
+			Loan.COL_RETURNDATE 
+//			Loan.COL_PAYMENT ,
+//			Loan.COL_LOCATION ,
+//			Loan.COL_CALLNUMBER 
 		};
 		return tableColums;
 	}
@@ -39,15 +39,15 @@ public class RemindSqlite extends BaseSqlite{
 		ContentValues values = new ContentValues();
 		values.put(Loan.COL_ID, loan.getId());
 		values.put(Loan.COL_STUDENTNUMBER, loan.getStudentNumber());
-		values.put(Loan.COL_SCHOOLID	, loan.getSchoolId());
+		values.put(Loan.COL_SCHOOLID, loan.getSchoolId());
 		values.put(Loan.COL_TITLE, loan.getTitle());
 		values.put(Loan.COL_AUTHOR, loan.getAuthor());
 		values.put(Loan.COL_URL, loan.getUrl());
-		values.put(Loan.COL_PUBLISHYEAR, loan.getPublishYear());
-		values.put(Loan.COL_PAYMENT, loan.getPayment());
+//		values.put(Loan.COL_PUBLISHYEAR, loan.getPublishYear());
+//		values.put(Loan.COL_PAYMENT, loan.getPayment());
 		values.put(Loan.COL_RETURNDATE, loan.getReturnDate());
-		values.put(Loan.COL_CALLNUMBER, loan.getCallNumber());
-		values.put(Loan.COL_LOCATION, loan.getLocation());
+//		values.put(Loan.COL_CALLNUMBER, loan.getCallNumber());
+//		values.put(Loan.COL_LOCATION, loan.getLocation());
 		
 		// prepare sql
 		String whereSql = Loan.COL_ID + "=?";

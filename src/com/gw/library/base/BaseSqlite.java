@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.gw.library.model.History;
 import com.gw.library.model.Loan;
+import com.gw.library.model.Recommend;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,7 +17,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public abstract class BaseSqlite {
 
 	private static final String DB_NAME = "library.db";
-	private static final int DB_VERSION = 1;
+	private static final int DB_VERSION = 4;
 	
 	private DbHelper dbh = null;
 	private SQLiteDatabase db = null;
@@ -154,12 +155,14 @@ public abstract class BaseSqlite {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(createLoanSql());
 			db.execSQL(createHisotrySql());
+			db.execSQL(createRecommendSql());
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL(upgradeLoanSql());
 			db.execSQL(upgradeHistorySql());
+			db.execSQL(upgradeRecommendSql());
 			onCreate(db);
 		}
 	}
@@ -172,28 +175,44 @@ public abstract class BaseSqlite {
 				Loan.COL_TITLE + " text, " + 
 				Loan.COL_AUTHOR + " text, " +
 				Loan.COL_URL + " text, " +
-				Loan.COL_PUBLISHYEAR + " text, " +
-				Loan.COL_RETURNDATE + " text, " +
-				Loan.COL_PAYMENT + " text, " +
-				Loan.COL_LOCATION + " text, " +
-				Loan.COL_CALLNUMBER + " text" +
+//				Loan.COL_PUBLISHYEAR + " text, " +
+				Loan.COL_RETURNDATE + " text" +
+//				Loan.COL_PAYMENT + " text, " +
+//				Loan.COL_LOCATION + " text, " +
+//				Loan.COL_CALLNUMBER + " text" +
 			")";
 		return sql;
 	}
 	
 	protected String createHisotrySql() {
 		String sql = "CREATE TABLE history ("+
-				History.COL_ID + " text PRIARY KEY, "+
+				History.COL_ID + " text PRIMARY KEY, "+
 				History.COL_STUDENTNUMBER + " text, " +
 				History.COL_SCHOOLID + " text, " +
 				History.COL_TITLE + " text, "+
 				History.COL_AUTHOR + " text, " +
-				History.COL_URL + " text, " +
-				History.COL_PUBLISHYEAR + " text, "+
-				History.COL_PAYMENT + " text, "+
-				History.COL_LIMITTIME + " text, "+
-				History.COL_RETURNTIME + " text, "+
-				History.COL_LOCATION + " text " +
+				History.COL_URL + " text" +
+//				History.COL_PUBLISHYEAR + " text, "+
+//				History.COL_PAYMENT + " text, "+
+//				History.COL_LIMITTIME + " text, "+
+//				History.COL_RETURNTIME + " text, "+
+//				History.COL_LOCATION + " text" +
+			")";
+		return sql;
+	}
+	
+	protected String createRecommendSql() {
+		String sql = "CREATE TABLE recommend (" +
+				Recommend.COL_ID + " text PRIMARY KEY, " +
+				Recommend.COL_TITLE + " text, " +
+				Recommend.COL_AUTHOR + " text, " +
+				Recommend.COL_ISBN + " text, " +
+				Recommend.COL_CALLNUMBER + " text, " +
+				Recommend.COL_RECOMMENDTIME + " text, " +
+				Recommend.COL_URL + " text, " +
+				Recommend.COL_COVER + " text, " +
+				Recommend.COL_SCHOOLID + " text, " +
+				Recommend.COL_STUDENTNUMBER + " text" +
 			")";
 		return sql;
 	}
@@ -204,6 +223,10 @@ public abstract class BaseSqlite {
 	
 	protected String upgradeHistorySql() {
 		return "DROP TABLE IF EXISTS history";
+	}
+	
+	protected String upgradeRecommendSql() {
+		return "DROP TABLE IF EXISTS recommend";
 	}
 	
 }

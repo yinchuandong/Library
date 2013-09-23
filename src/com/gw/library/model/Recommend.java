@@ -11,7 +11,9 @@ public class Recommend extends BaseModel{
 	public final static String COL_CALLNUMBER = "callNumber";
 	public final static String COL_URL = "url";
 	public final static String COL_RECOMMENDTIME = "recommendTime";
-	public final static String COL_IMAGENAME = "imageName";
+	public final static String COL_COVER = "cover";
+	public final static String COL_SCHOOLID = "schoolId";
+	public final static String COL_STUDENTNUMBER = "studentNumber";
 
 	private String id;
 	private String title;
@@ -20,7 +22,9 @@ public class Recommend extends BaseModel{
 	private String callNumber;
 	private String url;
 	private String recommendTime;
-	private String imageName;
+	private String cover;
+	private String schoolId;
+	private String studentNumber;
 	
 	public String getId(){
 		return id;
@@ -50,8 +54,33 @@ public class Recommend extends BaseModel{
 		return recommendTime;
 	}
 	
-	public String getImageName(){
-		return imageName;
+	public String getCover(){
+		return cover;
+	}
+	
+	public String getStudentNumber(){
+		return studentNumber;
+	}
+	
+	public String getSchoolId(){
+		return schoolId;
+	}
+	
+	
+	public void setId(String id){
+		this.id = id;
+	}
+	
+	public void setAuthor(String author){
+		this.author = author;
+	}
+	
+	public void setTitle(String title){
+		this.title = title;
+	}
+	
+	public void setCover(String cover){
+		this.cover = cover;
 	}
 	
 }

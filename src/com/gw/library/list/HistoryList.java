@@ -55,7 +55,6 @@ public class HistoryList extends BaseList{
 		History hs = historyList.get(position);
 		titleView.setText(hs.getTitle());
 		authorView.setText(hs.getAuthor());
-		returnTimeView.setText(hs.getReturnTime());
 		
 		return convertView;
 	}

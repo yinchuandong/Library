@@ -5,18 +5,18 @@
     android:orientation="vertical"
     >
 	<RelativeLayout 
-	    android:id="@+id/r_item_main"
+	    android:id="@+id/rc_item_main"
 	    style="@style/h_item" 
 	    >
 	
 	    <LinearLayout 
-	        android:layout_height="52dp"
-			android:layout_width="62dp"
+	        android:layout_height="78dp"
+			android:layout_width="56dp"
 			android:layout_alignParentLeft="true"	
-			android:id="@+id/r_number"
+			android:id="@+id/rc_cover_layout"
 	        >
-	       <TextView 
-	           android:id="@+id/r_remain_day"
+	       <ImageView  
+	           android:id="@+id/rc_cover"
 	           android:text="@string/remain"
 	           android:textStyle="bold" 
 	           android:textColor="@color/red"
@@ -24,19 +24,19 @@
 	           android:layout_width="fill_parent"
 	           android:textSize="30sp"
 	           android:gravity="center"
+	           android:src="@drawable/cover_2"
 	           /> 
-	        
 	    </LinearLayout>
 	    
 		<LinearLayout
 		    android:orientation="vertical"
-		    android:layout_toRightOf="@id/r_number"
+		    android:layout_toRightOf="@+id/rc_cover_layout"
 			android:layout_width="fill_parent"
 			android:padding="10dp"
 			android:layout_height="wrap_content"
 		 >
 			<TextView 
-			    android:id="@+id/r_title"
+			    android:id="@+id/rc_title"
 				android:text="@string/remind"
 				android:textColor="#000000"
 				android:layout_width="fill_parent"
@@ -44,7 +44,7 @@
 			     />
 			
 			<TextView 
-			     android:id="@+id/r_author"
+			     android:id="@+id/rc_author"
 			     android:text="@string/remind"
 			     android:textColor="#000000"
 			     android:layout_width="fill_parent"
