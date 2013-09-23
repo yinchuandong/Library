@@ -6,8 +6,10 @@ import com.gw.library.base.BaseList;
 import com.gw.library.base.BaseUi;
 import com.gw.library.list.RemindList.RItem;
 import com.gw.library.model.Recommend;
+import com.gw.library.util.AppCache;
 import com.gw.library.R;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +66,11 @@ public class RecommendList extends BaseList{
 		Recommend model = rcList.get(position);
 		rcItem.authorView.setText(model.getAuthor());
 		rcItem.titleView.setText(model.getTitle());
-		rcItem.coverView.setImageResource(R.drawable.cover_1);
+//		rcItem.coverView.setImageResource(R.drawable.cover_1);
+		Bitmap cover = AppCache.getImage(model.getCover());
+		if (cover != null) {
+			rcItem.coverView.setImageBitmap(cover);
+		}
 		
 		return convertView;
 	}

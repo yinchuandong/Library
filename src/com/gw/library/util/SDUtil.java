@@ -70,11 +70,15 @@ public class SDUtil {
 		// 不存在则创建目录
 		File dir = new File(C.dir.cover);
 		if (!dir.exists()) {
-			dir.mkdirs();
+			if (dir.mkdirs()) {
+				Log.d(TAG, "-->makdir true");
+			}else{
+				Log.d(TAG, "-->makdir false");
+			}
 		}
 		// 保存图片
 		try {
-			String realFileName = C.dir.cover + "/" + fileName;
+			String realFileName = C.dir.cover + "/"+fileName;
 			File file = new File(realFileName);
 			file.createNewFile();
 			OutputStream outStream = new FileOutputStream(file);

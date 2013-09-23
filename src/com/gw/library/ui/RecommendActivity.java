@@ -31,6 +31,8 @@ public class RecommendActivity extends BaseUiAuth {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_recommend);
 		
+		this.setHandler(new RecommendHandler(this));//设置handler
+		
 		rcList = new ArrayList<Recommend>(); //实例化暂存list
 		rcSqlite = new RecommendSqlite(this); //实例化数据库
 		
@@ -44,6 +46,7 @@ public class RecommendActivity extends BaseUiAuth {
 			Recommend temp = new Recommend();
 			temp.setAuthor("作者"+i);
 			temp.setTitle("书名"+i);
+			temp.setCover("cover_1.png");
 			rcList.add(temp);
 		}
 		rcListAdapter = new RecommendList(this, rcList);
@@ -56,7 +59,7 @@ public class RecommendActivity extends BaseUiAuth {
 			
 			@Override
 			public void onRefresh() {
-				
+				loadImage("cover_1.png");
 			}
 		});
 		
@@ -72,12 +75,12 @@ public class RecommendActivity extends BaseUiAuth {
 	
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message){
-		
+		listView.onRefreshComplete();
 	}
 	
 	@Override
 	public void onNetworkError(int taskId){
-		
+		listView.onRefreshComplete();
 	}
 
 	/**
@@ -96,9 +99,11 @@ public class RecommendActivity extends BaseUiAuth {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg); //继承父类的handleMessage方法
+			listView.onRefreshComplete();
 			
 			switch (msg.what) {
 			case BaseTask.LOAD_IMAGE:
+				rcListAdapter.notifyDataSetChanged();
 				break;
 
 			default:
