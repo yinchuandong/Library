@@ -95,7 +95,8 @@ public class RecommendActivity extends BaseUiAuth {
 
 		@Override
 		public void handleMessage(Message msg) {
-
+			super.handleMessage(msg); //继承父类的handleMessage方法
+			
 			switch (msg.what) {
 			case BaseTask.LOAD_IMAGE:
 				break;
