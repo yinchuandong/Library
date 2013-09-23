@@ -20,6 +20,8 @@ public class C {
 		public static final String login = "User/login";
 		public static final String register = "User/register";
 		public static final String schoolList = "School/getSchoolList";
+		
+		public static final String imgBase = "http://lib.yinchuandong.com/Upload/";
 	}
 
 	/**
@@ -52,7 +54,7 @@ public class C {
 	}
 
 	public static final class dir {
-		public static final String base = "/sdcard/library";
+		public static final String base = "/sdcard/gwlibrary";
 		public static final String cover = base + "/cover";
 	}
 
