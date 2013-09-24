@@ -60,7 +60,7 @@ public class HistoryActivity extends BaseUiAuth {
 		if (!isLoaded) {// 如果是第一次进入页面，则开始从服务器上获取数据
 			listView.displayHeader();
 			doTaskAsync(
-					1,
+					C.task.historyList,
 					C.api.historyList + "?studentNumber="
 							+ user.getStudentNumber() + "&password="
 							+ user.getPassword() + "&schoolId="
@@ -99,24 +99,52 @@ public class HistoryActivity extends BaseUiAuth {
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		Log.i("remindactivity====ontaskcomplete", taskId + "");
-		try {
-			String whereSql = History.COL_STUDENTNUMBER + "=?";
-			String[] whereParams = new String[] { user.getStudentNumber() };
-			hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
-			hList = (ArrayList<History>) message.getDataList("History");
-			for (History history : hList) {
-				hSqlite.updateHistory(history);
-				Log.i("studentNumber", history.getStudentNumber());
+		switch (taskId) {
+		case C.task.historyList://第一次加载或者下拉刷新
+			try {
+				String whereSql = History.COL_STUDENTNUMBER + "=?";
+				String[] whereParams = new String[] { user.getStudentNumber() };
+				hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
+				hList = (ArrayList<History>) message.getDataList("History");
+				for (History history : hList) {
+					hSqlite.updateHistory(history);
+					Log.i("studentNumber", history.getStudentNumber());
+				}
+				hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
+				hListAdapter.notifyDataSetChanged();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				toast(e.getMessage());
+			}finally{
+				isLoaded = true; // 加载完成的标志设为true
+				listView.onRefreshComplete(); // 刷新完成
 			}
-			hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
-			hListAdapter.notifyDataSetChanged();
-			listView.onRefreshComplete(); // 刷新完成
-
-			isLoaded = true; // 加载完成的标志设为true
-		} catch (Exception e) {
-			e.printStackTrace();
-			toast(e.getMessage());
+			
+			break;
+		case C.task.historyListPage://翻页
+			try {
+				ArrayList<History> tempList = (ArrayList<History>) message.getDataList("History");
+				for (History history : tempList) {
+					String whereSql = History.COL_ID + "=?";
+					String[] whereParams = new String[] { history.getId() };
+					if (!hSqlite.exists(whereSql, whereParams)) {
+						hList.add(history);
+						hSqlite.updateHistory(history);
+					}
+					Log.i("studentNumber", history.getStudentNumber());
+				}
+				hListAdapter.setData(hList);
+				hListAdapter.notifyDataSetChanged();
+				listView.setSelection(hList.size());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				listView.onLoadMoreComplete();
+			}
+			break;
 		}
+		
 	}
 
 	/**
@@ -127,7 +155,7 @@ public class HistoryActivity extends BaseUiAuth {
 			public void onRefresh() {
 
 				doTaskAsync(
-						1,
+						C.task.historyList,
 						C.api.historyList + "?studentNumber="
 								+ user.getStudentNumber() + "&password="
 								+ user.getPassword() + "&schoolId="
@@ -140,8 +168,16 @@ public class HistoryActivity extends BaseUiAuth {
 			
 			@Override
 			public void onLoadMore() {
-				// TODO Auto-generated method stub
-				
+				int page = (int)Math.ceil(hList.size()/4.0);
+				page++;
+				doTaskAsync(
+						C.task.historyListPage,
+						C.api.historyList + "?studentNumber="
+								+ user.getStudentNumber() + "&password="
+								+ user.getPassword() + "&schoolId="
+								+ user.getSchoolId() + "&p="
+								+ page
+						);
 			}
 		});
 	}

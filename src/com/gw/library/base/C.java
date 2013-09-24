@@ -11,8 +11,8 @@ public class C {
 	public static final class api {
 
 		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
-		// public static final String base =
-		// "http://192.168.233.101/libraryServer/index.php/Api/";
+//		 public static final String base =
+//		 "http://192.168.233.15/libraryServer/index.php/Api/";
 
 		public static final String historyList = "Loan/getHistoryList";
 		public static final String loanList = "Loan/getLoanList";
@@ -51,6 +51,8 @@ public class C {
 		public static final int notice = 1005; // 通知
 		public static final int schoolList = 1006; // 获得学校的名称
 		public static final int renew = 1007; // 续借
+		public static final int historyListPage = 1008; //借阅历史-->翻页
+		public static final int loanListPage = 1009; //借阅历史-->翻页
 	}
 
 	public static final class dir {
