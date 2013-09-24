@@ -414,6 +414,10 @@ public class GwListView extends ListView implements OnScrollListener {
 		this.mLoadMoreListener = onLoadMoreListener;
 	}
 	
+	public void onLoadMoreComplete(){
+		this.updateLoadMoreViewState(OnLoadMoreViewState.LMVS_NORMAL);
+	}
+	
 	// 初始化footview试图
 	private void initLoadMoreView(Context context)
 	{

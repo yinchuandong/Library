@@ -62,4 +62,8 @@ public class HistoryList extends BaseList{
 	public void setData(ArrayList<History> historyList){
 		this.historyList = historyList;
 	}
+	
+	public void addData(History history){
+		this.historyList.add(history);
+	}
 }
