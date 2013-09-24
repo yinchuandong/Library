@@ -10,11 +10,11 @@ public class C {
 	 */
 	public static final class api {
 
-//		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
-		 public static final String base =
-		 "http://192.168.233.15/libraryServer/index.php/Api/";
+		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
+//		 public static final String base =
+//		 "http://192.168.233.15/libraryServer/index.php/Api/";
 
-		public static final String historyList = "Loan/getHistoryList2";
+		public static final String historyList = "Loan/getHistoryList";
 		public static final String loanList = "Loan/getLoanList";
 		public static final String renew = "Loan/renew";
 		public static final String login = "User/login";
