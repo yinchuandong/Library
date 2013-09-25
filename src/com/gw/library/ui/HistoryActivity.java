@@ -116,6 +116,11 @@ public class HistoryActivity extends BaseUiAuth {
 				listView.onRefreshComplete(); // 刷新完成
 				loadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
 				listView.updateLoadMoreViewState(loadMoreState);// 设置显示加载更多
+
+				doTaskAsync(C.task.updateIsbn, C.api.updateIsbn
+						+ "?studentNumber=" + user.getStudentNumber()
+						+ "&schoolId=" + user.getSchoolId());
+
 			}
 
 			break;

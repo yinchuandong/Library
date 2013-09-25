@@ -6,6 +6,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
 
 import com.gw.library.base.C;
@@ -49,14 +50,19 @@ public class PollingUtils {
 	// 开启闹钟服务
 	public static void startAlarmService(Context context, Class<?> cls,
 			String action) {
+		SharedPreferences sharedPreferences = AppUtil
+				.getSharedPreferences(context);
+		int day = sharedPreferences.getInt("before_day", C.time.day);
+		int hour = sharedPreferences.getInt("hour", C.time.hour);
+		int minute = sharedPreferences.getInt("minute", C.time.minute);
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
 		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
-		calendar.set(Calendar.HOUR_OF_DAY, C.time.hour);
-		calendar.set(Calendar.MINUTE, C.time.minute);
-		calendar.set(Calendar.SECOND, C.time.second);
+		calendar.set(Calendar.HOUR_OF_DAY, hour);
+		calendar.set(Calendar.MINUTE, minute);
+		calendar.set(Calendar.SECOND, 0);
 		// 获取AlarmManager系统服务
 		AlarmManager manager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
@@ -70,7 +76,7 @@ public class PollingUtils {
 		long triggerAtTime = calendar.getTimeInMillis();
 		long currenAtTime = System.currentTimeMillis();
 		if (currenAtTime > triggerAtTime) {
-			triggerAtTime += C.time.alarmTime;
+			triggerAtTime += (C.time.alarmTime * day);
 		}
 		manager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtTime,
 				C.time.alarmTime, pendingIntent);

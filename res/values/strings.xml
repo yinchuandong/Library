@@ -18,8 +18,9 @@
     <string name="password">密码</string>
     <string name="login_fail">登录失败，账号或密码有误</string>
     <string name="remain">32</string>
-    <string name="personalNumber">个人学号</string>
-    <string name="logout">退出登录</string>
+    <string name="personalNumber">管理账号</string>
+    <string name="logout">注销</string>
+    <string name="save">保存</string>
     <string name="setting">设置</string>
     <string name="set_remind">设置提前提醒时间</string>
 
