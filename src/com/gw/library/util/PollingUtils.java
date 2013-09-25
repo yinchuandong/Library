@@ -54,9 +54,9 @@ public class PollingUtils {
 		calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
 		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
-		calendar.set(Calendar.HOUR_OF_DAY, 9);
-		calendar.set(Calendar.MINUTE, 30);
-		calendar.set(Calendar.SECOND, 00);
+		calendar.set(Calendar.HOUR_OF_DAY, C.time.hour);
+		calendar.set(Calendar.MINUTE, C.time.minute);
+		calendar.set(Calendar.SECOND, C.time.second);
 		// 获取AlarmManager系统服务
 		AlarmManager manager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.util.Log;
 
 public class AlarmReceiver extends BroadcastReceiver {
 	MediaPlayer alarmPlayer;
@@ -18,6 +19,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
 		alarmPlayer = new MediaPlayer();
+		Log.v("message----------------->", "收到广播");
 		try {
 			alarmPlayer.setDataSource(context, RingtoneManager
 					.getDefaultUri(RingtoneManager.TYPE_RINGTONE));

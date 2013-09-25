@@ -1,120 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg"
-     >
+    android:orientation="vertical" >
 
-    <TextView 
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:text="@string/setting"
-        android:gravity="center"
-        android:textSize="26sp"
-        android:textColor="@color/white"
         android:layout_marginTop="20dp"
-       />
-    
+        android:gravity="center"
+        android:text="@string/setting"
+        android:textColor="@color/white"
+        android:textSize="26sp" />
+
     <!-- 个人学号 -->
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:layout_marginTop="35dp"
-	    android:layout_marginLeft="20dp"
-	    android:layout_marginRight="20dp"
-	    android:background="@drawable/input"
-	    >
-	    <TextView 
-	        android:layout_width="70dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/personalNumber"
-	        android:textSize="14sp"
-	        android:gravity="center"	        
-	        />
-	    <EditText 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="20111003632"
-	        android:layout_marginLeft="8dp"
-	        android:textColor="@color/fontColor"
-	        />
-	</LinearLayout>
 
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:layout_marginLeft="20dp"
-	    android:layout_marginRight="20dp"
-	    android:layout_marginTop="20dp"
-	    android:background="@drawable/input"
-	    >
-	    <TextView 
-	        android:layout_width="70dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/remind"
-	        android:textSize="14sp"
-	        android:gravity="center"
-	        />
-	    <Spinner
-	        android:id="@+id/select"
-	        android:layout_height="50dp"
-	        android:layout_width="wrap_content"
-	        android:entries="@+array/options"
-	        />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/input"
+        android:orientation="horizontal" >
 
-	   <!--   <EditText 
-	        android:layout_width="190dp"
-	        android:layout_height="wrap_content"
-	        android:text=""
-	        android:inputType="text"
-	        android:layout_marginLeft="8dp"
-	        android:textColor="@color/fontColor"
-	    />
-	    <Button 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-        	android:background="@drawable/select"
-	        />
--->
-	</LinearLayout>
-	
-	<!-- 退出登陆 -->
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="20dp"
-	    android:layout_marginRight="20dp"
-	    android:layout_marginTop="50dp"
-	    android:gravity="center_horizontal"
-	    >
-	    <Button 
-	        android:id="@+id/logout"
-		    android:layout_width="160dp"
-		    android:layout_height="40dp"
-		    android:text="@string/logout"
-		    android:textSize="20sp"
-		    android:background="@drawable/btn_login"
-		    android:layout_marginBottom="50dp"
-	    />
-	</LinearLayout>
-	
-	<RelativeLayout 
-	        android:layout_width="fill_parent"
-	        android:layout_height="match_parent"      
-	    >
-	    <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:background="@drawable/logo"
-	        android:layout_centerHorizontal="true"
-	        android:layout_centerVertical="true"
-	       
-	        />
-	    
-	</RelativeLayout>
-	
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/personalNumber"
+            android:textSize="14sp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="20111003632"
+            android:textColor="@color/fontColor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/remind"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/select"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:entries="@+array/options"
+            android:prompt="@string/set_remind" />
+    </LinearLayout>
+
+    <!-- 退出登陆 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal" >
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/btn_login"
+            android:text="@string/logout"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/logo" />
+    </RelativeLayout>
+
 </LinearLayout>

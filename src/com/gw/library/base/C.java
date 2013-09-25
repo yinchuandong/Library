@@ -20,7 +20,7 @@ public class C {
 		public static final String login = "User/login";
 		public static final String register = "User/register";
 		public static final String schoolList = "School/getSchoolList";
-		
+
 		public static final String imgBase = "http://lib.yinchuandong.com/Upload/";
 	}
 
@@ -79,6 +79,9 @@ public class C {
 	public static final class time {
 		public static final long pollTime = 12 * 60 * 60 * 1000;
 		public static final long alarmTime = 24 * 60 * 60 * 1000;
+		public static final int hour = 10;
+		public static final int minute = 25;
+		public static final int second = 00;
 	}
 
 }

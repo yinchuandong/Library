@@ -392,7 +392,11 @@ public class GwListView extends ListView implements OnScrollListener {
 	private TextView mLoadMoreTextView;
 	private View mLoadingView;
 	private OnLoadMoreListener mLoadMoreListener;
-	private int mLoadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
+	private int mLoadMoreState = OnLoadMoreViewState.LMVS_FIRST;
+
+	public int getMLoadMoreState() {
+		return mLoadMoreState;
+	}
 
 	public interface OnLoadMoreViewState {
 		int LMVS_NORMAL = 0; // 正常情况
