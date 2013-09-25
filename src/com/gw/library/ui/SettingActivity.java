@@ -27,8 +27,10 @@ import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.model.RemindTime;
 import com.gw.library.model.User;
+import com.gw.library.service.AlarmNotifyService;
 import com.gw.library.sqlite.RemindTimeSqlite;
 import com.gw.library.util.AppUtil;
+import com.gw.library.util.PollingUtils;
 
 public class SettingActivity extends BaseUiAuth {
 
@@ -167,6 +169,9 @@ public class SettingActivity extends BaseUiAuth {
 		editor.putInt("hourOfDay", hourOfDay);
 		editor.putInt("minute", minute);
 		editor.commit();
+		// 重新设置闹钟服务
+		PollingUtils.startAlarmService(SettingActivity.this,
+				AlarmNotifyService.class, C.action.alarmAction);
 	}
 
 	// 用于检测时间设定器的变化
