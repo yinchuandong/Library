@@ -119,6 +119,12 @@ public class HistoryActivity extends BaseUiAuth {
 			}finally{
 				isLoaded = true; // 加载完成的标志设为true
 				listView.onRefreshComplete(); // 刷新完成
+				doTaskAsync(
+						C.task.updateIsbn, 
+						C.api.updateIsbn + 
+						"?studentNumber=" + user.getStudentNumber() +
+						"&schoolId=" + user.getSchoolId()
+					);
 			}
 			
 			break;

@@ -70,7 +70,7 @@ public class BaseUiAuth extends BaseUi {
 			mainSettingBtn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					overlay(SettingActivity.class);
+					forward(SettingActivity.class);
 				}
 			});
 		}
