@@ -413,6 +413,10 @@ public class GwListView extends ListView implements OnScrollListener {
 		this.mLoadMoreListener = onLoadMoreListener;
 	}
 
+	public void onLoadMoreComplete() {
+		this.updateLoadMoreViewState(OnLoadMoreViewState.LMVS_NORMAL);
+	}
+
 	// 初始化footview试图
 	private void initLoadMoreView(Context context) {
 		mFootView = LayoutInflater.from(context).inflate(
@@ -465,7 +469,7 @@ public class GwListView extends ListView implements OnScrollListener {
 		case OnLoadMoreViewState.LMVS_OVER:
 			mLoadingView.setVisibility(View.GONE);
 			mLoadMoreTextView.setVisibility(View.VISIBLE);
-			mLoadMoreTextView.setText("尼玛的数据都加载完了！");
+			mLoadMoreTextView.setText("数据已经为你加载完毕");
 			break;
 		case OnLoadMoreViewState.LMVS_FIRST:
 			mLoadingView.setVisibility(View.GONE);

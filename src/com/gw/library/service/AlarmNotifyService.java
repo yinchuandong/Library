@@ -45,12 +45,14 @@ public class AlarmNotifyService extends BaseService {
 		super.onCreate();
 		rList = new ArrayList<Loan>();
 		rSqlite = new RemindSqlite(this);
+		Log.v("alarm", "--------------->>>创建AlarmService成功！");
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
+
 		try {
 			getOverList();
 			if (rList != null && rList.size() > 0) {
@@ -64,6 +66,7 @@ public class AlarmNotifyService extends BaseService {
 			Log.v("AlarmNotifyServer-------------->",
 					"Alarm闹钟异常--------------》error");
 		}
+		Log.v("alarm", "--------------->>>开启AlarmService成功！");
 	}
 
 	/**
@@ -75,8 +78,6 @@ public class AlarmNotifyService extends BaseService {
 		ArrayList<HashMap<String, String>> mapList = rSqlite.query(
 				"select * from loan where studentNumber=?",
 				new String[] { user.getStudentNumber() });
-		Log.v("returnDate", "查询数据的获得的正在借阅的书本------------------------------->"
-				+ mapList.size());
 
 		if (mapList.size() > 0) {
 			try {
@@ -89,13 +90,11 @@ public class AlarmNotifyService extends BaseService {
 					}
 
 				}
-				Log.v("remind", "有需要提醒的书籍，一共1-----------》" + rList.size());
+				Log.v("remind", "有需要提醒的书籍，一共-----------》" + rList.size());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
-			rList = null;
 		}
 	}
 
@@ -144,7 +143,7 @@ public class AlarmNotifyService extends BaseService {
 		CharSequence tickerText = "Library";
 		Context context = getApplicationContext();
 		CharSequence contentTitle = "Library Remind ";
-		CharSequence contentText = "亲，你有即将到期的图书哟!!赶紧的查看,免得又要扣费哟！";
+		CharSequence contentText = "亲，你有即将到期的图书哟!!赶紧的查看,免得要扣费哟！";
 
 		long when = System.currentTimeMillis();
 

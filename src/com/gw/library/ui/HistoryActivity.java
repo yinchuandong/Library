@@ -36,7 +36,7 @@ public class HistoryActivity extends BaseUiAuth {
 	HistorySqlite hSqlite = new HistorySqlite(this);
 
 	public static boolean isLoaded = false; // 是否被加载的标志
-	private boolean isFromLoadMore = false;// 标记加载 更多
+
 	HistoryReceiver historyReceiver;
 	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
 
@@ -58,7 +58,7 @@ public class HistoryActivity extends BaseUiAuth {
 		if (!isLoaded) {// 如果是第一次进入页面，则开始从服务器上获取数据
 			listView.displayHeader();
 			doTaskAsync(
-					1,
+					C.task.historyList,
 					C.api.historyList + "?studentNumber="
 							+ user.getStudentNumber() + "&password="
 							+ user.getPassword() + "&schoolId="
@@ -94,37 +94,56 @@ public class HistoryActivity extends BaseUiAuth {
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		Log.i("remindactivity====ontaskcomplete", taskId + "");
-		try {
-			String whereSql = History.COL_STUDENTNUMBER + "=?";
-			String[] whereParams = new String[] { user.getStudentNumber() };
-			hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
-			hList = (ArrayList<History>) message.getDataList("History");
-			for (History history : hList) {
-				hSqlite.updateHistory(history);
-				Log.i("studentNumber", history.getStudentNumber());
-			}
-			if (hList == null || hList.size() == 0) {// 无记录处理
-				toast("没有借阅记录,去library看看吧");
-			} else {
+		switch (taskId) {
+		case C.task.historyList:// 第一次加载或者下拉刷新
+			try {
+				String whereSql = History.COL_STUDENTNUMBER + "=?";
+				String[] whereParams = new String[] { user.getStudentNumber() };
+				hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
+				hList = (ArrayList<History>) message.getDataList("History");
+				for (History history : hList) {
+					hSqlite.updateHistory(history);
+					Log.i("studentNumber", history.getStudentNumber());
+				}
 				hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
 				hListAdapter.notifyDataSetChanged();
-				listView.onRefreshComplete(); // 刷新完成
 
+			} catch (Exception e) {// 没有借阅历史的情况
+				e.printStackTrace();
+
+			} finally {
 				isLoaded = true; // 加载完成的标志设为true
-				if (isLoaded) {
-					loadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
-					listView.updateLoadMoreViewState(loadMoreState);
-				}
-				if (isFromLoadMore) {// 数据都加载完毕
-					loadMoreState = OnLoadMoreViewState.LMVS_OVER;
-					listView.updateLoadMoreViewState(loadMoreState);
-				}
+				listView.onRefreshComplete(); // 刷新完成
+				loadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
+				listView.updateLoadMoreViewState(loadMoreState);// 设置显示加载更多
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			toast(e.getMessage());
+			break;
+		case C.task.historyListPage:// 翻页
+			try {
+				ArrayList<History> tempList = (ArrayList<History>) message
+						.getDataList("History");
+				for (History history : tempList) {
+					String whereSql = History.COL_ID + "=?";
+					String[] whereParams = new String[] { history.getId() };
+					if (!hSqlite.exists(whereSql, whereParams)) {
+						hList.add(history);
+						hSqlite.updateHistory(history);
+					}
+					Log.i("studentNumber", history.getStudentNumber());
+				}
+				hListAdapter.setData(hList);
+				hListAdapter.notifyDataSetChanged();
+				listView.setSelection(hList.size());
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				listView.onLoadMoreComplete();
+			}
+			break;
+
 		}
+
 	}
 
 	/**
@@ -134,12 +153,10 @@ public class HistoryActivity extends BaseUiAuth {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
 
-				doTaskAsync(
-						1,
-						C.api.historyList + "?studentNumber="
-								+ user.getStudentNumber() + "&password="
-								+ user.getPassword() + "&schoolId="
-								+ user.getSchoolId());
+				doTaskAsync(C.task.historyList, C.api.historyList
+						+ "?studentNumber=" + user.getStudentNumber()
+						+ "&password=" + user.getPassword() + "&schoolId="
+						+ user.getSchoolId());
 
 			}
 		});
@@ -149,13 +166,13 @@ public class HistoryActivity extends BaseUiAuth {
 			@Override
 			public void onLoadMore() {
 
-				doTaskAsync(
-						1,
-						C.api.historyList + "?studentNumber="
-								+ user.getStudentNumber() + "&password="
-								+ user.getPassword() + "&schoolId="
-								+ user.getSchoolId());
-				isFromLoadMore = true;
+				int page = (int) Math.ceil(hList.size() / 4.0);
+				page++;
+				doTaskAsync(C.task.historyListPage, C.api.historyList
+						+ "?studentNumber=" + user.getStudentNumber()
+						+ "&password=" + user.getPassword() + "&schoolId="
+						+ user.getSchoolId() + "&p=" + page);
+
 			}
 		});
 	}

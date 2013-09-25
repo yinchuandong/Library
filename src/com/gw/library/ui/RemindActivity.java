@@ -16,6 +16,7 @@ import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
 import com.gw.library.base.GwListView.OnLoadMoreListener;
+import com.gw.library.base.GwListView.OnLoadMoreViewState;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.RemindList;
 import com.gw.library.model.Loan;
@@ -31,13 +32,14 @@ public class RemindActivity extends BaseUiAuth {
 
 	RemindReceiver remindReceiver;
 	public static boolean isLoaded = false; // 是否被加载的标志
+	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
 
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_remind);
 		listView = (GwListView) findViewById(R.id.remind_list);
-
+		listView.updateLoadMoreViewState(loadMoreState);
 		rSqlite = new RemindSqlite(this);
 
 		pullToRefresh(); // 绑定下拉刷新的事件
@@ -96,11 +98,14 @@ public class RemindActivity extends BaseUiAuth {
 				remindListAdapter.setData(rList); // 必须调用这个方法来改变data，否者刷新无效
 				remindListAdapter.notifyDataSetChanged();
 
-				isLoaded = true;// 加载完成的标志设为true
-			} catch (Exception e) {
+			} catch (Exception e) {// 没有需要提醒的情况
 				e.printStackTrace();
+
 			} finally {
+				isLoaded = true;// 加载完成的标志设为true
 				listView.onRefreshComplete(); // 刷新完成
+				loadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
+				listView.updateLoadMoreViewState(loadMoreState);// 设置显示加载更多
 				baseDialog.close();
 			}
 			break;
@@ -137,10 +142,18 @@ public class RemindActivity extends BaseUiAuth {
 			@Override
 			public void onLoadMore() {
 				// TODO Auto-generated method stub
-				toast("点击进行刷新");
+				// int page = (int) Math.ceil(rList.size() / 4.0);
+				// page++;
+				// doTaskAsync(
+				// C.task.loanList,
+				// C.api.loanList + "?studentNumber="
+				// + user.getStudentNumber() + "&password="
+				// + user.getPassword() + "&schoolId="
+				// + user.getSchoolId() + "&p=" + page);
 			}
 
 		});
+
 	}
 
 	@Override
@@ -152,7 +165,8 @@ public class RemindActivity extends BaseUiAuth {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(C.action.remindAction);
 		this.registerReceiver(remindReceiver, filter);
-
+		// 设置加载更多
+		listView.updateLoadMoreViewState(loadMoreState);
 	}
 
 	/**

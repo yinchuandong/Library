@@ -22,6 +22,7 @@
     <!-- 在sdcard中创建/删除文件的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
     </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVER_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -155,7 +156,7 @@
             android:name="com.gw.library.service.RemoteService"
             android:enabled="true"
             android:exported="false"
-            android:label="@string/alarm_server" >
+            android:label="@string/remote_serivice" >
             <intent-filter>
                 <action android:name="com.gw.library.service.action.remote" />
 
@@ -166,7 +167,7 @@
             android:name="com.gw.library.service.AlarmNotifyService"
             android:enabled="true"
             android:exported="false"
-            android:label="@string/remote_serivice" >
+            android:label="@string/alarm_server" >
             <intent-filter>
                 <action android:name="com.gw.library.service.action.alarm" />
 
