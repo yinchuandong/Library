@@ -53,7 +53,7 @@ public class PollingUtils {
 		SharedPreferences sharedPreferences = AppUtil
 				.getSharedPreferences(context);
 		int day = sharedPreferences.getInt("before_day", C.time.day);
-		int hour = sharedPreferences.getInt("hour", C.time.hour);
+		int hour = sharedPreferences.getInt("hourOfDay", C.time.hour);
 		int minute = sharedPreferences.getInt("minute", C.time.minute);
 
 		Calendar calendar = Calendar.getInstance();

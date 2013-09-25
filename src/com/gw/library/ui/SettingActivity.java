@@ -1,10 +1,12 @@
 package com.gw.library.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -16,12 +18,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.TimePicker.OnTimeChangedListener;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseAuth;
 import com.gw.library.base.BaseUiAuth;
+import com.gw.library.base.C;
 import com.gw.library.model.RemindTime;
 import com.gw.library.model.User;
 import com.gw.library.sqlite.RemindTimeSqlite;
@@ -32,31 +35,44 @@ public class SettingActivity extends BaseUiAuth {
 	Button logoutBtn;
 	Button saveBtn;
 	Spinner spinner;
+
 	TimePicker timePicker;
 	private int before_day;// 提前时间
+	private int rHourOfDay;// 提醒时间
+	private int rMinute;// 提醒时间
+
 	SharedPreferences sharedPreferences;
 	EditText editText;
+	TextView timeEditText;
 	RemindTimeSqlite remindTimeSqlite;
 	ArrayList<RemindTime> tList;
 	User user = BaseAuth.getUser();
+
+	Calendar calendar = Calendar.getInstance();// 全局使用的calendar
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_settings);
 
 		sharedPreferences = AppUtil.getSharedPreferences(SettingActivity.this);
-		before_day = sharedPreferences.getInt("before_day", 0);
+		before_day = sharedPreferences.getInt("before_day", C.time.day);
+		rHourOfDay = sharedPreferences.getInt("hourOfDay", C.time.hour);
+		rMinute = sharedPreferences.getInt("minute", C.time.minute);
+
 		// remindTimeSqlite = new RemindTimeSqlite(this);
 		// before_day = getUserRemindTime(user);
 
 		// timePicker = (TimePicker) this.findViewById(R.id.timepicker);
 		logoutBtn = (Button) findViewById(R.id.logout);
 		spinner = (Spinner) this.findViewById(R.id.select);
-		spinner.setSelection(before_day);
+
 		saveBtn = (Button) this.findViewById(R.id.save);
-		timePicker = (TimePicker) this.findViewById(R.id.timerpicker);
 		editText = (EditText) this.findViewById(R.id.s_number);
+		timeEditText = (TextView) this.findViewById(R.id.time_EditText);// 显示时间
+		// 显示系统数值
+		spinner.setSelection(before_day);
 		editText.setText(user.getStudentNumber());
+		timeEditText.setText(rHourOfDay + "时" + rMinute + "分");
 		bindEvent();
 	}
 
@@ -88,13 +104,13 @@ public class SettingActivity extends BaseUiAuth {
 
 			}
 		});
-		saveBtn.setOnClickListener(new OnClickListener() {
+		saveBtn.setOnClickListener(new OnClickListener() {// 保存按钮统一保存
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				// remindTimeSqlite.updateTime(tList.get(0));
-				saveToAPP(before_day);
+				saveToAPP(before_day, rHourOfDay, rMinute);
 				if (before_day == 0) {
 					toast("提醒时间已经修改为当天");
 				} else {
@@ -103,26 +119,16 @@ public class SettingActivity extends BaseUiAuth {
 
 			}
 		});
-
-	}
-
-	// 使用TimePicker
-	private void createTimePicker(Context context) {
-		TimePicker tpicker = new TimePicker(context);
-		Calendar calendar = Calendar.getInstance();
-		tpicker.setIs24HourView(true);// 设置是否为24小时制
-		tpicker.setCurrentHour(calendar.get(Calendar.HOUR_OF_DAY));
-		tpicker.setCurrentMinute(calendar.get(Calendar.MINUTE));
-		tpicker.setOnTimeChangedListener(new OnTimeChangedListener() {
+		timeEditText.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				new TimePickerDialog(SettingActivity.this, listener2,
+						Calendar.HOUR_OF_DAY, Calendar.MINUTE, true).show();// 调用对话框的TimerPicker
 			}
-
 		});
-		tpicker.showContextMenu();
+
 	}
 
 	// 查询当前用户提醒的日期
@@ -155,10 +161,29 @@ public class SettingActivity extends BaseUiAuth {
 	}
 
 	// 写到应用中区
-	private void saveToAPP(int day) {
+	private void saveToAPP(int day, int hourOfDay, int minute) {
 		Editor editor = sharedPreferences.edit();
 		editor.putInt("before_day", day);
+		editor.putInt("hourOfDay", hourOfDay);
+		editor.putInt("minute", minute);
 		editor.commit();
 	}
+
+	// 用于检测时间设定器的变化
+	private TimePickerDialog.OnTimeSetListener listener2 = new TimePickerDialog.OnTimeSetListener() {
+
+		@SuppressLint("SimpleDateFormat")
+		@Override
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			// TODO Auto-generated method stub
+			calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);// 设置小时
+			rHourOfDay = hourOfDay;
+			calendar.set(Calendar.MINUTE, minute);// 调用分钟
+			rMinute = minute;
+			// 调用更新时间显示
+			SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH时mm分");// 创建时间格式
+			timeEditText.setText(simpleTimeFormat.format(calendar.getTime()));// 按照最新的calendar更新时间显示;//
+		}
+	};
 
 }

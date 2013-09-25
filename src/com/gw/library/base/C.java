@@ -90,8 +90,8 @@ public class C {
 		public static final long pollTime = 12 * 60 * 60 * 1000;
 		public static final long alarmTime = 24 * 60 * 60 * 1000;
 		public static final int day = 0;
-		public static final int hour = 5;
-		public static final int minute = 21;
+		public static final int hour = 8;
+		public static final int minute = 30;
 	}
 
 }
