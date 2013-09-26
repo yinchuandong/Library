@@ -47,19 +47,25 @@ public class RemoteService extends BaseService {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-
+		Log.v("Remote", "--------------->>>创建RemoteService成功！");
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
+
 		update();
+		Log.v("login Statue", "登录状态-----------------》" + BaseAuth.isLogin());
+
 		if (updateFlag == true && alarmFlag == false && BaseAuth.isLogin()) {
 			PollingUtils.startAlarmService(RemoteService.this,
 					AlarmNotifyService.class, C.action.alarmAction);
 			alarmFlag = true;// 仅仅创建 一次
+			Log.v("alarm", "--------------->>>尝试创建AlarmService成功！");
 		}
+		Log.v("alarm", "--------------->>>开启RemoteService成功！");
+
 	}
 
 	// 更新
@@ -67,6 +73,7 @@ public class RemoteService extends BaseService {
 		getLoanList();
 		getHistoryList();
 		updateFlag = true;
+		Log.v("alarm", "--------------->>>更新成功！alarmFlag为" + alarmFlag);
 	}
 
 	// 远程获取历史消息
@@ -140,6 +147,7 @@ public class RemoteService extends BaseService {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				Log.v("Loan Eception", "Loan中没有需要提醒的书本" + e.getMessage());
 			}
 
 			break;

@@ -22,7 +22,9 @@ public class AlarmDetialActivity extends BaseUi {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_alarmdetial);
-		rList = (ArrayList<Loan>) getIntent().getSerializableExtra("rList");
+		Bundle bundle = getIntent().getExtras();
+		rList = (ArrayList<Loan>) bundle.get("rList");
+
 		listView = (GwListView) findViewById(R.id.remind_list);
 		remindListAdapter = new RemindList(this, rList);
 		listView.setAdapter(remindListAdapter);

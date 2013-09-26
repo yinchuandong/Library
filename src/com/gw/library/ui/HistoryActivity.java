@@ -19,6 +19,7 @@ import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
 import com.gw.library.base.GwListView.OnLoadMoreListener;
+import com.gw.library.base.GwListView.OnLoadMoreViewState;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.HistoryList;
 import com.gw.library.model.History;
@@ -35,7 +36,9 @@ public class HistoryActivity extends BaseUiAuth {
 	HistorySqlite hSqlite = new HistorySqlite(this);
 
 	public static boolean isLoaded = false; // 是否被加载的标志
+
 	HistoryReceiver historyReceiver;
+	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,17 +46,12 @@ public class HistoryActivity extends BaseUiAuth {
 		setContentView(R.layout.ui_history);
 
 		listView = (GwListView) findViewById(R.id.history_list);
+		listView.updateLoadMoreViewState(loadMoreState);
 		// 实例化数据库
 		hSqlite = new HistorySqlite(this);
 		// 初始化数据，打开页面的时候从手机数据库里面获取数据
 		initData();
 		pullToRefresh();
-		// 注册historyReceiver
-		historyReceiver = new HistoryReceiver();
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(C.action.historyAction);
-		this.registerReceiver(historyReceiver, filter);
-
 		// 为每一个列表项添加动作事件
 		listView.setOnItemClickListener(new HSItemListener());
 
@@ -80,10 +78,7 @@ public class HistoryActivity extends BaseUiAuth {
 		try {
 			hList = (ArrayList<History>) AppUtil.hashMapToModel(
 					"com.gw.library.model.History", mapList);
-			// 无记录处理
-			if (hList == null || hList.size() == 0) {
-				toast("没有借阅记录,去library看看吧");
-			}
+
 			hListAdapter = new HistoryList(this, hList);
 			listView.setAdapter(hListAdapter);
 		} catch (Exception e) {
@@ -100,7 +95,7 @@ public class HistoryActivity extends BaseUiAuth {
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		Log.i("remindactivity====ontaskcomplete", taskId + "");
 		switch (taskId) {
-		case C.task.historyList://第一次加载或者下拉刷新
+		case C.task.historyList:// 第一次加载或者下拉刷新
 			try {
 				String whereSql = History.COL_STUDENTNUMBER + "=?";
 				String[] whereParams = new String[] { user.getStudentNumber() };
@@ -112,25 +107,27 @@ public class HistoryActivity extends BaseUiAuth {
 				}
 				hListAdapter.setData(hList); // 必须调用这个方法来改变data，否者刷新无效
 				hListAdapter.notifyDataSetChanged();
-				
-			} catch (Exception e) {
+
+			} catch (Exception e) {// 没有借阅历史的情况
 				e.printStackTrace();
-				toast(e.getMessage());
-			}finally{
+
+			} finally {
 				isLoaded = true; // 加载完成的标志设为true
 				listView.onRefreshComplete(); // 刷新完成
-				doTaskAsync(
-						C.task.updateIsbn, 
-						C.api.updateIsbn + 
-						"?studentNumber=" + user.getStudentNumber() +
-						"&schoolId=" + user.getSchoolId()
-					);
+				loadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
+				listView.updateLoadMoreViewState(loadMoreState);// 设置显示加载更多
+
+				doTaskAsync(C.task.updateIsbn, C.api.updateIsbn
+						+ "?studentNumber=" + user.getStudentNumber()
+						+ "&schoolId=" + user.getSchoolId());
+
 			}
-			
+
 			break;
-		case C.task.historyListPage://翻页
+		case C.task.historyListPage:// 翻页
 			try {
-				ArrayList<History> tempList = (ArrayList<History>) message.getDataList("History");
+				ArrayList<History> tempList = (ArrayList<History>) message
+						.getDataList("History");
 				for (History history : tempList) {
 					String whereSql = History.COL_ID + "=?";
 					String[] whereParams = new String[] { history.getId() };
@@ -145,12 +142,13 @@ public class HistoryActivity extends BaseUiAuth {
 				listView.setSelection(hList.size());
 			} catch (Exception e) {
 				e.printStackTrace();
-			}finally{
+			} finally {
 				listView.onLoadMoreComplete();
 			}
 			break;
+
 		}
-		
+
 	}
 
 	/**
@@ -160,30 +158,26 @@ public class HistoryActivity extends BaseUiAuth {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
 
-				doTaskAsync(
-						C.task.historyList,
-						C.api.historyList + "?studentNumber="
-								+ user.getStudentNumber() + "&password="
-								+ user.getPassword() + "&schoolId="
-								+ user.getSchoolId());
+				doTaskAsync(C.task.historyList, C.api.historyList
+						+ "?studentNumber=" + user.getStudentNumber()
+						+ "&password=" + user.getPassword() + "&schoolId="
+						+ user.getSchoolId());
 
 			}
 		});
-		
+
 		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
-			
+
 			@Override
 			public void onLoadMore() {
-				int page = (int)Math.ceil(hList.size()/4.0);
+
+				int page = (int) Math.ceil(hList.size() / 4.0);
 				page++;
-				doTaskAsync(
-						C.task.historyListPage,
-						C.api.historyList + "?studentNumber="
-								+ user.getStudentNumber() + "&password="
-								+ user.getPassword() + "&schoolId="
-								+ user.getSchoolId() + "&p="
-								+ page
-						);
+				doTaskAsync(C.task.historyListPage, C.api.historyList
+						+ "?studentNumber=" + user.getStudentNumber()
+						+ "&password=" + user.getPassword() + "&schoolId="
+						+ user.getSchoolId() + "&p=" + page);
+
 			}
 		});
 	}
@@ -208,12 +202,24 @@ public class HistoryActivity extends BaseUiAuth {
 
 	}
 
+	@Override
+	public void onResume() {
+
+		super.onResume();
+		// 注册historyReceiver
+		historyReceiver = new HistoryReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(C.action.historyAction);
+		this.registerReceiver(historyReceiver, filter);
+		// 设置加载更多
+		listView.updateLoadMoreViewState(loadMoreState);
+	}
+
 	/**
 	 * 添加Receiver,接受来自后台的更新操作
 	 */
 	public class HistoryReceiver extends BroadcastReceiver {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO 显示有更新
@@ -222,11 +228,11 @@ public class HistoryActivity extends BaseUiAuth {
 	}
 
 	@Override
-	public void onStop() {
+	public void onPause() {
 		super.onStop();
-		try{
+		try {
 			unregisterReceiver(historyReceiver);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			Log.i("Historyactivity-->onstop", "false");
 		}
 	}

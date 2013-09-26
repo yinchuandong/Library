@@ -70,8 +70,8 @@ public class GwListView extends ListView implements OnScrollListener {
 
 	public GwListView(Context context) {
 		super(context);
-		init(context); //加载头部下拉刷新
-		initLoadMoreView(context); //加载底部上拉更多
+		init(context); // 加载头部下拉刷新
+		initLoadMoreView(context); // 加载底部上拉更多
 	}
 
 	public GwListView(Context context, AttributeSet attrs) {
@@ -377,142 +377,119 @@ public class GwListView extends ListView implements OnScrollListener {
 		lastUpdatedTextView.setText("最近更新:" + date);
 		super.setAdapter(adapter);
 	}
-	
+
 	/**
-	 * 显示出headerView
-	 * 当页面刚开始加载时调用
+	 * 显示出headerView 当页面刚开始加载时调用
 	 */
-	public void displayHeader(){
+	public void displayHeader() {
 		state = REFRESHING;
 		changeHeaderViewByState();
 	}
-	
-	
-	
-	
-	//================上拉加载更多====================================
-	private View mFootView;								
+
+	// ================上拉加载更多====================================
+	private View mFootView;
 	private View mLoadMoreView;
 	private TextView mLoadMoreTextView;
 	private View mLoadingView;
 	private OnLoadMoreListener mLoadMoreListener;
-	private int mLoadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
-	
-	
-	public interface OnLoadMoreViewState
-	{
-		int LMVS_NORMAL= 0;
-		int LMVS_LOADING = 1;				//  加载状态
-		int LMVS_OVER = 2;					//  结束状态
+	private int mLoadMoreState = OnLoadMoreViewState.LMVS_FIRST;
+
+	public int getMLoadMoreState() {
+		return mLoadMoreState;
 	}
-	
-	public interface OnLoadMoreListener{
+
+	public interface OnLoadMoreViewState {
+		int LMVS_NORMAL = 0; // 正常情况
+		int LMVS_LOADING = 1; // 加载状态
+		int LMVS_OVER = 2; // 结束状态
+		int LMVS_FIRST = 3; // 应用第一次使用
+	}
+
+	public interface OnLoadMoreListener {
 		public void onLoadMore();
 	}
-	
-	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener){
+
+	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
 		this.mLoadMoreListener = onLoadMoreListener;
 		if (mLoadMoreListener != null) {
 			addFooterView(mFootView);
 		}
 	}
-	
-	public void onLoadMoreComplete(){
+
+	public void onLoadMoreComplete() {
 		this.updateLoadMoreViewState(OnLoadMoreViewState.LMVS_NORMAL);
 	}
-	
+
 	// 初始化footview试图
-	private void initLoadMoreView(Context context)
-	{
-		mFootView= LayoutInflater.from(context).inflate(R.layout.tpl_load_more, null);
-		
+	private void initLoadMoreView(Context context) {
+		mFootView = LayoutInflater.from(context).inflate(
+				R.layout.tpl_load_more, null);
+
 		mLoadMoreView = mFootView.findViewById(R.id.load_more_view);
-		
-		mLoadMoreTextView = (TextView) mFootView.findViewById(R.id.load_more_tv);
-		
+
+		mLoadMoreTextView = (TextView) mFootView
+				.findViewById(R.id.load_more_tv);
+
 		mLoadingView = mFootView.findViewById(R.id.loading_layout);
-	
+
 		mLoadMoreView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				switch(v.getId())
-				{
-					case R.id.load_more_view:
-					{
-						if (mLoadMoreListener != null && mLoadMoreState == OnLoadMoreViewState.LMVS_NORMAL)
-						{
-							updateLoadMoreViewState(OnLoadMoreViewState.LMVS_LOADING);
-							mLoadMoreListener.onLoadMore();
-						}
+				switch (v.getId()) {
+				case R.id.load_more_view: {
+					if (mLoadMoreListener != null
+							&& mLoadMoreState == OnLoadMoreViewState.LMVS_NORMAL) {
+						updateLoadMoreViewState(OnLoadMoreViewState.LMVS_LOADING);
+						mLoadMoreListener.onLoadMore();
 					}
+				}
 					break;
 				}
 			}
 		});
+
 		if (mLoadMoreListener != null) {
 			addFooterView(mFootView);
 		}
+
 	}
-	
+
 	/**
 	 * 更新footview视图
+	 * 
 	 * @param state
 	 */
-	private void updateLoadMoreViewState(int state)
-	{
-		switch(state)
-		{
-			case OnLoadMoreViewState.LMVS_NORMAL:
-				mLoadingView.setVisibility(View.GONE);
-				mLoadMoreTextView.setVisibility(View.VISIBLE);
-				mLoadMoreTextView.setText("查看更多");
-				break;
-			case OnLoadMoreViewState.LMVS_LOADING:
-				mLoadingView.setVisibility(View.VISIBLE);
-				mLoadMoreTextView.setVisibility(View.GONE);
-				break;
-			case OnLoadMoreViewState.LMVS_OVER:
-				mLoadingView.setVisibility(View.GONE);
-				mLoadMoreTextView.setVisibility(View.VISIBLE);
-				mLoadMoreTextView.setText("尼玛的数据都加载完了！");
-				break;
-				default:
-					break;
+	public void updateLoadMoreViewState(int state) {
+		switch (state) {
+
+		case OnLoadMoreViewState.LMVS_NORMAL:
+			mLoadingView.setVisibility(View.GONE);
+			mLoadMoreTextView.setVisibility(View.VISIBLE);
+			mLoadMoreTextView.setText("查看更多");
+			break;
+		case OnLoadMoreViewState.LMVS_LOADING:
+			mLoadingView.setVisibility(View.VISIBLE);
+			mLoadMoreTextView.setVisibility(View.GONE);
+			break;
+		case OnLoadMoreViewState.LMVS_OVER:
+			mLoadingView.setVisibility(View.GONE);
+			mLoadMoreTextView.setVisibility(View.VISIBLE);
+			mLoadMoreTextView.setText("数据已经为你加载完毕");
+			break;
+		case OnLoadMoreViewState.LMVS_FIRST:
+			mLoadingView.setVisibility(View.GONE);
+			mLoadMoreTextView.setVisibility(View.GONE);
+			break;
+		default:
+			break;
 		}
-		
+
 		mLoadMoreState = state;
 	}
 
-		
-	public void removeFootView()
-	{
+	public void removeFootView() {
 		removeFooterView(mFootView);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -17,7 +17,6 @@ import android.widget.EditText;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseAuth;
-import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
@@ -83,6 +82,7 @@ public class LoginActivity extends BaseUi {
 	 */
 	public void checkIsExistedCookie() {
 		if (BaseAuth.isLogin()) {
+			startService();// 开启服务
 			forward(HistoryActivity.class);
 		} else {
 			HashMap<String, String> userInfo = BaseAuth.getUserInfo(this);
@@ -90,6 +90,7 @@ public class LoginActivity extends BaseUi {
 			if (spStudentNumber != "" && !spStudentNumber.equals("")) {
 				BaseAuth.setLogin(true);
 				BaseAuth.saveUserInfo(this, userInfo);
+				startService();// 开启服务
 				forward(HistoryActivity.class);
 			}
 		}
@@ -110,10 +111,9 @@ public class LoginActivity extends BaseUi {
 					userInfo.put("password", password);
 					BaseAuth.setLogin(true);
 					BaseAuth.saveUserInfo(this, userInfo);
-
+					startService();// 开启服务
 					forward(HistoryActivity.class);
-					// 开启服务
-					startService();
+
 				} else {
 					baseDialog.setData(1, message.getInfo());
 				}

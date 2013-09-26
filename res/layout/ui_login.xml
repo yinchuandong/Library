@@ -64,7 +64,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="20111003632"
+            android:text="20111003635"
             android:textColor="@color/fontColor" />
     </LinearLayout>
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:inputType="textPassword"
-            android:text="yin543211"
+            android:text="250037"
             android:textColor="@color/fontColor" />
     </LinearLayout>
 

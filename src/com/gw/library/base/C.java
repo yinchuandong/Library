@@ -18,12 +18,11 @@ public class C {
 		public static final String loanList = "Loan/getLoanList";
 		public static final String recommendList = "Recommend/getRecommendList";
 		public static final String renew = "Loan/renew";
-		public static final String updateIsbn = "Loan/updateIsbn";//更新历史列表的isbn
+		public static final String updateIsbn = "Loan/updateIsbn";// 更新历史列表的isbn
 		public static final String login = "User/login";
 		public static final String register = "User/register";
 		public static final String schoolList = "School/getSchoolList";
-		
-		
+
 		public static final String imgBase = "http://lib.yinchuandong.com/Upload/";
 	}
 
@@ -54,11 +53,13 @@ public class C {
 		public static final int notice = 1005; // 通知
 		public static final int schoolList = 1006; // 获得学校的名称
 		public static final int renew = 1007; // 续借
-		public static final int historyListPage = 1008; //借阅历史-->翻页
-		public static final int loanListPage = 1009; //借阅历史-->翻页
-		public static final int updateIsbn = 1010; //借阅历史-->更新isbn
-		public static final int recommendList = 1011; //图书推荐
-		public static final int recommendListPage = 1012;//图书推荐-->翻页
+
+		public static final int historyListPage = 1008; // 借阅历史-->翻页
+		public static final int loanListPage = 1009; // 借阅历史-->翻页
+		public static final int updateIsbn = 1010; // 借阅历史-->更新isbn
+		public static final int recommendList = 1011; // 图书推荐
+		public static final int recommendListPage = 1012;// 图书推荐-->翻页
+
 	}
 
 	public static final class dir {
@@ -85,8 +86,12 @@ public class C {
 	 * 定义服务时间
 	 */
 	public static final class time {
-		public static final int pollTime = 30;
+
+		public static final long pollTime = 12 * 60 * 60 * 1000;
 		public static final long alarmTime = 24 * 60 * 60 * 1000;
+		public static final int day = 0;
+		public static final int hour = 8;
+		public static final int minute = 30;
 	}
 
 }
