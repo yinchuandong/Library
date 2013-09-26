@@ -174,10 +174,15 @@ public class RemindActivity extends BaseUiAuth {
 	 */
 	public class RemindReceiver extends BroadcastReceiver {
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO 显示有更新
-			toast("" + intent.getIntExtra("numb", 5));
+			if (intent.getAction().equals(C.action.remindAction)) {
+				// 取消闹钟
+				Intent intent2 = new Intent(C.action.alarmStopAction);
+				sendBroadcast(intent2);
+			}
 		}
 	}
 

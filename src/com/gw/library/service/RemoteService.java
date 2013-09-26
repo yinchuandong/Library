@@ -71,7 +71,7 @@ public class RemoteService extends BaseService {
 	// 更新
 	public void update() {
 		getLoanList();
-		getHistoryList();
+		// getHistoryList();
 		updateFlag = true;
 		Log.v("alarm", "--------------->>>更新成功！alarmFlag为" + alarmFlag);
 	}

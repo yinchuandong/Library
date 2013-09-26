@@ -23,7 +23,7 @@ import com.gw.library.base.C;
 import com.gw.library.model.Loan;
 import com.gw.library.model.User;
 import com.gw.library.sqlite.RemindSqlite;
-import com.gw.library.ui.AlarmDetialActivity;
+import com.gw.library.ui.RemindActivity;
 import com.gw.library.util.AppUtil;
 
 /**
@@ -149,9 +149,12 @@ public class AlarmNotifyService extends BaseService {
 
 		Notification notification = new Notification(icon, tickerText, when);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
+		// 发送给RemindActivity的接收器
+		Intent intent = new Intent(C.action.remindAction);
+		sendBroadcast(intent);
+		// 点击消息后跳转页面
 		Intent notificationIntent = new Intent(AlarmNotifyService.this,
-				AlarmDetialActivity.class);
+				RemindActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("rList", rList);
 		notificationIntent.putExtras(bundle);
@@ -162,5 +165,6 @@ public class AlarmNotifyService extends BaseService {
 		notification.setLatestEventInfo(context, contentTitle, contentText,
 				contentIntent);
 		mNotificationManager.notify(2, notification);
+
 	}
 }
