@@ -92,7 +92,7 @@ public final class R {
         public static final int tab_remind_hover=0x7f020025;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0030;
+        public static final int action_settings=0x7f0a0031;
         public static final int hSwebview=0x7f0a0025;
         public static final int head_arrowImageView=0x7f0a000f;
         public static final int head_contentLayout=0x7f0a000e;
@@ -109,7 +109,7 @@ public final class R {
         public static final int load_more_view=0x7f0a000b;
         public static final int loading_layout=0x7f0a000d;
         public static final int login=0x7f0a0029;
-        public static final int logout=0x7f0a002f;
+        public static final int logout=0x7f0a0030;
         public static final int main_dialog_close=0x7f0a0000;
         public static final int main_dialog_loading=0x7f0a0001;
         public static final int main_dialog_text=0x7f0a0002;
@@ -132,15 +132,16 @@ public final class R {
         public static final int recommend_list=0x7f0a002a;
         public static final int remind_list=0x7f0a0023;
         public static final int renew=0x7f0a0020;
-        public static final int s_number=0x7f0a002b;
-        public static final int save=0x7f0a002e;
+        public static final int s_back=0x7f0a002b;
+        public static final int s_number=0x7f0a002c;
+        public static final int save=0x7f0a002f;
         public static final int school=0x7f0a0026;
-        public static final int select=0x7f0a002c;
+        public static final int select=0x7f0a002d;
         public static final int studentNumber=0x7f0a0027;
         public static final int tab_history=0x7f0a0007;
         public static final int tab_recommend=0x7f0a0005;
         public static final int tab_remind=0x7f0a0006;
-        public static final int time_EditText=0x7f0a002d;
+        public static final int time_EditText=0x7f0a002e;
     }
     public static final class layout {
         public static final int main_dialog=0x7f030000;

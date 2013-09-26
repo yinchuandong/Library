@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ public class SettingActivity extends BaseUiAuth {
 
 	Button logoutBtn;
 	Button saveBtn;
+	Button backBtn;
 	Spinner spinner;
 
 	TimePicker timePicker;
@@ -67,7 +69,7 @@ public class SettingActivity extends BaseUiAuth {
 		// timePicker = (TimePicker) this.findViewById(R.id.timepicker);
 		logoutBtn = (Button) findViewById(R.id.logout);
 		spinner = (Spinner) this.findViewById(R.id.select);
-
+		backBtn = (Button)findViewById(R.id.s_back);
 		saveBtn = (Button) this.findViewById(R.id.save);
 		editText = (EditText) this.findViewById(R.id.s_number);
 		timeEditText = (TextView) this.findViewById(R.id.time_EditText);// 显示时间
@@ -79,6 +81,22 @@ public class SettingActivity extends BaseUiAuth {
 	}
 
 	private void bindEvent() {
+		backBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Bundle bundle = getIntent().getExtras(); 
+				String lastActivity = bundle.getString("lastActivity");
+				if (lastActivity.equals("RecommendActivity")) {
+					forward(RecommendActivity.class);
+				}else if (lastActivity.equals("HistoryActivity")) {
+					forward(HistoryActivity.class);
+				}else {
+					forward(RemindActivity.class);
+				}
+			}
+		});
+		
 		// 绑定退出事件
 		logoutBtn.setOnClickListener(new OnClickListener() {
 			@Override

@@ -3,7 +3,6 @@ package com.gw.library.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
