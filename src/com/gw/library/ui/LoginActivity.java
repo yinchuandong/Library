@@ -83,7 +83,7 @@ public class LoginActivity extends BaseUi {
 	public void checkIsExistedCookie() {
 		if (BaseAuth.isLogin()) {
 			startService();// 开启服务
-			forward(HistoryActivity.class);
+			forward(RemindActivity.class);
 		} else {
 			HashMap<String, String> userInfo = BaseAuth.getUserInfo(this);
 			String spStudentNumber = userInfo.get("studentNumber");
@@ -91,7 +91,7 @@ public class LoginActivity extends BaseUi {
 				BaseAuth.setLogin(true);
 				BaseAuth.saveUserInfo(this, userInfo);
 				startService();// 开启服务
-				forward(HistoryActivity.class);
+				forward(RemindActivity.class);
 			}
 		}
 
@@ -103,6 +103,7 @@ public class LoginActivity extends BaseUi {
 		case C.task.login: // 登陆的任务
 			try {
 				if (message.getStatus().equals("1")) {
+					baseDialog.close();
 					JSONObject jsonObject = new JSONObject(message.getData());
 					JSONObject userObject = jsonObject.getJSONObject("User");
 					HashMap<String, String> userInfo = AppUtil
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseUi {
 					BaseAuth.setLogin(true);
 					BaseAuth.saveUserInfo(this, userInfo);
 					startService();// 开启服务
-					forward(HistoryActivity.class);
+					forward(RemindActivity.class);
 
 				} else {
 					baseDialog.setData(1, message.getInfo());
