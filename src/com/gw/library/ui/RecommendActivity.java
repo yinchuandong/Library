@@ -133,6 +133,7 @@ public class RecommendActivity extends BaseUiAuth {
 				e.printStackTrace();
 				toast(e.getMessage());
 			}finally{
+				isLoaded = true;
 				listView.onRefreshComplete();
 			}
 			break;
