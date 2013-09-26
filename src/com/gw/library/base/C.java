@@ -77,7 +77,7 @@ public class C {
 		public static final String remoteAction = "com.gw.library.service.action.remote";
 		public static final String remindAction = "com.gw.library.service.action.remind";
 		public static final String historyAction = "com.gw.library.service.action.history";
-		public static final String alarmAction = "com.gw.library.service.action.alarm";
+		public static final String alarmAction = "com.gw.library.service.action.alarmreceiver";
 		public static final String alarmStopAction = "com.gw.library.service.action.alarmStop";
 		public static final String alarmReceiverAction = "com.gw.library.service.action.alarmreceiver";
 

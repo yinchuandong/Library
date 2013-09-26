@@ -138,7 +138,7 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.gw.library.service.action.alarmreceiver" />
-
+				<action android:name="com.gw.library.service.action.alarmStop" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>

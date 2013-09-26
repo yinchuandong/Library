@@ -20,14 +20,16 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
+		Log.v("AlarmReceiver-->onReceive", intent.getAction());
+		
 		if (intent.getAction().equals(C.action.alarmAction)) {
 			alarmPlayer = new MediaPlayer();
 			Log.v("message----------------->", "收到广播");
 			try {
 				alarmPlayer.setDataSource(context, RingtoneManager
 						.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
-				alarmPlayer.prepare();
-				alarmPlayer.start();
+//				alarmPlayer.prepare();
+//				alarmPlayer.start();
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -45,7 +47,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 		} else if (intent.getAction().equals(C.action.alarmStopAction)) {
 			if (alarmPlayer != null) {
 				alarmPlayer.stop();
+				Log.v("message----------------->", "停止广播22222");
 			}
+			Log.v("message----------------->", "停止广播");
 		}
 
 	}
