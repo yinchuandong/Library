@@ -187,8 +187,9 @@ public class SettingActivity extends BaseUiAuth {
 		editor.putInt("hourOfDay", hourOfDay);
 		editor.putInt("minute", minute);
 		editor.commit();
+
 		// 停止之前的闹钟服务
-		PollingUtils.stopAlarmService(SettingActivity.this,
+		PollingUtils.stopAlarmService(new LoginActivity().getContext(),
 				AlarmNotifyService.class, C.action.alarmAction);
 		// 重新设置闹钟服务
 		PollingUtils.startAlarmService(SettingActivity.this,

@@ -98,8 +98,5 @@ public class PollingUtils {
 				intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		// 取消正在执行的服务
 		manager.cancel(pendingIntent);
-		// 停止服务
-		context.stopService(intent);
-
 	}
 }

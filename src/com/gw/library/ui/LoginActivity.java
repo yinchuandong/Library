@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -156,5 +157,9 @@ public class LoginActivity extends BaseUi {
 		PollingUtils.startPollingService(LoginActivity.this, C.time.pollTime,
 				RemoteService.class, C.action.remoteAction);
 
+	}
+
+	public Context getContext() {
+		return LoginActivity.this;
 	}
 }
