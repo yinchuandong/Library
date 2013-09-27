@@ -172,16 +172,21 @@ public class RemindList extends BaseList {
 
 			@Override
 			public void onClick(View arg0) {
-				baseUi.baseDialog.setData(0, null);
-				baseUi.baseDialog.show();// 显示对话框
+				if (BaseAuth.isLogin()) {
+					baseUi.baseDialog.setData(0, null);
+					baseUi.baseDialog.show();// 显示对话框
 
-				HashMap<String, String> form = new HashMap<String, String>();
-				User user = BaseAuth.getUser();
-				form.put("studentNumber", user.getStudentNumber());
-				form.put("schoolId", user.getSchoolId());
-				form.put("password", user.getPassword());
-				form.put("books", remindList.get(position).getId());
-				baseUi.doTaskAsync(C.task.renew, C.api.renew, form);
+					HashMap<String, String> form = new HashMap<String, String>();
+					User user = BaseAuth.getUser();
+					form.put("studentNumber", user.getStudentNumber());
+					form.put("schoolId", user.getSchoolId());
+					form.put("password", user.getPassword());
+					form.put("books", remindList.get(position).getId());
+					baseUi.doTaskAsync(C.task.renew, C.api.renew, form);
+				} else {
+					baseUi.baseDialog.setData(0, "请登录");
+				}
+
 			}
 		});
 

@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,7 +68,7 @@ public class SettingActivity extends BaseUiAuth {
 		// timePicker = (TimePicker) this.findViewById(R.id.timepicker);
 		logoutBtn = (Button) findViewById(R.id.logout);
 		spinner = (Spinner) this.findViewById(R.id.select);
-		backBtn = (Button)findViewById(R.id.s_back);
+		backBtn = (Button) findViewById(R.id.s_back);
 		saveBtn = (Button) this.findViewById(R.id.save);
 		editText = (EditText) this.findViewById(R.id.s_number);
 		timeEditText = (TextView) this.findViewById(R.id.time_EditText);// 显示时间
@@ -82,21 +81,23 @@ public class SettingActivity extends BaseUiAuth {
 
 	private void bindEvent() {
 		backBtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				Bundle bundle = getIntent().getExtras(); 
+				Bundle bundle = getIntent().getExtras();
 				String lastActivity = bundle.getString("lastActivity");
 				if (lastActivity.equals("RecommendActivity")) {
 					forward(RecommendActivity.class);
-				}else if (lastActivity.equals("HistoryActivity")) {
+				} else if (lastActivity.equals("HistoryActivity")) {
 					forward(HistoryActivity.class);
-				}else {
+				} else if (lastActivity.equals("RemindActivity")) {
+					forward(RemindActivity.class);
+				} else {
 					forward(RemindActivity.class);
 				}
 			}
 		});
-		
+
 		// 绑定退出事件
 		logoutBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -115,7 +116,6 @@ public class SettingActivity extends BaseUiAuth {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				before_day = position;
-
 			}
 
 			@Override
@@ -187,6 +187,9 @@ public class SettingActivity extends BaseUiAuth {
 		editor.putInt("hourOfDay", hourOfDay);
 		editor.putInt("minute", minute);
 		editor.commit();
+		// 停止之前的闹钟服务
+		PollingUtils.stopAlarmService(SettingActivity.this,
+				AlarmNotifyService.class, C.action.alarmAction);
 		// 重新设置闹钟服务
 		PollingUtils.startAlarmService(SettingActivity.this,
 				AlarmNotifyService.class, C.action.alarmAction);
@@ -205,6 +208,7 @@ public class SettingActivity extends BaseUiAuth {
 			rMinute = minute;
 			// 调用更新时间显示
 			SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("HH时mm分");// 创建时间格式
+
 			timeEditText.setText(simpleTimeFormat.format(calendar.getTime()));// 按照最新的calendar更新时间显示;//
 		}
 	};

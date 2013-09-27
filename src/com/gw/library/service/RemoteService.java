@@ -51,7 +51,7 @@ public class RemoteService extends BaseService {
 	}
 
 	@Override
-	public void onStart(Intent intent, int startId) {
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
 
@@ -65,7 +65,7 @@ public class RemoteService extends BaseService {
 			Log.v("alarm", "--------------->>>尝试创建AlarmService成功！");
 		}
 		Log.v("alarm", "--------------->>>开启RemoteService成功！");
-
+		return START_REDELIVER_INTENT;
 	}
 
 	// 更新
@@ -169,6 +169,17 @@ public class RemoteService extends BaseService {
 			sendIntent.putExtra("numb", numb);
 		}
 		sendBroadcast(sendIntent);
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		Intent localIntent = new Intent();
+
+		localIntent.setClass(this, RemoteService.class); // 销毁时重新启动当前的Service
+		this.startService(localIntent);
+
 	}
 
 }

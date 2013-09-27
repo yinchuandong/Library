@@ -3,9 +3,6 @@ package com.gw.library.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import junit.framework.Test;
-
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,13 +35,12 @@ public class RemindActivity extends BaseUiAuth {
 	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
 
 	public void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_remind);
 		listView = (GwListView) findViewById(R.id.remind_list);
 		listView.updateLoadMoreViewState(loadMoreState);
 		rSqlite = new RemindSqlite(this);
-		
+
 		pullToRefresh(); // 绑定下拉刷新的事件
 		initData(); // 初始化数据
 
@@ -181,20 +177,20 @@ public class RemindActivity extends BaseUiAuth {
 	 */
 	public static class RemindReceiver extends BroadcastReceiver {
 
-		public RemindReceiver(){
-			
+		public RemindReceiver() {
+
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO 显示有更新
 			if (intent.getAction().equals(C.action.remindAction)) {
 				// 取消闹钟
-//				Intent intent2 = new Intent(C.action.alarmStopAction);
-////				sendBroadcast(intent2);
-//				Activity activity = new Activity();
-//				activity.sendBroadcast(intent2);
+				// Intent intent2 = new Intent(C.action.alarmStopAction);
+				// // sendBroadcast(intent2);
+				// Activity activity = new Activity();
+				// activity.sendBroadcast(intent2);
 			}
 			Log.i("RemindReceiver--->onreceive", intent.getAction());
 		}
