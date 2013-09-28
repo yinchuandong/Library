@@ -29,7 +29,6 @@
 	    </LinearLayout>
 	    
 		<LinearLayout
-		    android:id="@+id/rc_info_layout"
 		    android:orientation="vertical"
 		    android:layout_toRightOf="@+id/rc_cover_layout"
 			android:layout_width="fill_parent"
@@ -53,28 +52,6 @@
 			     />
 		</LinearLayout>
 		
-		
-		<LinearLayout
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal"
-		    android:gravity="center"
-		    android:background="@color/grey_bg"
-		    android:visibility="visible"
-		    android:layout_below="@+id/rc_cover_layout"
-		    >
-		
-			<TextView
-			    android:id="@+id/rc_intro"
-			    android:layout_width="fill_parent"
-			    android:layout_height="80dp"
-			    android:gravity="center"
-			    android:text="简介"
-			    android:textColor="#888888"
-			    android:textSize="12sp"
-			     />
-
-		</LinearLayout>
 		
 	</RelativeLayout>
 	

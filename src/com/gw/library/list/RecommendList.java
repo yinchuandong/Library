@@ -66,8 +66,6 @@ public class RecommendList extends BaseList{
 			rcItem.authorView = (TextView)convertView.findViewById(R.id.rc_author);
 			rcItem.titleView = (TextView)convertView.findViewById(R.id.rc_title);
 			rcItem.coverView = (ImageView)convertView.findViewById(R.id.rc_cover);
-			rcItem.infoLayout = (LinearLayout)convertView.findViewById(R.id.rc_info_layout);
-			rcItem.introView = (TextView)convertView.findViewById(R.id.rc_intro);
 		}else{
 			rcItem = (RcItem)convertView.getTag();
 		}
@@ -84,34 +82,13 @@ public class RecommendList extends BaseList{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		bindEvent(rcItem, position);
+//		bindEvent(rcItem, position);
 		return convertView;
 	}
 	
 	public void setData(ArrayList<Recommend> rcList){
 		this.rcList = rcList;
 	}
-	
-	
-	public void bindEvent(final RcItem rcItem, final int position){
-		
-		//绑定弹出书的简介事件
-		rcItem.infoLayout.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				if (rcItem.introView.getVisibility() == View.VISIBLE) {
-					rcItem.introView.setVisibility(View.GONE);
-				}else{
-					rcItem.introView.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-		
-	}
-	
-	
-	
 	
 	
 	
