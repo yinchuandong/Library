@@ -9,13 +9,16 @@ import com.gw.library.model.Recommend;
 import com.gw.library.util.AppCache;
 import com.gw.library.R;
 
+import android.R.integer;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RecommendList extends BaseList{
@@ -28,6 +31,8 @@ public class RecommendList extends BaseList{
 		public ImageView coverView;
 		public TextView authorView;
 		public TextView titleView;
+		public LinearLayout infoLayout;
+		public TextView introView; //简介
 	}
 	
 	public RecommendList(BaseUi baseUi, ArrayList<Recommend> rcList){
@@ -61,6 +66,8 @@ public class RecommendList extends BaseList{
 			rcItem.authorView = (TextView)convertView.findViewById(R.id.rc_author);
 			rcItem.titleView = (TextView)convertView.findViewById(R.id.rc_title);
 			rcItem.coverView = (ImageView)convertView.findViewById(R.id.rc_cover);
+			rcItem.infoLayout = (LinearLayout)convertView.findViewById(R.id.rc_info_layout);
+			rcItem.introView = (TextView)convertView.findViewById(R.id.rc_intro);
 		}else{
 			rcItem = (RcItem)convertView.getTag();
 		}
@@ -77,12 +84,38 @@ public class RecommendList extends BaseList{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		bindEvent(rcItem, position);
 		return convertView;
 	}
 	
 	public void setData(ArrayList<Recommend> rcList){
 		this.rcList = rcList;
 	}
+	
+	
+	public void bindEvent(final RcItem rcItem, final int position){
+		
+		//绑定弹出书的简介事件
+		rcItem.infoLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if (rcItem.introView.getVisibility() == View.VISIBLE) {
+					rcItem.introView.setVisibility(View.GONE);
+				}else{
+					rcItem.introView.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

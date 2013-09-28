@@ -197,7 +197,6 @@ public class HistoryActivity extends BaseUiAuth {
 			bundle.putString("url", hList.get(position - 1).getUrl());
 			intent.putExtras(bundle);
 			startActivity(intent);
-
 		}
 
 	}

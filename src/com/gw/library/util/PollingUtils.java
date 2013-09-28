@@ -73,10 +73,14 @@ public class PollingUtils {
 		PendingIntent pendingIntent = PendingIntent.getService(context, 0,
 				intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		// 触发服务的起始时间
-		long triggerAtTime = calendar.getTimeInMillis();
+		long settingAtTime = calendar.getTimeInMillis();
 		long currenAtTime = System.currentTimeMillis();
-		if (currenAtTime > triggerAtTime) {
-			triggerAtTime += (C.time.alarmTime * day);
+		long triggerAtTime;
+		if (currenAtTime > settingAtTime) {
+
+			triggerAtTime = settingAtTime + (C.time.alarmTime * day);
+		} else {
+			triggerAtTime = settingAtTime;
 		}
 		manager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtTime,
 				C.time.alarmTime, pendingIntent);

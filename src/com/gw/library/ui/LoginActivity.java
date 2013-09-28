@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,7 +43,7 @@ public class LoginActivity extends BaseUi {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
-
+		loginContext = getContext();
 		checkIsExistedCookie();
 
 		schoolText = (AutoCompleteTextView) findViewById(R.id.school);
@@ -156,5 +157,10 @@ public class LoginActivity extends BaseUi {
 		PollingUtils.startPollingService(LoginActivity.this, C.time.pollTime,
 				RemoteService.class, C.action.remoteAction);
 
+	}
+
+	private static Context loginContext;
+	public static Context getLoginContext() {
+		return loginContext;
 	}
 }
