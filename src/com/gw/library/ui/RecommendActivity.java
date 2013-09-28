@@ -92,39 +92,26 @@ public class RecommendActivity extends BaseUiAuth {
 			}
 		});
 		
-		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
 
+		
+		//上拉加载更多
+		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
+			
 			@Override
 			public void onLoadMore() {
 				Log.i("recommendactivity-->bindevent","=====");
-				int page = (int) Math.ceil(rcList.size() / 4.0);
+				int page = (int) Math.ceil(rcList.size() / (double)listRows);
 				page++;
-				doTaskAsync(C.task.recommendListPage, C.api.recommendList
-						+ "?studentNumber=" + user.getStudentNumber()
-						+ "&password=" + user.getPassword() + "&schoolId="
-						+ user.getSchoolId() + "&p=" + page);
-
+				Log.i("recommendactivity-->bindevent",page+"=====");
+				HashMap<String, String> form = new HashMap<String, String>();
+				form.put("studentNumber", user.getStudentNumber());
+				form.put("password", user.getPassword());
+				form.put("schoolId", user.getSchoolId());
+				form.put("p", String.valueOf(page));
+//				form.put("listRows", String.valueOf(listRows));
+				doTaskAsync(C.task.recommendListPage, C.api.recommendList, form);
 			}
 		});
-		
-//		//上拉加载更多
-//		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
-//			
-//			@Override
-//			public void onLoadMore() {
-//				Log.i("recommendactivity-->bindevent","=====");
-//				int page = (int) Math.ceil(rcList.size() / 4.0);
-//				page++;
-//				Log.i("recommendactivity-->bindevent",page+"=====");
-//				HashMap<String, String> form = new HashMap<String, String>();
-//				form.put("studentNumber", user.getStudentNumber());
-//				form.put("password", user.getPassword());
-//				form.put("schoolId", user.getSchoolId());
-//				form.put("p", String.valueOf(page));
-////				form.put("listRows", String.valueOf(listRows));
-//				doTaskAsync(C.task.recommendListPage, C.api.recommendList, form);
-//			}
-//		});
 	}
 	
 	@SuppressWarnings("unchecked")
