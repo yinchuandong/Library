@@ -77,8 +77,13 @@ public class PollingUtils {
 		long currenAtTime = System.currentTimeMillis();
 		long triggerAtTime;
 		if (currenAtTime > settingAtTime) {
-
-			triggerAtTime = settingAtTime + (C.time.alarmTime * day);
+			//保证在当前的1分钟内有通知
+			if ((currenAtTime-settingAtTime)<60*1000) {
+				triggerAtTime=currenAtTime;
+			}else {
+				triggerAtTime = settingAtTime + (C.time.alarmTime * day);
+			}
+			
 		} else {
 			triggerAtTime = settingAtTime;
 		}

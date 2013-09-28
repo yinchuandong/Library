@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -56,7 +57,6 @@ public class SettingActivity extends BaseUiAuth {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_settings);
-
 		sharedPreferences = AppUtil.getSharedPreferences(SettingActivity.this);
 		before_day = sharedPreferences.getInt("before_day", C.time.day);
 		rHourOfDay = sharedPreferences.getInt("hourOfDay", C.time.hour);
@@ -105,7 +105,10 @@ public class SettingActivity extends BaseUiAuth {
 				BaseAuth.setLogin(false);
 				BaseAuth.clearUserInfo(getContext());
 				finish();
-				// 清理数据库
+				// 停止之前的所有闹钟服务
+				PollingUtils.stopAlarmService(LoginActivity.getLoginContext(),
+						AlarmNotifyService.class, C.action.alarmAction);
+				//恢复默认
 				forward(LoginActivity.class);
 			}
 		});
@@ -192,7 +195,7 @@ public class SettingActivity extends BaseUiAuth {
 		PollingUtils.stopAlarmService(LoginActivity.getLoginContext(),
 				AlarmNotifyService.class, C.action.alarmAction);
 		// 重新设置闹钟服务
-		PollingUtils.startAlarmService(SettingActivity.this,
+		PollingUtils.startAlarmService(LoginActivity.getLoginContext(),
 				AlarmNotifyService.class, C.action.alarmAction);
 	}
 
@@ -213,5 +216,8 @@ public class SettingActivity extends BaseUiAuth {
 			timeEditText.setText(simpleTimeFormat.format(calendar.getTime()));// 按照最新的calendar更新时间显示;//
 		}
 	};
+
+	
+		
 
 }

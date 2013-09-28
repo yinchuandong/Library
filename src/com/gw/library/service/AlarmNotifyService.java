@@ -105,7 +105,7 @@ public class AlarmNotifyService extends BaseService {
 	private long getSettingDate() {
 		SharedPreferences setting = AppUtil
 				.getSharedPreferences(AlarmNotifyService.this);
-		int day = setting.getInt("ahead_day", 0);
+		int day = setting.getInt("before_day", 0);
 		return day * 24 * 60 * 60 * 1000;
 	}
 
