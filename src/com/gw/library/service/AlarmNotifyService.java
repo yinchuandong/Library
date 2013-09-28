@@ -23,6 +23,7 @@ import com.gw.library.base.C;
 import com.gw.library.model.Loan;
 import com.gw.library.model.User;
 import com.gw.library.sqlite.RemindSqlite;
+import com.gw.library.ui.AlarmDetialActivity;
 import com.gw.library.ui.RemindActivity;
 import com.gw.library.util.AppUtil;
 
@@ -156,7 +157,7 @@ public class AlarmNotifyService extends BaseService {
 
 		// 点击消息后跳转页面
 		Intent notificationIntent = new Intent(AlarmNotifyService.this,
-				RemindActivity.class);
+				AlarmDetialActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("rList", rList);
 		notificationIntent.putExtras(bundle);

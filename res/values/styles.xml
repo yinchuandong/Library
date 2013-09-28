@@ -74,6 +74,10 @@
         <item> 5天</item>
         <item> 6天</item>
         <item> 7天</item>
+        <item> 8天</item>
+        <item> 9天</item>
+        <item> 10天</item>
+        <item> 11天</item>
     </string-array>
 
     <style name="base_dialog" parent="android:Theme.Dialog">
