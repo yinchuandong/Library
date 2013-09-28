@@ -31,8 +31,6 @@ public class RecommendActivity extends BaseUiAuth {
 	
 	int listRows = 4; //每页显示的数目
 	static boolean isLoaded = false; //该activity是否是第一次被加载
-	static int preLoadedPage = 0; //上一次加载的页码
-	int page;//现在的页码
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -95,17 +93,17 @@ public class RecommendActivity extends BaseUiAuth {
 			
 			@Override
 			public void onLoadMore() {
-				page = (int)Math.ceil(rcList.size()/listRows);
-				preLoadedPage = page;
-				page++;
-				
-				HashMap<String, String> form = new HashMap<String, String>();
-				form.put("studentNumber", user.getStudentNumber());
-				form.put("password", user.getPassword());
-				form.put("schoolId", user.getSchoolId());
-				form.put("p", String.valueOf(page));
-//				form.put("listRows", String.valueOf(listRows));
-				doTaskAsync(C.task.recommendListPage, C.api.recommendList, form);
+				Log.i("recommendactivity-->bindevent","=====");
+//				int page = (int) Math.ceil(rcList.size() / 4.0);
+//				page++;
+//				Log.i("recommendactivity-->bindevent",page+"=====");
+//				HashMap<String, String> form = new HashMap<String, String>();
+//				form.put("studentNumber", user.getStudentNumber());
+//				form.put("password", user.getPassword());
+//				form.put("schoolId", user.getSchoolId());
+//				form.put("p", String.valueOf(page));
+////				form.put("listRows", String.valueOf(listRows));
+//				doTaskAsync(C.task.recommendListPage, C.api.recommendList, form);
 			}
 		});
 	}
@@ -156,9 +154,6 @@ public class RecommendActivity extends BaseUiAuth {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}finally{
-				if(page == preLoadedPage){
-					toast("数据已经全部加载完成");
-				}
 				listView.onLoadMoreComplete();
 			}
 			break;

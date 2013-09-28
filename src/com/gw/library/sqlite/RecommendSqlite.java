@@ -29,7 +29,8 @@ public class RecommendSqlite extends BaseSqlite{
 				Recommend.COL_URL,
 				Recommend.COL_COVER,
 				Recommend.COL_SCHOOLID,
-				Recommend.COL_STUDENTNUMBER
+				Recommend.COL_STUDENTNUMBER,
+//				Recommend.COL_INTRO
 		};
 		return columns;
 	}
@@ -46,6 +47,7 @@ public class RecommendSqlite extends BaseSqlite{
 		values.put(Recommend.COL_ISBN, recommend.getIsbn());
 		values.put(Recommend.COL_CALLNUMBER, recommend.getCallNumber());
 		values.put(Recommend.COL_RECOMMENDTIME, recommend.getRecommendTime());
+//		values.put(Recommend.COL_INTRO, recommend.getIntro());
 		
 		// prepare sql
 		String whereSql = Recommend.COL_ID + "=?";

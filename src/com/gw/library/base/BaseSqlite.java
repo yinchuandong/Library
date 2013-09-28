@@ -18,7 +18,7 @@ import com.gw.library.model.RemindTime;
 public abstract class BaseSqlite {
 
 	private static final String DB_NAME = "library.db";
-	private static final int DB_VERSION = 4;
+	private static final int DB_VERSION = 6;
 
 	private DbHelper dbh = null;
 	private SQLiteDatabase db = null;
@@ -202,14 +202,19 @@ public abstract class BaseSqlite {
 	}
 
 	protected String createRecommendSql() {
-		String sql = "CREATE TABLE recommend (" + Recommend.COL_ID
-				+ " text PRIMARY KEY, " + Recommend.COL_TITLE + " text, "
-				+ Recommend.COL_AUTHOR + " text, " + Recommend.COL_ISBN
-				+ " text, " + Recommend.COL_CALLNUMBER + " text, "
-				+ Recommend.COL_RECOMMENDTIME + " text, " + Recommend.COL_URL
-				+ " text, " + Recommend.COL_COVER + " text, "
-				+ Recommend.COL_SCHOOLID + " text, "
-				+ Recommend.COL_STUDENTNUMBER + " text" + ")";
+		String sql = "CREATE TABLE recommend (" + 
+				Recommend.COL_ID + " text PRIMARY KEY, " + 
+				Recommend.COL_TITLE + " text, "	+ 
+				Recommend.COL_AUTHOR + " text, " + 
+				Recommend.COL_ISBN	+ " text, " + 
+				Recommend.COL_CALLNUMBER + " text, "+ 
+				Recommend.COL_RECOMMENDTIME + " text, " + 
+				Recommend.COL_URL + " text, " + 
+				Recommend.COL_COVER + " text, "	+ 
+				Recommend.COL_SCHOOLID + " text, "+
+				Recommend.COL_STUDENTNUMBER + " text" + 
+//				Recommend.COL_INTRO + " text"+
+				")";
 		return sql;
 	}
 
