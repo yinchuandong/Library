@@ -16,6 +16,7 @@ import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
 import com.gw.library.base.GwListView;
 import com.gw.library.base.GwListView.OnLoadMoreListener;
+import com.gw.library.base.GwListView.OnLoadMoreViewState;
 import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.RecommendList;
 import com.gw.library.model.Recommend;
@@ -31,18 +32,21 @@ public class RecommendActivity extends BaseUiAuth {
 	
 	int listRows = 4; //每页显示的数目
 	static boolean isLoaded = false; //该activity是否是第一次被加载
+	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_recommend);
 		
+		listView = (GwListView)findViewById(R.id.recommend_list);
 		this.setHandler(new RecommendHandler(this));//设置handler
+		listView.updateLoadMoreViewState(loadMoreState);
 		
 		rcList = new ArrayList<Recommend>(); //实例化暂存list
 		rcSqlite = new RecommendSqlite(this); //实例化数据库
 		
-		listView = (GwListView)findViewById(R.id.recommend_list);
+		
 		initData();
 		bindEvent();
 		
@@ -88,12 +92,27 @@ public class RecommendActivity extends BaseUiAuth {
 			}
 		});
 		
-		//上拉加载更多
 		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
-			
+
 			@Override
 			public void onLoadMore() {
 				Log.i("recommendactivity-->bindevent","=====");
+				int page = (int) Math.ceil(rcList.size() / 4.0);
+				page++;
+				doTaskAsync(C.task.recommendListPage, C.api.recommendList
+						+ "?studentNumber=" + user.getStudentNumber()
+						+ "&password=" + user.getPassword() + "&schoolId="
+						+ user.getSchoolId() + "&p=" + page);
+
+			}
+		});
+		
+//		//上拉加载更多
+//		listView.setOnLoadMoreListener(new OnLoadMoreListener() {
+//			
+//			@Override
+//			public void onLoadMore() {
+//				Log.i("recommendactivity-->bindevent","=====");
 //				int page = (int) Math.ceil(rcList.size() / 4.0);
 //				page++;
 //				Log.i("recommendactivity-->bindevent",page+"=====");
@@ -104,8 +123,8 @@ public class RecommendActivity extends BaseUiAuth {
 //				form.put("p", String.valueOf(page));
 ////				form.put("listRows", String.valueOf(listRows));
 //				doTaskAsync(C.task.recommendListPage, C.api.recommendList, form);
-			}
-		});
+//			}
+//		});
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -133,6 +152,8 @@ public class RecommendActivity extends BaseUiAuth {
 			}finally{
 				isLoaded = true;
 				listView.onRefreshComplete();
+				loadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
+				listView.updateLoadMoreViewState(loadMoreState);// 设置显示加载更多
 			}
 			break;
 			
