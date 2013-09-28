@@ -136,7 +136,7 @@ public class AppUtil {
 	}
 
 	/* 获取 Message */
-	static public BaseMessage getMessage(String jsonStr){
+	static public BaseMessage getMessage(String jsonStr) {
 		BaseMessage message = new BaseMessage();
 		JSONObject jsonObject = null;
 		try {
@@ -147,7 +147,7 @@ public class AppUtil {
 				message.setStatus(jsonObject.getString("status"));
 			}
 		} catch (JSONException e) {
-//			throw new Exception("Json format error");
+			// throw new Exception("Json format error");
 			Log.e("AppUtil-->getMessage", "Json format error");
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -180,29 +180,30 @@ public class AppUtil {
 		}
 		return map;
 	}
-	
+
 	/**
 	 * 把从数据库查询的数据转为model的形式
+	 * 
 	 * @param className
 	 * @param mapList
 	 * @return
 	 * @throws Exception
 	 */
 	public static ArrayList<? extends BaseModel> hashMapToModel(
-			String className, 
-			ArrayList<HashMap<String, String>> mapList
-		) throws Exception{
-		
+			String className, ArrayList<HashMap<String, String>> mapList)
+			throws Exception {
+
 		ArrayList<BaseModel> modelList = new ArrayList<BaseModel>();
-		
+
 		for (HashMap<String, String> temp : mapList) {
-			BaseModel modelObj = (BaseModel) Class.forName(className).newInstance();
+			BaseModel modelObj = (BaseModel) Class.forName(className)
+					.newInstance();
 			Class<? extends BaseModel> modelClass = modelObj.getClass();
 			Iterator<String> it = temp.keySet().iterator();
 			while (it.hasNext()) {
 				String varField = it.next();
 				String varValue = temp.get(varField);
-//				Log.i("appUtil--hashmaptomodel--", varField+"==>"+varValue);
+				// Log.i("appUtil--hashmaptomodel--", varField+"==>"+varValue);
 				Field field = modelClass.getDeclaredField(varField);
 				field.setAccessible(true); // have private to be accessable
 				field.set(modelObj, varValue);
@@ -211,39 +212,41 @@ public class AppUtil {
 		}
 		return modelList;
 	}
-	
-	
+
 	/**
 	 * 把jsonObject转为hashmap的格式
+	 * 
 	 * @param jsonObject
 	 * @return
 	 */
-	public static HashMap<String, String> jsonObject2HashMap(JSONObject jsonObject){
+	public static HashMap<String, String> jsonObject2HashMap(
+			JSONObject jsonObject) {
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		Iterator<String> iterator = jsonObject.keys();
-		
+
 		try {
 			while (iterator.hasNext()) {
 				String key = iterator.next();
 				String value = jsonObject.getString(key);
 				hashMap.put(key, value);
-				
+
 			}
 		} catch (Exception e) {
 			Log.w("apputil", "jsonobject2hasmap");
 		}
 		return hashMap;
 	}
-	
-	
+
 	/**
 	 * 把url返回的json格式转换为arrayList<Hash<key,map>>形式
+	 * 
 	 * @param jsonArray
 	 * @return arrayList
 	 */
 	@SuppressWarnings("null")
-	public static ArrayList<HashMap<String, String>> jsonArray2ArrayList(JSONArray jsonArray){
-		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String,String>>();
+	public static ArrayList<HashMap<String, String>> jsonArray2ArrayList(
+			JSONArray jsonArray) {
+		ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 		JSONObject jsonObject = null;
 		try {
 			for (int i = 0; i < jsonArray.length(); i++) {

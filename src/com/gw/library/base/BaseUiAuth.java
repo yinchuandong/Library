@@ -65,12 +65,15 @@ public class BaseUiAuth extends BaseUi {
 	 * 绑定header设置按钮的事件
 	 */
 	public void bindSettingEvent(){
+		final String activity = this.getClass().getSimpleName();
 		mainSettingBtn = (Button)findViewById(R.id.main_setting);
 		if (mainSettingBtn != null) {
 			mainSettingBtn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					overlay(SettingActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("lastActivity", activity);
+					forward(SettingActivity.class, bundle);
 				}
 			});
 		}

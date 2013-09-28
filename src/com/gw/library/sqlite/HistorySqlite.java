@@ -45,11 +45,6 @@ public class HistorySqlite extends BaseSqlite{
 		values.put(History.COL_TITLE, history.getTitle());
 		values.put(History.COL_AUTHOR, history.getAuthor());
 		values.put(History.COL_URL, history.getUrl());
-//		values.put(History.COL_PUBLISHYEAR, history.getPublishYear());
-//		values.put(History.COL_PAYMENT, history.getPayment());
-//		values.put(History.COL_LIMITTIME, history.getLimitTime());
-//		values.put(History.COL_RETURNTIME, history.getReturnTime());
-//		values.put(History.COL_LOCATION, history.getLocation());
 		
 		// prepare sql
 		String whereSql = History.COL_ID + "=?";

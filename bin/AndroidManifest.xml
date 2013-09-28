@@ -15,11 +15,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- For using notification -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    
-    <!--往sdcard中写入数据的权限 -->
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-	 <!--在sdcard中创建/删除文件的权限 -->
-	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+
+    <!-- 往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVER_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -135,7 +138,7 @@
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.gw.library.service.action.alarmreceiver" />
-
+				<action android:name="com.gw.library.service.action.alarmStop" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -164,7 +167,7 @@
             android:name="com.gw.library.service.AlarmNotifyService"
             android:enabled="true"
             android:exported="false"
-            android:label="@string/remote_serivice" >
+            android:label="@string/alarm_server" >
             <intent-filter>
                 <action android:name="com.gw.library.service.action.alarm" />
 
