@@ -88,6 +88,7 @@ public class AlarmNotifyService extends BaseService {
 				for (int i = 0; i < temp.size(); i++) {
 					if (getOverDay(temp.get(i).getReturnDate()) <= 0) {
 						rList.add(temp.get(i));
+						Log.i("Alarmnotifyservice", "======"+temp.get(i).getReturnDate());
 					}
 
 				}

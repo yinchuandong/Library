@@ -19,7 +19,7 @@ public class HistoryList extends BaseList {
 
 	TextView titleView;
 	TextView authorView;
-	TextView returnTimeView;
+//	TextView returnTimeView;
 
 	public HistoryList(BaseUi baseUi, ArrayList<History> historyList) {
 		this.baseUi = baseUi;
@@ -50,8 +50,8 @@ public class HistoryList extends BaseList {
 		convertView = inflater.inflate(R.layout.tpl_history_item, null);
 		titleView = (TextView) convertView.findViewById(R.id.hs_title);
 		authorView = (TextView) convertView.findViewById(R.id.hs_author);
-		returnTimeView = (TextView) convertView
-				.findViewById(R.id.hs_return_time);
+//		returnTimeView = (TextView) convertView
+//				.findViewById(R.id.hs_return_time);
 
 		History hs = historyList.get(position);
 		titleView.setText(hs.getTitle());
