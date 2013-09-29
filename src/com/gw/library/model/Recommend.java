@@ -14,6 +14,7 @@ public class Recommend extends BaseModel{
 	public final static String COL_COVER = "cover";
 	public final static String COL_SCHOOLID = "schoolId";
 	public final static String COL_STUDENTNUMBER = "studentNumber";
+//	public final static String COL_INTRO = "intro";
 
 	private String id;
 	private String title;
@@ -25,6 +26,7 @@ public class Recommend extends BaseModel{
 	private String cover;
 	private String schoolId;
 	private String studentNumber;
+	private String intro;
 	
 	public String getId(){
 		return id;
@@ -64,6 +66,14 @@ public class Recommend extends BaseModel{
 	
 	public String getSchoolId(){
 		return schoolId;
+	}
+	
+	/**
+	 * 获得简介
+	 * @return
+	 */
+	private String getIntro(){
+		return intro;
 	}
 	
 	

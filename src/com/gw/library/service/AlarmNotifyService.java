@@ -24,6 +24,7 @@ import com.gw.library.model.Loan;
 import com.gw.library.model.User;
 import com.gw.library.sqlite.RemindSqlite;
 import com.gw.library.ui.AlarmDetialActivity;
+import com.gw.library.ui.RemindActivity;
 import com.gw.library.util.AppUtil;
 
 /**
@@ -87,6 +88,7 @@ public class AlarmNotifyService extends BaseService {
 				for (int i = 0; i < temp.size(); i++) {
 					if (getOverDay(temp.get(i).getReturnDate()) <= 0) {
 						rList.add(temp.get(i));
+						Log.i("Alarmnotifyservice", "======"+temp.get(i).getReturnDate());
 					}
 
 				}
@@ -104,7 +106,7 @@ public class AlarmNotifyService extends BaseService {
 	private long getSettingDate() {
 		SharedPreferences setting = AppUtil
 				.getSharedPreferences(AlarmNotifyService.this);
-		int day = setting.getInt("ahead_day", 0);
+		int day = setting.getInt("before_day", 0);
 		return day * 24 * 60 * 60 * 1000;
 	}
 

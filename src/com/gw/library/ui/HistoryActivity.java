@@ -139,7 +139,7 @@ public class HistoryActivity extends BaseUiAuth {
 				}
 				hListAdapter.setData(hList);
 				hListAdapter.notifyDataSetChanged();
-				listView.setSelection(hList.size());
+//				listView.setSelection(hList.size());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {

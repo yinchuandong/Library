@@ -38,7 +38,7 @@ public class IOUtil {
 		URL myFileUrl = null;
 		Bitmap bitmap = null;
 		try {
-			url = C.api.imgBase + url;
+//			url = C.api.imgBase + url;
 			Log.w(TAG, url);
 			myFileUrl = new URL(url);
 		} catch (MalformedURLException e) {

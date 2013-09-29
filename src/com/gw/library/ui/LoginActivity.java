@@ -43,7 +43,7 @@ public class LoginActivity extends BaseUi {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
-
+		loginContext = getContext();
 		checkIsExistedCookie();
 
 		schoolText = (AutoCompleteTextView) findViewById(R.id.school);
@@ -159,7 +159,8 @@ public class LoginActivity extends BaseUi {
 
 	}
 
-	public Context getContext() {
-		return LoginActivity.this;
+	private static Context loginContext;
+	public static Context getLoginContext() {
+		return loginContext;
 	}
 }
