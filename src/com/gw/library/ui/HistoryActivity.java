@@ -34,7 +34,7 @@ public class HistoryActivity extends BaseUiAuth {
 	public ArrayList<History> hList; // 具体数据
 
 	HistorySqlite hSqlite = new HistorySqlite(this);
-
+	double listRows = 10.0; //每页显示的数目
 	public static boolean isLoaded = false; // 是否被加载的标志
 
 	HistoryReceiver historyReceiver;
@@ -117,6 +117,7 @@ public class HistoryActivity extends BaseUiAuth {
 				loadMoreState = OnLoadMoreViewState.LMVS_NORMAL;
 				listView.updateLoadMoreViewState(loadMoreState);// 设置显示加载更多
 
+				//更新历史列表的isbn
 				doTaskAsync(C.task.updateIsbn, C.api.updateIsbn
 						+ "?studentNumber=" + user.getStudentNumber()
 						+ "&schoolId=" + user.getSchoolId());
@@ -160,8 +161,10 @@ public class HistoryActivity extends BaseUiAuth {
 
 				doTaskAsync(C.task.historyList, C.api.historyList
 						+ "?studentNumber=" + user.getStudentNumber()
-						+ "&password=" + user.getPassword() + "&schoolId="
-						+ user.getSchoolId());
+						+ "&password=" + user.getPassword() 
+						+ "&schoolId=" + user.getSchoolId()
+						+ "&listRows=" + listRows
+						);
 
 			}
 		});
@@ -171,12 +174,15 @@ public class HistoryActivity extends BaseUiAuth {
 			@Override
 			public void onLoadMore() {
 
-				int page = (int) Math.ceil(hList.size() / 4.0);
+				int page = (int) Math.ceil(hList.size() / (double)listRows);
 				page++;
 				doTaskAsync(C.task.historyListPage, C.api.historyList
 						+ "?studentNumber=" + user.getStudentNumber()
-						+ "&password=" + user.getPassword() + "&schoolId="
-						+ user.getSchoolId() + "&p=" + page);
+						+ "&password=" + user.getPassword() 
+						+ "&schoolId=" + user.getSchoolId() 
+						+ "&p=" + page
+						+ "&listRows=" + listRows
+						);
 
 			}
 		});

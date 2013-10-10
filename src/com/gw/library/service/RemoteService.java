@@ -71,24 +71,40 @@ public class RemoteService extends BaseService {
 	// 更新
 	public void update() {
 		getLoanList();
-		// getHistoryList();
+		getHistoryList();
+//		calculateRecommend();
+		
 		updateFlag = true;
 		Log.v("alarm", "--------------->>>更新成功！alarmFlag为" + alarmFlag);
 	}
 
 	// 远程获取历史消息
 	private void getHistoryList() {
-		doTaskAsync(C.task.historyList, C.api.historyList + "?studentNumber="
-				+ user.getStudentNumber() + "&password=" + user.getPassword()
+		doTaskAsync(C.task.historyList, 
+				C.api.historyList 
+				+ "?studentNumber="	+ user.getStudentNumber() 
+				+ "&password=" + user.getPassword()
 				+ "&schoolId=" + user.getSchoolId());
 	}
 
 	// 远程获取借阅消息
 	private void getLoanList() {
-		doTaskAsync(C.task.loanList,
-				C.api.loanList + "?studentNumber=" + user.getStudentNumber()
-						+ "&password=" + user.getPassword() + "&schoolId="
-						+ user.getSchoolId());
+		doTaskAsync(
+				C.task.loanList,
+				C.api.loanList 
+				+ "?studentNumber=" + user.getStudentNumber()
+				+ "&password=" + user.getPassword() 
+				+ "&schoolId=" + user.getSchoolId()
+			);
+	}
+	
+	private void calculateRecommend(){
+		doTaskAsync(
+				C.task.calculateRecommend, 
+				C.api.calculateRecommend
+				+ "?studentNumber=" + user.getStudentNumber()
+				+ "&schoolId=" + user.getSchoolId() 
+		);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -102,16 +118,8 @@ public class RemoteService extends BaseService {
 			try {
 				String whereSql = History.COL_STUDENTNUMBER + "=?";
 				String[] whereParams = new String[] { user.getStudentNumber() };
-				// 判断是否有更新
-				ArrayList<HashMap<String, String>> mapList = hSqlite.query(
-						"select * from history where studentNumber=?",
-						new String[] { user.getStudentNumber() });
 				hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
 				hList = (ArrayList<History>) message.getDataList("History");
-				if (mapList.size() > hList.size()) {
-					numb = mapList.size() - hList.size();
-					sendIntent(hList);
-				}
 				if (hList.size() > 0) {
 					for (History history : hList) {
 						hSqlite.updateHistory(history);
