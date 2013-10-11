@@ -41,8 +41,8 @@ public class AppClient {
 	private String apiUrl;
 	private HttpParams httpParams;
 	private HttpClient httpClient;
-	private int timeoutConnection = 10000;
-	private int timeoutSocket = 10000;
+	private int timeoutConnection = 20000;
+	private int timeoutSocket = 20000;
 	private int compress = CS_NONE;// 设置zip与否
 
 	// charset default utf8
