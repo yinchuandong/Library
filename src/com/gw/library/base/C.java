@@ -1,5 +1,7 @@
 package com.gw.library.base;
 
+import android.R.integer;
+
 public class C {
 
 	/**
@@ -16,13 +18,14 @@ public class C {
 
 		public static final String historyList = "Loan/getHistoryList";
 		public static final String loanList = "Loan/getLoanList";
-		public static final String recommendList = "Recommend/getRecommendList";
+		public static final String recommendList = "Recommend/getRecommendList";//获取推荐的列表
+		public static final String calculateRecommend = "Recommend/calculateRecommend"; //计算推荐的书
 		public static final String renew = "Loan/renew";
 		public static final String updateIsbn = "Loan/updateIsbn";// 更新历史列表的isbn
 		public static final String login = "User/login";
 		public static final String register = "User/register";
 		public static final String schoolList = "School/getSchoolList";
-
+		
 		public static final String imgBase = "http://lib.yinchuandong.com/Upload/";
 	}
 
@@ -59,6 +62,7 @@ public class C {
 		public static final int updateIsbn = 1010; // 借阅历史-->更新isbn
 		public static final int recommendList = 1011; // 图书推荐
 		public static final int recommendListPage = 1012;// 图书推荐-->翻页
+		public static final int calculateRecommend = 1013;
 
 	}
 

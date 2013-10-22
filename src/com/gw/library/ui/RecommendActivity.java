@@ -30,7 +30,7 @@ public class RecommendActivity extends BaseUiAuth {
 	RecommendList rcListAdapter;
 	RecommendSqlite rcSqlite;
 	
-	int listRows = 4; //每页显示的数目
+	int listRows = 10; //每页显示的数目
 	static boolean isLoaded = false; //该activity是否是第一次被加载
 	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
 	
@@ -88,6 +88,7 @@ public class RecommendActivity extends BaseUiAuth {
 				form.put("studentNumber", user.getStudentNumber());
 				form.put("password", user.getPassword());
 				form.put("schoolId", user.getSchoolId());
+				form.put("listRows", String.valueOf(listRows));
 				doTaskAsync(C.task.recommendList, C.api.recommendList, form);
 			}
 		});
@@ -108,7 +109,7 @@ public class RecommendActivity extends BaseUiAuth {
 				form.put("password", user.getPassword());
 				form.put("schoolId", user.getSchoolId());
 				form.put("p", String.valueOf(page));
-//				form.put("listRows", String.valueOf(listRows));
+				form.put("listRows", String.valueOf(listRows));
 				doTaskAsync(C.task.recommendListPage, C.api.recommendList, form);
 			}
 		});
