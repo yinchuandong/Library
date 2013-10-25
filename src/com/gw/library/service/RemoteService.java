@@ -47,6 +47,7 @@ public class RemoteService extends BaseService {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		updateCover();
 		Log.v("Remote", "--------------->>>创建RemoteService成功！");
 	}
 
@@ -98,13 +99,23 @@ public class RemoteService extends BaseService {
 			);
 	}
 	
-	private void calculateRecommend(){
-		doTaskAsync(
-				C.task.calculateRecommend, 
-				C.api.calculateRecommend
-				+ "?studentNumber=" + user.getStudentNumber()
-				+ "&schoolId=" + user.getSchoolId() 
-		);
+	private void updateCover(){
+		new Thread(){
+			public void run(){
+				try {
+					while(true){
+						Thread.sleep(10*60*1000);
+						//更新历史列表的isbn
+						doTaskAsync(C.task.updateBookCover, C.api.updateBookCover
+								+ "?studentNumber=" + user.getStudentNumber()
+								+ "&schoolId=" + user.getSchoolId());
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}.start();
+		
 	}
 
 	@SuppressWarnings("unchecked")

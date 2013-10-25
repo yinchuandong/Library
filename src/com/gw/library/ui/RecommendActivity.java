@@ -88,7 +88,7 @@ public class RecommendActivity extends BaseUiAuth {
 				form.put("studentNumber", user.getStudentNumber());
 				form.put("password", user.getPassword());
 				form.put("schoolId", user.getSchoolId());
-				form.put("listRows", String.valueOf(listRows));
+//				form.put("listRows", String.valueOf(listRows));
 				doTaskAsync(C.task.recommendList, C.api.recommendList, form);
 			}
 		});

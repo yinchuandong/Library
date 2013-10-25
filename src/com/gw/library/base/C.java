@@ -14,7 +14,7 @@ public class C {
 
 		public static final String base = "http://lib.yinchuandong.com/index.php/Api/";
 //		 public static final String base =
-//		 "http://192.168.233.15/libraryServer/index.php/Api/";
+//		 "http://192.168.233.15:90/libraryServer/index.php/Api/";
 
 		public static final String historyList = "Loan/getHistoryList";
 		public static final String loanList = "Loan/getLoanList";
@@ -25,6 +25,7 @@ public class C {
 		public static final String login = "User/login";
 		public static final String register = "User/register";
 		public static final String schoolList = "School/getSchoolList";
+		public static final String updateBookCover = "Recommend/getCover";
 		
 		public static final String imgBase = "http://lib.yinchuandong.com/Upload/";
 	}
@@ -63,7 +64,7 @@ public class C {
 		public static final int recommendList = 1011; // 图书推荐
 		public static final int recommendListPage = 1012;// 图书推荐-->翻页
 		public static final int calculateRecommend = 1013;
-
+		public static final int updateBookCover= 1014; //  图书推荐-->更新cover
 	}
 
 	public static final class dir {
