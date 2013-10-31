@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +18,6 @@ import android.widget.EditText;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseAuth;
-import com.gw.library.base.BaseDialog;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
@@ -43,7 +43,7 @@ public class LoginActivity extends BaseUi {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ui_login);
-
+		loginContext = getContext();
 		checkIsExistedCookie();
 
 		schoolText = (AutoCompleteTextView) findViewById(R.id.school);
@@ -83,14 +83,16 @@ public class LoginActivity extends BaseUi {
 	 */
 	public void checkIsExistedCookie() {
 		if (BaseAuth.isLogin()) {
-			forward(HistoryActivity.class);
+			startService();// 开启服务
+			forward(RemindActivity.class);
 		} else {
 			HashMap<String, String> userInfo = BaseAuth.getUserInfo(this);
 			String spStudentNumber = userInfo.get("studentNumber");
 			if (spStudentNumber != "" && !spStudentNumber.equals("")) {
 				BaseAuth.setLogin(true);
 				BaseAuth.saveUserInfo(this, userInfo);
-				forward(HistoryActivity.class);
+				startService();// 开启服务
+				forward(RemindActivity.class);
 			}
 		}
 
@@ -102,6 +104,7 @@ public class LoginActivity extends BaseUi {
 		case C.task.login: // 登陆的任务
 			try {
 				if (message.getStatus().equals("1")) {
+					baseDialog.close();
 					JSONObject jsonObject = new JSONObject(message.getData());
 					JSONObject userObject = jsonObject.getJSONObject("User");
 					HashMap<String, String> userInfo = AppUtil
@@ -110,10 +113,9 @@ public class LoginActivity extends BaseUi {
 					userInfo.put("password", password);
 					BaseAuth.setLogin(true);
 					BaseAuth.saveUserInfo(this, userInfo);
+					startService();// 开启服务
+					forward(RemindActivity.class);
 
-					forward(HistoryActivity.class);
-					// 开启服务
-					startService();
 				} else {
 					baseDialog.setData(1, message.getInfo());
 				}
@@ -155,5 +157,10 @@ public class LoginActivity extends BaseUi {
 		PollingUtils.startPollingService(LoginActivity.this, C.time.pollTime,
 				RemoteService.class, C.action.remoteAction);
 
+	}
+
+	private static Context loginContext;
+	public static Context getLoginContext() {
+		return loginContext;
 	}
 }

@@ -38,7 +38,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="广东外语外贸大学"
+            android:hint="请输入学校全名"
             android:textColor="@color/fontColor" />
     </LinearLayout>
     
@@ -64,7 +64,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="20111003632"
+            android:hint="您的学号或借书号"
             android:textColor="@color/fontColor" />
     </LinearLayout>
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:inputType="textPassword"
-            android:text="yin543211"
+            android:hint="网页图书馆的密码"
             android:textColor="@color/fontColor" />
     </LinearLayout>
 
@@ -126,4 +126,4 @@
             android:background="@drawable/login_bottom_repeat_bg" />
     </RelativeLayout>
 
-</LinearLayout>
+</LinearLayout>

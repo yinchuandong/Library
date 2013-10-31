@@ -47,41 +47,75 @@ public class RemoteService extends BaseService {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-
+		updateCover();
+		Log.v("Remote", "--------------->>>创建RemoteService成功！");
 	}
 
 	@Override
-	public void onStart(Intent intent, int startId) {
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
+
 		update();
+		Log.v("login Statue", "登录状态-----------------》" + BaseAuth.isLogin());
+
 		if (updateFlag == true && alarmFlag == false && BaseAuth.isLogin()) {
 			PollingUtils.startAlarmService(RemoteService.this,
 					AlarmNotifyService.class, C.action.alarmAction);
 			alarmFlag = true;// 仅仅创建 一次
+			Log.v("alarm", "--------------->>>尝试创建AlarmService成功！");
 		}
+		Log.v("alarm", "--------------->>>开启RemoteService成功！");
+		return START_REDELIVER_INTENT;
 	}
 
 	// 更新
 	public void update() {
 		getLoanList();
 		getHistoryList();
+//		calculateRecommend();
+		
 		updateFlag = true;
+		Log.v("alarm", "--------------->>>更新成功！alarmFlag为" + alarmFlag);
 	}
 
 	// 远程获取历史消息
 	private void getHistoryList() {
-		doTaskAsync(C.task.historyList, C.api.historyList + "?studentNumber="
-				+ user.getStudentNumber() + "&password=" + user.getPassword()
+		doTaskAsync(C.task.historyList, 
+				C.api.historyList 
+				+ "?studentNumber="	+ user.getStudentNumber() 
+				+ "&password=" + user.getPassword()
 				+ "&schoolId=" + user.getSchoolId());
 	}
 
 	// 远程获取借阅消息
 	private void getLoanList() {
-		doTaskAsync(C.task.loanList,
-				C.api.loanList + "?studentNumber=" + user.getStudentNumber()
-						+ "&password=" + user.getPassword() + "&schoolId="
-						+ user.getSchoolId());
+		doTaskAsync(
+				C.task.loanList,
+				C.api.loanList 
+				+ "?studentNumber=" + user.getStudentNumber()
+				+ "&password=" + user.getPassword() 
+				+ "&schoolId=" + user.getSchoolId()
+			);
+	}
+	
+	private void updateCover(){
+		new Thread(){
+			public void run(){
+				try {
+					while(true){
+						Thread.sleep(10*60*1000);
+						//更新历史列表的isbn
+						doTaskAsync(C.task.updateBookCover, C.api.updateBookCover
+								+ "?studentNumber=" + user.getStudentNumber()
+								+ "&schoolId=" + user.getSchoolId());
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}.start();
+		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -95,16 +129,8 @@ public class RemoteService extends BaseService {
 			try {
 				String whereSql = History.COL_STUDENTNUMBER + "=?";
 				String[] whereParams = new String[] { user.getStudentNumber() };
-				// 判断是否有更新
-				ArrayList<HashMap<String, String>> mapList = hSqlite.query(
-						"select * from history where studentNumber=?",
-						new String[] { user.getStudentNumber() });
 				hSqlite.delete(whereSql, whereParams); // 清空当前历史列表
 				hList = (ArrayList<History>) message.getDataList("History");
-				if (mapList.size() > hList.size()) {
-					numb = mapList.size() - hList.size();
-					sendIntent(hList);
-				}
 				if (hList.size() > 0) {
 					for (History history : hList) {
 						hSqlite.updateHistory(history);
@@ -140,6 +166,7 @@ public class RemoteService extends BaseService {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				Log.v("Loan Eception", "Loan中没有需要提醒的书本" + e.getMessage());
 			}
 
 			break;
@@ -161,6 +188,17 @@ public class RemoteService extends BaseService {
 			sendIntent.putExtra("numb", numb);
 		}
 		sendBroadcast(sendIntent);
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		Intent localIntent = new Intent();
+
+		localIntent.setClass(this, RemoteService.class); // 销毁时重新启动当前的Service
+		this.startService(localIntent);
+
 	}
 
 }

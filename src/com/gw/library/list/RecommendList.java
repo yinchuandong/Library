@@ -9,13 +9,16 @@ import com.gw.library.model.Recommend;
 import com.gw.library.util.AppCache;
 import com.gw.library.R;
 
+import android.R.integer;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class RecommendList extends BaseList{
@@ -28,6 +31,8 @@ public class RecommendList extends BaseList{
 		public ImageView coverView;
 		public TextView authorView;
 		public TextView titleView;
+		public LinearLayout infoLayout;
+		public TextView introView; //简介
 	}
 	
 	public RecommendList(BaseUi baseUi, ArrayList<Recommend> rcList){
@@ -77,12 +82,17 @@ public class RecommendList extends BaseList{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+//		bindEvent(rcItem, position);
 		return convertView;
 	}
 	
 	public void setData(ArrayList<Recommend> rcList){
 		this.rcList = rcList;
 	}
+	
+	
+	
+	
+	
 
 }

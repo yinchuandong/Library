@@ -12,16 +12,16 @@ import com.gw.library.base.BaseList;
 import com.gw.library.base.BaseUi;
 import com.gw.library.model.History;
 
-public class HistoryList extends BaseList{
+public class HistoryList extends BaseList {
 	private BaseUi baseUi;
 	private ArrayList<History> historyList;
 	private LayoutInflater inflater;
-	
+
 	TextView titleView;
 	TextView authorView;
-	TextView returnTimeView;
-	
-	public HistoryList(BaseUi baseUi, ArrayList<History> historyList){
+//	TextView returnTimeView;
+
+	public HistoryList(BaseUi baseUi, ArrayList<History> historyList) {
 		this.baseUi = baseUi;
 		this.historyList = historyList;
 		inflater = LayoutInflater.from(baseUi);
@@ -48,22 +48,23 @@ public class HistoryList extends BaseList{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = inflater.inflate(R.layout.tpl_history_item, null);
-		titleView = (TextView)convertView.findViewById(R.id.hs_title);
-		authorView = (TextView)convertView.findViewById(R.id.hs_author);
-		returnTimeView = (TextView)convertView.findViewById(R.id.hs_return_time);
-		
+		titleView = (TextView) convertView.findViewById(R.id.hs_title);
+		authorView = (TextView) convertView.findViewById(R.id.hs_author);
+//		returnTimeView = (TextView) convertView
+//				.findViewById(R.id.hs_return_time);
+
 		History hs = historyList.get(position);
 		titleView.setText(hs.getTitle());
 		authorView.setText(hs.getAuthor());
-		
+
 		return convertView;
 	}
-	
-	public void setData(ArrayList<History> historyList){
+
+	public void setData(ArrayList<History> historyList) {
 		this.historyList = historyList;
 	}
-	
-	public void addData(History history){
+
+	public void addData(History history) {
 		this.historyList.add(history);
 	}
 }
