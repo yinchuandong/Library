@@ -10,6 +10,7 @@ import com.gw.library.util.AppCache;
 import com.gw.library.R;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,9 +68,14 @@ public class RecommendList extends BaseList{
 		rcItem.authorView.setText(model.getAuthor());
 		rcItem.titleView.setText(model.getTitle());
 //		rcItem.coverView.setImageResource(R.drawable.cover_1);
-		Bitmap cover = AppCache.getImage(model.getCover());
-		if (cover != null) {
-			rcItem.coverView.setImageBitmap(cover);
+		try {
+			Log.i("cover", model.getCover());
+			Bitmap cover = AppCache.getImage(model.getCover());
+			if (cover != null) {
+				rcItem.coverView.setImageBitmap(cover);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return convertView;

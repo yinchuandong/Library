@@ -412,6 +412,9 @@ public class GwListView extends ListView implements OnScrollListener {
 	
 	public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener){
 		this.mLoadMoreListener = onLoadMoreListener;
+		if (mLoadMoreListener != null) {
+			addFooterView(mFootView);
+		}
 	}
 	
 	public void onLoadMoreComplete(){
@@ -447,8 +450,9 @@ public class GwListView extends ListView implements OnScrollListener {
 				}
 			}
 		});
-		
-		addFooterView(mFootView);
+		if (mLoadMoreListener != null) {
+			addFooterView(mFootView);
+		}
 	}
 	
 	/**
