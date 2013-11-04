@@ -14,14 +14,14 @@ import com.gw.library.R;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
-import com.gw.library.base.GwListView;
-import com.gw.library.base.GwListView.OnLoadMoreListener;
-import com.gw.library.base.GwListView.OnLoadMoreViewState;
-import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.RemindList;
 import com.gw.library.model.Loan;
 import com.gw.library.sqlite.RemindSqlite;
 import com.gw.library.util.AppUtil;
+import com.gw.library.widget.GwListView;
+import com.gw.library.widget.GwListView.OnLoadMoreListener;
+import com.gw.library.widget.GwListView.OnLoadMoreViewState;
+import com.gw.library.widget.GwListView.OnRefreshListener;
 
 public class RemindActivity extends BaseUiAuth {
 

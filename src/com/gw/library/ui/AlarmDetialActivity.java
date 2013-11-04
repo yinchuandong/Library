@@ -20,10 +20,10 @@ import com.gw.library.base.BaseAuth;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
-import com.gw.library.base.GwListView;
 import com.gw.library.list.RemindList;
 import com.gw.library.model.Loan;
 import com.gw.library.sqlite.RemindSqlite;
+import com.gw.library.widget.GwListView;
 
 public class AlarmDetialActivity extends BaseUi {
 	GwListView listView;

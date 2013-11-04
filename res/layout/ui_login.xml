@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/bg"
     android:orientation="vertical" >
 
@@ -24,7 +24,10 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/input"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+         >
 
         <TextView
             android:layout_width="70dp"
@@ -41,6 +44,32 @@
             android:hint="请输入学校全名"
             android:textColor="@color/fontColor" />
     </LinearLayout>
+    
+	<RelativeLayout
+	    android:id="@+id/school_list_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:orientation="horizontal"
+		android:background="#fff"
+		android:focusableInTouchMode="true"
+		android:visibility="gone" >
+	   <ListView
+	       android:id="@+id/school_list"
+	       android:layout_width="fill_parent"
+	       android:layout_height="fill_parent"
+	       android:layout_gravity="center"
+	       android:layout_toLeftOf="@+id/sidebar"
+	       ></ListView>
+	   <com.gw.library.widget.SideBar 
+	       android:id="@+id/sidebar"
+	       android:layout_width="30.0dip"
+	       android:layout_height="fill_parent"
+	       android:layout_gravity="right|center"
+	       android:layout_alignParentRight="true"
+	       />
+    </RelativeLayout>
     
     <!-- 学号框 -->
     <LinearLayout
@@ -121,7 +150,7 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="67dp"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/login_bottom_repeat_bg" />
     </RelativeLayout>

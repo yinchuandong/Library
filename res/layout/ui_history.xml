@@ -25,11 +25,11 @@
   	>
 
   		<!-- 自定义的listview -->
-    	<com.gw.library.base.GwListView 
+    	<com.gw.library.widget.GwListView 
     	    android:id="@+id/history_list"
     	   	style="@style/gw_list_view"
     	    >
-    	</com.gw.library.base.GwListView>
+    	</com.gw.library.widget.GwListView>
     </LinearLayout>
     
     <LinearLayout android:id="@+id/layout_main_tab"

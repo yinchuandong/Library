@@ -24,13 +24,12 @@
     android:layout_above="@+id/layout_main_tab"
   	>
   	
-    	<com.gw.library.base.GwListView 
+    	<com.gw.library.widget.GwListView 
     	    android:id="@+id/remind_list"
     	    style="@style/gw_list_view"
     	    >
     	    
-    	</com.gw.library.base.GwListView>
-
+	</com.gw.library.widget.GwListView>
 
     </LinearLayout>
     

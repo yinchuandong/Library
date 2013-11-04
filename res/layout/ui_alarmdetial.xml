@@ -23,10 +23,10 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp" >
 
-        <com.gw.library.base.GwListView
+        <com.gw.library.widget.GwListView
             android:id="@+id/remind_list"
             style="@style/gw_list_view" >
-        </com.gw.library.base.GwListView>
+        </com.gw.library.widget.GwListView>
     </LinearLayout>
 
     <LinearLayout

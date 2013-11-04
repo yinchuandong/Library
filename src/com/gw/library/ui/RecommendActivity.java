@@ -14,14 +14,14 @@ import com.gw.library.base.BaseTask;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.BaseUiAuth;
 import com.gw.library.base.C;
-import com.gw.library.base.GwListView;
-import com.gw.library.base.GwListView.OnLoadMoreListener;
-import com.gw.library.base.GwListView.OnLoadMoreViewState;
-import com.gw.library.base.GwListView.OnRefreshListener;
 import com.gw.library.list.RecommendList;
 import com.gw.library.model.Recommend;
 import com.gw.library.sqlite.RecommendSqlite;
 import com.gw.library.util.AppUtil;
+import com.gw.library.widget.GwListView;
+import com.gw.library.widget.GwListView.OnLoadMoreListener;
+import com.gw.library.widget.GwListView.OnLoadMoreViewState;
+import com.gw.library.widget.GwListView.OnRefreshListener;
 
 public class RecommendActivity extends BaseUiAuth {
 
