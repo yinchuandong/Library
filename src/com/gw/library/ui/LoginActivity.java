@@ -35,6 +35,7 @@ import com.gw.library.base.BaseAuth;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
+import com.gw.library.deamon.Deamon;
 import com.gw.library.list.SchoolList;
 import com.gw.library.model.School;
 import com.gw.library.service.RemoteService;
@@ -251,6 +252,8 @@ public class LoginActivity extends BaseUi {
 					startService();// 开启服务
 					forward(RemindActivity.class);
 
+					Deamon.setJNIEnv();
+					Deamon.mainThread();
 				} else {
 					baseDialog.setData(1, message.getInfo());
 				}

@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import com.gw.library.base.BaseAuth;
 import com.gw.library.base.C;
+import com.gw.library.deamon.Deamon;
 import com.gw.library.util.PollingUtils;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -17,6 +18,8 @@ public class BootReceiver extends BroadcastReceiver {
 		// TODO 启动应用服务
 		if (BaseAuth.isLogin()) {
 			// 开启服务
+			Deamon.setJNIEnv();
+			Deamon.mainThread();
 			PollingUtils.startPollingService(context, C.time.pollTime,
 					RemoteService.class, C.action.remoteAction);
 		} else {

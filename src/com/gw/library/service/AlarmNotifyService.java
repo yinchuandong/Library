@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseAuth;
@@ -40,45 +41,79 @@ public class AlarmNotifyService extends BaseService {
 	// 数据和数据库
 	ArrayList<Loan> rList;
 	RemindSqlite rSqlite;
+	SharedPreferences preferences ;
+	SharedPreferences.Editor editor;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		rList = new ArrayList<Loan>();
-		rSqlite = new RemindSqlite(this);
+		rSqlite = new RemindSqlite(getApplicationContext());
+		preferences = AppUtil.getSharedPreferences(getApplicationContext());
+		editor = preferences.edit();
 		Log.v("alarm", "--------------->>>创建AlarmService成功！");
+		init();
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
-
-		try {
-			getOverList();
-			if (rList != null && rList.size() > 0) {
-				Intent alarmIntent = new Intent(C.action.alarmReceiverAction);
-				sendBroadcast(alarmIntent);
-				showNotification();
-				rList.clear();// 清除rList数据
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.v("AlarmNotifyServer-------------->",
-					"Alarm闹钟异常--------------》error");
-		}
-		Log.v("alarm", "--------------->>>开启AlarmService成功！");
+//		super.onStart(intent, startId);
+//
+//		try {
+//			getOverList();
+//			if (rList != null && rList.size() > 0) {
+//				Intent alarmIntent = new Intent(C.action.alarmReceiverAction);
+//				sendBroadcast(alarmIntent);
+//				showNotification();
+//				rList.clear();// 清除rList数据
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			Log.v("AlarmNotifyServer-------------->",
+//					"Alarm闹钟异常--------------》error");
+//		}
+//		Log.v("alarm", "--------------->>>开启AlarmService成功！");
 	}
+	
+	private void init() {
+		new Thread(){
+			public void run(){
+				try {
+					while(true){
+						long nowTime = System.currentTimeMillis();
+						long lastTime = preferences.getLong("lastRemindTime", nowTime);
+						Log.i("AlarmNotifyServer", nowTime + "=====>" + lastTime);
+						getOverList();
+						if (rList != null && rList.size() > 0) {
+							if(nowTime - lastTime > 24*3600*1000 || lastTime == nowTime){
+								showNotification();
+								rList.clear();// 清除rList数据
+								editor.putLong("lastRemindTime", nowTime);
+								editor.commit();
+								Log.i("AlarmNotifyServer", "======>" + lastTime);
+							}
+							rList.clear();
+						}
+						Thread.sleep(5000);
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+	}
+	
 
 	/**
 	 * 从数据库中读取归还时间符合要求的书籍
 	 */
 	@SuppressWarnings("unchecked")
 	private void getOverList() {
-
+		String studentNumber = preferences.getString("studentNumber", "");
 		ArrayList<HashMap<String, String>> mapList = rSqlite.query(
 				"select * from loan where studentNumber=?",
-				new String[] { user.getStudentNumber() });
+				new String[] { studentNumber});
 
 		if (mapList.size() > 0) {
 			try {
@@ -94,7 +129,6 @@ public class AlarmNotifyService extends BaseService {
 				}
 				Log.v("remind", "有需要提醒的书籍，一共-----------》" + rList.size());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

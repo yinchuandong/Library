@@ -27,6 +27,7 @@
     <permission android:protectionLevel="normal" android:name="oem.permission.SENDMAIL"></permission>
 
     <application
+        android:persistent="true"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
@@ -113,34 +114,13 @@
             </intent-filter>
         </activity>
 
-        <!-- activity Receiver -->
-
-        <receiver
-            android:name="com.gw.library.ui.HistoryActivity$HistoryReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.gw.library.service.action.history" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.gw.library.ui.RemindActivity$RemindReceiver"
-            android:enabled="true"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.gw.library.service.action.remind" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
+        
         <receiver
             android:permission="oem.permission.SENDMAIL"
             android:name="com.gw.library.service.AlarmReceiver"
             android:enabled="true"
             android:exported="true" >
-            <intent-filter>
+            <intent-filter android:priority="1000">
                 <action android:name="com.gw.library.service.action.alarmreceiver" />
 				<action android:name="com.gw.library.service.action.alarmStop" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -166,7 +146,7 @@
             android:enabled="true"
             android:exported="false"
             android:label="@string/remote_serivice" >
-            <intent-filter>
+            <intent-filter android:priority="1000">
                 <action android:name="com.gw.library.service.action.remote" />
 
                 <category android:name="android.intent.category.default" />

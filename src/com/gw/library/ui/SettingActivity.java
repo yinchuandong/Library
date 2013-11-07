@@ -185,18 +185,28 @@ public class SettingActivity extends BaseUiAuth {
 
 	// 写到应用中区
 	private void saveToAPP(int day, int hourOfDay, int minute) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+		calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+		calendar.set(Calendar.MINUTE, minute);
+		calendar.set(Calendar.SECOND, 0);
+		long settingTime = calendar.getTimeInMillis();
+		settingTime = settingTime - 24*3600*1000; //修改上次提醒的时间
 		Editor editor = sharedPreferences.edit();
+		editor.putLong("lastRemindTime", settingTime);
 		editor.putInt("before_day", day);
 		editor.putInt("hourOfDay", hourOfDay);
 		editor.putInt("minute", minute);
 		editor.commit();
 
 //		// 停止之前的闹钟服务
-		PollingUtils.stopAlarmService(LoginActivity.getLoginContext(),
-				AlarmNotifyService.class, C.action.alarmAction);
-		// 重新设置闹钟服务
-		PollingUtils.startAlarmService(LoginActivity.getLoginContext(),
-				AlarmNotifyService.class, C.action.alarmAction);
+//		PollingUtils.stopAlarmService(LoginActivity.getLoginContext(),
+//				AlarmNotifyService.class, C.action.alarmAction);
+//		// 重新设置闹钟服务
+//		PollingUtils.startAlarmService(LoginActivity.getLoginContext(),
+//				AlarmNotifyService.class, C.action.alarmAction);
 	}
 
 	// 用于检测时间设定器的变化
