@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -38,6 +39,7 @@ import com.gw.library.base.C;
 import com.gw.library.deamon.Deamon;
 import com.gw.library.list.SchoolList;
 import com.gw.library.model.School;
+import com.gw.library.service.AlarmNotifyService;
 import com.gw.library.service.RemoteService;
 import com.gw.library.util.AppUtil;
 import com.gw.library.util.CharacterParser;
@@ -296,7 +298,7 @@ public class LoginActivity extends BaseUi {
 
 	// 开启应用服务
 	public void startService() {
-		// TODO Auto-generated method stub
+		startService(new Intent(getApplicationContext(), AlarmNotifyService.class));
 		PollingUtils.startPollingService(LoginActivity.this, C.time.pollTime,
 				RemoteService.class, C.action.remoteAction);
 

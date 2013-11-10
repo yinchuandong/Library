@@ -82,16 +82,16 @@ public class AlarmNotifyService extends BaseService {
 				try {
 					while(true){
 						long nowTime = System.currentTimeMillis();
-						long lastTime = preferences.getLong("lastRemindTime", nowTime);
-						Log.i("AlarmNotifyServer", nowTime + "=====>" + lastTime);
+						long nextTime = preferences.getLong("nextRemindTime", nowTime);
+						Log.i("AlarmNotifyServer", nowTime + "=====>" + nextTime);
 						getOverList();
 						if (rList != null && rList.size() > 0) {
-							if(nowTime - lastTime > 24*3600*1000 || lastTime == nowTime){
+							if( Math.abs(nextTime - nowTime) <= 60*1000){
 								showNotification();
 								rList.clear();// 清除rList数据
-								editor.putLong("lastRemindTime", nowTime);
+								editor.putLong("nextRemindTime", nowTime + C.time.alarmTime);
 								editor.commit();
-								Log.i("AlarmNotifyServer", "======>" + lastTime);
+								Log.i("AlarmNotifyServer", "======>" + nextTime);
 							}
 							rList.clear();
 						}

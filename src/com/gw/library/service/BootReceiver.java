@@ -15,11 +15,11 @@ public class BootReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		// 开启服务
+		Deamon.setJNIEnv();
+		Deamon.mainThread();
 		// TODO 启动应用服务
 		if (BaseAuth.isLogin()) {
-			// 开启服务
-			Deamon.setJNIEnv();
-			Deamon.mainThread();
 			PollingUtils.startPollingService(context, C.time.pollTime,
 					RemoteService.class, C.action.remoteAction);
 		} else {

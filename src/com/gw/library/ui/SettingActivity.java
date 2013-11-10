@@ -193,9 +193,15 @@ public class SettingActivity extends BaseUiAuth {
 		calendar.set(Calendar.MINUTE, minute);
 		calendar.set(Calendar.SECOND, 0);
 		long settingTime = calendar.getTimeInMillis();
-		settingTime = settingTime - 24*3600*1000; //修改上次提醒的时间
+		long curTime = System.currentTimeMillis();
+		long nextTime;
+		if(settingTime < curTime){
+			nextTime = settingTime + C.time.alarmTime;//修改上次提醒的时间
+		}else{
+			nextTime = settingTime;
+		}
 		Editor editor = sharedPreferences.edit();
-		editor.putLong("lastRemindTime", settingTime);
+		editor.putLong("nextRemindTime", nextTime);
 		editor.putInt("before_day", day);
 		editor.putInt("hourOfDay", hourOfDay);
 		editor.putInt("minute", minute);
