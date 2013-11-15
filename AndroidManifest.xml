@@ -7,8 +7,9 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.RAISED_THREAD_PRIORITY"/>
+    <uses-permission android:name="android.permission.RAISED_THREAD_PRIORITY" />
     <!-- For using network -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -24,13 +25,17 @@
     <!-- 在sdcard中创建/删除文件的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
     </uses-permission>
-    <permission android:protectionLevel="normal" android:name="oem.permission.SENDMAIL"></permission>
+
+    <permission
+        android:name="oem.permission.SENDMAIL"
+        android:protectionLevel="normal" >
+    </permission>
 
     <application
-        android:persistent="true"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
+        android:persistent="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.gw.library.ui.LauncherActivity"
@@ -43,10 +48,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:windowSoftInputMode = "adjustPan"
             android:name="com.gw.library.ui.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/noTitle" >
+            android:theme="@style/noTitle"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -114,56 +119,63 @@
             </intent-filter>
         </activity>
 
-        
         <receiver
-            android:permission="oem.permission.SENDMAIL"
             android:name="com.gw.library.service.AlarmReceiver"
             android:enabled="true"
-            android:exported="true" >
-            <intent-filter android:priority="1000">
+            android:exported="true"
+            android:permission="oem.permission.SENDMAIL" >
+            <intent-filter android:priority="1000" >
                 <action android:name="com.gw.library.service.action.alarmreceiver" />
-				<action android:name="com.gw.library.service.action.alarmStop" />
+                <action android:name="com.gw.library.service.action.alarmStop" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
         <!-- 系统启动完成后会调用 -->
         <receiver
-            android:permission="oem.permission.SENDMAIL"
+            android:name="com.gw.library.service.BootReceiver"
             android:enabled="true"
-            android:exported="true" 
-            android:name="com.gw.library.service.BootReceiver" >
-            <intent-filter android:priority="1000">
-                <action android:name="android.intent.action.BOOT_COMPLETED" ></action>
-                <category android:name="android.intent.category.LAUNCHER"/>
+            android:exported="true"
+            android:permission="oem.permission.SENDMAIL" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
 
         <!-- service -->
         <service
-            android:permission="oem.permission.SENDMAIL"
             android:name="com.gw.library.service.RemoteService"
             android:enabled="true"
             android:exported="false"
-            android:label="@string/remote_serivice" >
-            <intent-filter android:priority="1000">
+            android:label="@string/remote_serivice"
+            android:permission="oem.permission.SENDMAIL" >
+            <intent-filter android:priority="1000" >
                 <action android:name="com.gw.library.service.action.remote" />
 
                 <category android:name="android.intent.category.default" />
             </intent-filter>
         </service>
         <service
-            android:permission="oem.permission.SENDMAIL"
             android:name="com.gw.library.service.AlarmNotifyService"
             android:enabled="true"
             android:exported="false"
-            android:label="@string/alarm_server" >
+            android:label="@string/alarm_server"
+            android:permission="oem.permission.SENDMAIL" >
             <intent-filter>
                 <action android:name="com.gw.library.service.action.alarm" />
 
                 <category android:name="android.intent.category.default" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name="com.gw.library.ui.HomeActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
     </application>
 
 </manifest>
