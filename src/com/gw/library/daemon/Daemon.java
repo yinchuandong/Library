@@ -1,8 +1,8 @@
-package com.gw.library.deamon;
+package com.gw.library.daemon;
 
 import android.util.Log;
 
-public class Deamon {
+public class Daemon {
 
 	static {
 		System.loadLibrary("Library");

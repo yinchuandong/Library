@@ -26,7 +26,7 @@ extern "C" {
 #define LOGF(...)  __android_log_print(ANDROID_LOG_FATAL,LOG_TAG, __VA_ARGS__)
 
 //判断是否已经有守护进程在运行
-int isDeamonExist();
+int isdaemonExist();
 //使用im startservice来开启服务
 void runProcess(const char* serviceName);
 // 使用pidof命令来检测目标进程是否运行
@@ -70,30 +70,30 @@ void *thread_fun(void* arg){
 
 	if((pid = fork()) < 0)
 	{
-		LOGI("i am deamon==1");
+		LOGI("i am daemon==1");
 			perror("fork");
 			exit(0);
 	}
 	else if(pid != 0)
 	{
-		LOGI("i am deamon==2");
+		LOGI("i am daemon==2");
 	}
 
 	setsid();
-	LOGI("i am deamon==3");
+	LOGI("i am daemon==3");
 	if((pid = fork()) < 0)
 	{
-		LOGI("i am deamon==4");
+		LOGI("i am daemon==4");
 			perror("fork");
 			exit(0);
 	}
 	else if(pid != 0)
 	{
-		LOGI("i am deamon==5");
+		LOGI("i am daemon==5");
 	}
 
 	chdir("/");
-	LOGI("i am deamon==6");
+	LOGI("i am daemon==6");
 	if(r.rlim_max == RLIM_INFINITY)
 	{
 			r.rlim_max = 1024;
@@ -103,13 +103,13 @@ void *thread_fun(void* arg){
 	int isExit;
 	while(1)
 	{
-		LOGI("i am deamon sucess myservice====");
+		LOGI("i am daemon sucess myservice====");
 //		isExit = isProcessExist("com.example.myservice");
 //		LOGD("%d isProcessExist============================", isExit);
-//		isExit = isDeamonExist();
-//		LOGD("%d isDeamonExist============================", isExit);
+//		isExit = isdaemonExist();
+//		LOGD("%d isdaemonExist============================", isExit);
 		runProcess("com.gw.library.service.action.alarm");
-		sleep(5);
+		sleep(60);
 	}
 
 error:
@@ -123,7 +123,7 @@ error:
 /**
  * @return 正在运行 -1,没有运行0;
  */
-int isDeamonExist(){
+int isdaemonExist(){
 	int ret = -1;
 	FILE * g_lockfile = NULL;
 
@@ -131,19 +131,19 @@ int isDeamonExist(){
 	g_lockfile = fopen(FLAG_FILE, "a+");
 	if (g_lockfile == NULL)
 	{
-		LOGE("deamon fopen() failed:%s!\n", strerror(errno));
+		LOGE("daemon fopen() failed:%s!\n", strerror(errno));
 		return -1;
 	}else{
-		LOGE("deamon failed:%s!\n", strerror(errno));
+		LOGE("daemon failed:%s!\n", strerror(errno));
 	}
 
 	ret = flock(fileno(g_lockfile), LOCK_EX |LOCK_NB);
 	if (ret != 0)
 	{
-		LOGE("deamon this program already running\n");
+		LOGE("daemon this program already running\n");
 		return -1;
 	}else{
-		LOGE("deamon ret!\n");
+		LOGE("daemon ret!\n");
 	}
 	return ret;
 }
@@ -192,7 +192,7 @@ void runProcess(const char* serviceName)
 	pclose(fp);
 }
 
-JNIEXPORT void Java_com_gw_library_deamon_Deamon_mainThread(JNIEnv* env, jobject obj){
+JNIEXPORT void Java_com_gw_library_daemon_Daemon_mainThread(JNIEnv* env, jobject obj){
 	int i;
 	pthread_t pt[NUMTHREADS];
 
@@ -201,7 +201,7 @@ JNIEXPORT void Java_com_gw_library_deamon_Deamon_mainThread(JNIEnv* env, jobject
 	}
 }
 
-JNIEXPORT void Java_com_gw_library_deamon_Deamon_setJNIEnv(JNIEnv* env, jobject obj){
+JNIEXPORT void Java_com_gw_library_daemon_Daemon_setJNIEnv(JNIEnv* env, jobject obj){
 	env->GetJavaVM(&g_jvm);
 	g_obj = env->NewGlobalRef(obj);
 }
