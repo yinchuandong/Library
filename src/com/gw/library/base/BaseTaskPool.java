@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 
 import android.content.Context;
 
+import com.gw.library.ui.HomeActivity;
 import com.gw.library.util.AppClient;
 import com.gw.library.util.HttpUtil;
 
@@ -19,6 +20,11 @@ public class BaseTaskPool {
 
 	public BaseTaskPool(BaseUi ui) {
 		this.context = ui.getContext();
+		taskPool = Executors.newCachedThreadPool();
+	}
+	
+	public BaseTaskPool(Context context){
+		this.context = context;
 		taskPool = Executors.newCachedThreadPool();
 	}
 

@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff" >
-
+<!-- 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/head_layout"
-        android:padding="5dip"
-        android:background="#fff" >
-
+        android:background="@color/bg" >
+	 
         <Button
             android:id="@+id/showLeft"
             android:layout_width="wrap_content"
@@ -26,14 +25,31 @@
             android:layout_gravity="right"
             android:text="ShowRight" />
         
-    </RelativeLayout>
+    </RelativeLayout>-->
+     <LinearLayout 
+        android:id="@+id/layout_main_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        >
+    	<include layout="@layout/main_header"/>
+     </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/head_layout"
+        android:layout_below="@+id/layout_main_header"
+        android:layout_above="@+id/layout_main_tab"
         android:background="#B847FF" >
     </android.support.v4.view.ViewPager>
-
+	
+    <LinearLayout android:id="@+id/layout_main_tab"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+    	<include layout="@layout/main_tab"/>
+    </LinearLayout>
+    
 </RelativeLayout>

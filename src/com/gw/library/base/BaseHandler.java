@@ -8,10 +8,15 @@ import android.os.Message;
 
 public class BaseHandler extends Handler {
 	
-	protected BaseUi ui;
+	protected BaseUi ui = null;
+	protected BaseFragment frag = null;
 	
 	public BaseHandler (BaseUi ui) {
 		this.ui = ui;
+	}
+	
+	public BaseHandler(BaseFragment fragment){
+		this.frag = fragment;
 	}
 	
 	public BaseHandler (Looper looper) {
@@ -28,16 +33,37 @@ public class BaseHandler extends Handler {
 					taskId = msg.getData().getInt("task");
 					result = msg.getData().getString("data");
 					if (result != null) {
-						ui.onTaskComplete(taskId, AppUtil.getMessage(result));
+						if(ui != null){
+							ui.onTaskComplete(taskId, AppUtil.getMessage(result));
+						}
+						if(frag != null){
+							frag.onTaskComplete(taskId, AppUtil.getMessage(result));
+						}
 					} else if (!AppUtil.isEmptyInt(taskId)) {
-						ui.onTaskComplete(taskId);
+						if(ui != null){
+							ui.onTaskComplete(taskId);
+						}
+						if (frag != null) {
+							frag.onTaskComplete(taskId);
+						}
 					} else {
+						if(ui != null){
+							ui.onTaskComplete(taskId);
+						}
+						if (frag != null) {
+							frag.onTaskComplete(taskId);
+						}
 						ui.toast(C.err.message);
 					}
 					break;
 				case BaseTask.NETWORK_ERROR:
 					taskId = msg.getData().getInt("task");
-					ui.onNetworkError(taskId);
+					if(ui != null){
+						ui.onNetworkError(taskId);
+					}
+					if (frag != null) {
+						frag.onNetworkError(taskId);
+					}
 					break;
 				case BaseTask.SHOW_LOADBAR:
 					break;
@@ -45,12 +71,22 @@ public class BaseHandler extends Handler {
 					break;
 				case BaseTask.SHOW_TOAST:
 					result = msg.getData().getString("data");
-					ui.toast(result);
+					if(ui != null){
+						ui.toast(result);
+					}
+					if (frag != null) {
+						frag.toast(result);
+					}
 					break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			ui.toast(e.getMessage());
+			if(ui != null){
+				ui.toast(e.getMessage());
+			}
+			if (frag != null) {
+				frag.toast(e.getMessage());
+			}
 		}
 	}
 	

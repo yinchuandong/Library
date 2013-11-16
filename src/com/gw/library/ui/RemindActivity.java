@@ -30,7 +30,6 @@ public class RemindActivity extends BaseUiAuth {
 	RemindSqlite rSqlite;
 	ArrayList<Loan> rList;
 
-	RemindReceiver remindReceiver;
 	public static boolean isLoaded = false; // 是否被加载的标志
 	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
 
@@ -159,51 +158,14 @@ public class RemindActivity extends BaseUiAuth {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		// 注册remindReceiver
-		try {
-			remindReceiver = new RemindReceiver();
-			IntentFilter filter = new IntentFilter();
-			filter.addAction(C.action.remindAction);
-			this.registerReceiver(remindReceiver, filter);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		// 设置加载更多
 		listView.updateLoadMoreViewState(loadMoreState);
 	}
 
-	/**
-	 * 添加Receiver,接受来自后台的更新操作
-	 */
-	public static class RemindReceiver extends BroadcastReceiver {
-
-		public RemindReceiver() {
-
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			// TODO 显示有更新
-			if (intent.getAction().equals(C.action.remindAction)) {
-				// 取消闹钟
-				// Intent intent2 = new Intent(C.action.alarmStopAction);
-				// // sendBroadcast(intent2);
-				// Activity activity = new Activity();
-				// activity.sendBroadcast(intent2);
-			}
-			Log.i("RemindReceiver--->onreceive", intent.getAction());
-		}
-	}
 
 	@Override
 	public void onPause() {
 		super.onStop();
-		try {
-			unregisterReceiver(remindReceiver);
-		} catch (Exception e) {
-			Log.i("Historyactivity-->onPause", "false");
-		}
 
 	}
 

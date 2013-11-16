@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseAuth;
+import com.gw.library.base.BaseFragment;
 import com.gw.library.base.BaseList;
 import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
@@ -24,7 +26,7 @@ import com.gw.library.model.Loan;
 import com.gw.library.model.User;
 
 public class RemindList extends BaseList {
-	private BaseUi baseUi;
+	private BaseFragment baseFragment;
 	private ArrayList<Loan> remindList;
 	private LayoutInflater inflater;
 
@@ -39,9 +41,15 @@ public class RemindList extends BaseList {
 	}
 
 	public RemindList(BaseUi baseUi, ArrayList<Loan> remindList) {
-		this.baseUi = baseUi;
+//		this.baseUi = baseUi;
 		this.remindList = remindList;
 		inflater = LayoutInflater.from(baseUi);
+	}
+	
+	public RemindList(Context context, BaseFragment fragment, ArrayList<Loan> remindList){
+		this.remindList = remindList;
+		this.baseFragment = fragment;
+		inflater = LayoutInflater.from(context);
 	}
 
 	@Override
@@ -173,8 +181,8 @@ public class RemindList extends BaseList {
 			@Override
 			public void onClick(View arg0) {
 				if (BaseAuth.isLogin()) {
-					baseUi.baseDialog.setData(0, null);
-					baseUi.baseDialog.show();// 显示对话框
+					baseFragment.baseDialog.setData(0, null);
+					baseFragment.baseDialog.show();// 显示对话框
 
 					HashMap<String, String> form = new HashMap<String, String>();
 					User user = BaseAuth.getUser();
@@ -182,9 +190,9 @@ public class RemindList extends BaseList {
 					form.put("schoolId", user.getSchoolId());
 					form.put("password", user.getPassword());
 					form.put("books", remindList.get(position).getId());
-					baseUi.doTaskAsync(C.task.renew, C.api.renew, form);
+					baseFragment.doTaskAsync(C.task.renew, C.api.renew, form);
 				} else {
-					baseUi.baseDialog.setData(0, "请登录");
+					baseFragment.baseDialog.setData(0, "请登录");
 				}
 
 			}

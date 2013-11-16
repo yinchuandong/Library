@@ -95,7 +95,7 @@ public class AlarmNotifyService extends BaseService {
 							}
 							rList.clear();
 						}
-						Thread.sleep(5000);
+						Thread.sleep(29*1000);
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();

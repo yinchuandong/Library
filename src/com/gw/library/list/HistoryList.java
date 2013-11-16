@@ -2,6 +2,7 @@ package com.gw.library.list;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import com.gw.library.base.BaseUi;
 import com.gw.library.model.History;
 
 public class HistoryList extends BaseList {
-	private BaseUi baseUi;
 	private ArrayList<History> historyList;
 	private LayoutInflater inflater;
 
@@ -22,9 +22,13 @@ public class HistoryList extends BaseList {
 //	TextView returnTimeView;
 
 	public HistoryList(BaseUi baseUi, ArrayList<History> historyList) {
-		this.baseUi = baseUi;
 		this.historyList = historyList;
 		inflater = LayoutInflater.from(baseUi);
+	}
+	
+	public HistoryList(Context context, ArrayList<History> historyList){
+		this.historyList = historyList;
+		inflater = LayoutInflater.from(context);
 	}
 
 	@Override

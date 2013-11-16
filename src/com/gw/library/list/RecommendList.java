@@ -10,6 +10,7 @@ import com.gw.library.util.AppCache;
 import com.gw.library.R;
 
 import android.R.integer;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,11 @@ public class RecommendList extends BaseList{
 		this.baseUi = baseUi;
 		this.rcList = rcList;
 		inflater = LayoutInflater.from(baseUi);
+	}
+	
+	public RecommendList(Context context, ArrayList<Recommend> rcList){
+		this.rcList = rcList;
+		inflater = LayoutInflater.from(context);
 	}
 	
 	@Override

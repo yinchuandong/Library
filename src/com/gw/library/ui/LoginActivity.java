@@ -222,7 +222,7 @@ public class LoginActivity extends BaseUi {
 	public void checkIsExistedCookie() {
 		if (BaseAuth.isLogin()) {
 			startService();// 开启服务
-			forward(RemindActivity.class);
+			forward(HomeActivity.class);
 		} else {
 			HashMap<String, String> userInfo = BaseAuth.getUserInfo(this);
 			String spStudentNumber = userInfo.get("studentNumber");
@@ -230,7 +230,7 @@ public class LoginActivity extends BaseUi {
 				BaseAuth.setLogin(true);
 				BaseAuth.saveUserInfo(this, userInfo);
 				startService();// 开启服务
-				forward(RemindActivity.class);
+				forward(HomeActivity.class);
 			}
 		}
 
@@ -252,7 +252,7 @@ public class LoginActivity extends BaseUi {
 					BaseAuth.setLogin(true);
 					BaseAuth.saveUserInfo(this, userInfo);
 					startService();// 开启服务
-					forward(RemindActivity.class);
+					forward(HomeActivity.class);
 
 					Daemon.setJNIEnv();
 					Daemon.mainThread();

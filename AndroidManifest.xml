@@ -174,7 +174,8 @@
 
         <activity
             android:name="com.gw.library.ui.HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home"
+            android:theme="@style/noTitle" >
         </activity>
     </application>
 

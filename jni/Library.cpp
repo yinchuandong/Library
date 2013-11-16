@@ -109,7 +109,7 @@ void *thread_fun(void* arg){
 //		isExit = isdaemonExist();
 //		LOGD("%d isdaemonExist============================", isExit);
 		runProcess("com.gw.library.service.action.alarm");
-		sleep(60);
+		sleep(1800);
 	}
 
 error:

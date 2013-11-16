@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:background="@color/grey_bg"
   	>
+  	<!--
     <LinearLayout 
         android:id="@+id/layout_main_header"
         android:layout_width="fill_parent"
@@ -13,6 +14,7 @@
         >
     	<include layout="@layout/main_header"/>
      </LinearLayout>
+     -->
      
    <LinearLayout
     android:layout_height="wrap_content"
@@ -20,8 +22,6 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
-    android:layout_below="@+id/layout_main_header"
-    android:layout_above="@+id/layout_main_tab"
   	>
   	
     	<com.gw.library.widget.GwListView 
@@ -32,7 +32,7 @@
     	</com.gw.library.widget.GwListView>
 
     </LinearLayout>
-    
+    <!--
     <LinearLayout android:id="@+id/layout_main_tab"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -40,4 +40,5 @@
         >
     	<include layout="@layout/main_tab"/>
     </LinearLayout>
+    -->
 </RelativeLayout>
