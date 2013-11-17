@@ -201,6 +201,13 @@ public class BaseFragment extends Fragment{
 		
 	}
 	
+	/**
+	 * 从服务器加载数据，供外部调用
+	 */
+	public void loadDataFromServer(){
+		
+	}
+	
 	public void debugMemory(String tag) {
 		if (this.showDebugMsg) {
 			Log.w(this.getClass().getSimpleName(),

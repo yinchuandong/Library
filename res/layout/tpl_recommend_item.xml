@@ -8,13 +8,12 @@
 	    android:id="@+id/rc_item_main"
 	    style="@style/h_item" 
 	    >
-	
 	    <LinearLayout 
 	        android:layout_height="78dp"
 			android:layout_width="56dp"
 			android:layout_alignParentLeft="true"	
 			android:id="@+id/rc_cover_layout"
-	        >
+	        > 
 	       <ImageView  
 	           android:id="@+id/rc_cover"
 	           android:text="@string/remain"

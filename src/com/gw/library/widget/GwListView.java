@@ -104,8 +104,8 @@ public class GwListView extends ListView implements OnScrollListener {
 		headView.setPadding(0, -1 * headContentHeight, 0, 0);
 		headView.invalidate();
 
-		Log.v("size", "width:" + headContentWidth + " height:"
-				+ headContentHeight);
+//		Log.v("size", "width:" + headContentWidth + " height:"
+//				+ headContentHeight);
 
 		addHeaderView(headView, null, false);
 		setOnScrollListener(this);
@@ -131,12 +131,34 @@ public class GwListView extends ListView implements OnScrollListener {
 	public void onScroll(AbsListView arg0, int firstVisiableItem, int arg2,
 			int arg3) {
 		firstItemIndex = firstVisiableItem;
-		Log.i("firstvisibleItem", firstVisiableItem + "12123");
+//		Log.i("firstvisibleItem", firstVisiableItem + "12123");
 	}
 
 	public void onScrollStateChanged(AbsListView arg0, int arg1) {
 
 	}
+	
+	private float xDistance, yDistance, lastX, lastY;
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                xDistance = yDistance = 0f;
+                lastX = ev.getX();
+                lastY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                final float curX = ev.getX();
+                final float curY = ev.getY();
+                xDistance += Math.abs(curX - lastX);
+                yDistance += Math.abs(curY - lastY);
+                lastX = curX;
+                lastY = curY;
+                if (xDistance > yDistance)
+                    return false;
+        }
+
+        return super.onInterceptTouchEvent(ev);
+    }
 
 	public boolean onTouchEvent(MotionEvent event) {
 
@@ -146,7 +168,7 @@ public class GwListView extends ListView implements OnScrollListener {
 				if (firstItemIndex == 0 && !isRecored) {
 					isRecored = true;
 					startY = (int) event.getY();
-					Log.v(TAG, "在down时候记录当前位置‘");
+//					Log.v(TAG, "在down时候记录当前位置‘");
 				}
 				break;
 
@@ -160,14 +182,14 @@ public class GwListView extends ListView implements OnScrollListener {
 						state = DONE;
 						changeHeaderViewByState();
 
-						Log.v(TAG, "由下拉刷新状态，到done状态");
+//						Log.v(TAG, "由下拉刷新状态，到done状态");
 					}
 					if (state == RELEASE_To_REFRESH) {
 						state = REFRESHING;
 						changeHeaderViewByState();
 						onRefresh();
 
-						Log.v(TAG, "由松开刷新状态，到done状态");
+//						Log.v(TAG, "由松开刷新状态，到done状态");
 					}
 				}
 
@@ -180,7 +202,7 @@ public class GwListView extends ListView implements OnScrollListener {
 				int tempY = (int) event.getY();
 
 				if (!isRecored && firstItemIndex == 0) {
-					Log.v(TAG, "在move时候记录下位置");
+//					Log.v(TAG, "在move时候记录下位置");
 					isRecored = true;
 					startY = tempY;
 				}
@@ -225,14 +247,14 @@ public class GwListView extends ListView implements OnScrollListener {
 							isBack = true;
 							changeHeaderViewByState();
 
-							Log.v(TAG, "由done或者下拉刷新状态转变到松开刷新");
+//							Log.v(TAG, "由done或者下拉刷新状态转变到松开刷新");
 						}
 						// 上推到顶了
 						else if (tempY - startY <= 0) {
 							state = DONE;
 							changeHeaderViewByState();
 
-							Log.v(TAG, "由DOne或者下拉刷新状态转变到done状态");
+//							Log.v(TAG, "由DOne或者下拉刷新状态转变到done状态");
 						}
 					}
 

@@ -66,6 +66,7 @@ public class ViewPageFragment extends BaseFragment {
 		mPager = (ViewPager)view.findViewById(R.id.pager);
 		initMainTab(view);
 		initCursorView(view);
+//		debugMemory("onCreateView");
 		return view;
 	}
 
@@ -74,6 +75,7 @@ public class ViewPageFragment extends BaseFragment {
 		home = (HomeActivity)getActivity();
 		initPager();
 		bindEvent();
+//		debugMemory("onActivityCreated");
 	}
 	
 	private void initPager(){
@@ -81,10 +83,11 @@ public class ViewPageFragment extends BaseFragment {
 		HistoryUi historyUi = new HistoryUi();
 		RecommendUi recommendUi = new RecommendUi();
 		pagerList.add(remindUi);
-		pagerList.add(recommendUi);
 		pagerList.add(historyUi);
+		pagerList.add(recommendUi);
 		fragmentAdapter = new FragmentList(getFragmentManager(), pagerList);
 		mPager.setAdapter(fragmentAdapter);
+		mPager.setCurrentItem(0);
 	}
 	
 	/**
@@ -133,6 +136,8 @@ public class ViewPageFragment extends BaseFragment {
 				animation.setFillAfter(true);
 				cursorImg.startAnimation(animation);
 				curIndex = position;
+				//异步加载数据
+				((BaseFragment)pagerList.get(position)).loadDataFromServer();
 			}
 
 			@Override

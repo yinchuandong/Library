@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class FragmentList extends FragmentPagerAdapter{
 
@@ -33,5 +37,12 @@ public class FragmentList extends FragmentPagerAdapter{
 	public int getCount() {
 		return fList.size();
 	}
+	
+//	@Override
+//	public Object instantiateItem(ViewGroup container, int position) {		
+//		super.instantiateItem(container, position);
+//		container.addView(fList.get(position).getView(), 0);
+//		return fList.get(position).getView();
+//	}
 
 }

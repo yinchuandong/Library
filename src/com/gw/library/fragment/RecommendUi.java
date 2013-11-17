@@ -3,24 +3,30 @@ package com.gw.library.fragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.gw.library.R;
 import com.gw.library.base.BaseFragment;
 import com.gw.library.base.BaseHandler;
 import com.gw.library.base.BaseMessage;
 import com.gw.library.base.BaseTask;
-import com.gw.library.base.BaseUi;
 import com.gw.library.base.C;
+import com.gw.library.fragment.HistoryUi.HSItemListener;
+import com.gw.library.list.HistoryList;
 import com.gw.library.list.RecommendList;
+import com.gw.library.model.History;
 import com.gw.library.model.Recommend;
+import com.gw.library.sqlite.HistorySqlite;
 import com.gw.library.sqlite.RecommendSqlite;
-import com.gw.library.sqlite.RemindSqlite;
+import com.gw.library.ui.HistoryWebViewActivity;
 import com.gw.library.util.AppUtil;
 import com.gw.library.widget.GwListView;
 import com.gw.library.widget.GwListView.OnLoadMoreListener;
@@ -29,33 +35,55 @@ import com.gw.library.widget.GwListView.OnRefreshListener;
 
 public class RecommendUi extends BaseFragment{
 
-	GwListView listView;
-	ArrayList<Recommend> rcList;
-	RecommendList rcListAdapter;
+	private GwListView listView;
+	private RecommendList rcListAdapter; // Listview 的adapter
+	private ArrayList<Recommend> rcList; // 具体数据
+
 	RecommendSqlite rcSqlite;
-	
-	int listRows = 10; //每页显示的数目
-	static boolean isLoaded = false; //该activity是否是第一次被加载
+	double listRows = 10.0; //每页显示的数目
+	public static boolean isLoaded = false; // 是否被加载的标志
+
 	public static int loadMoreState = OnLoadMoreViewState.LMVS_FIRST;
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.ui_recommend, null);
-		listView = (GwListView) view.findViewById(R.id.recommend_list);
+		View view = inflater.inflate(R.layout.ui_history, null);
+		listView = (GwListView) view.findViewById(R.id.history_list);
 		listView.updateLoadMoreViewState(loadMoreState);
 		return view;
 	}
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
-		this.setHandler(new RecommendHandler(this));
 		rcSqlite = new RecommendSqlite(getContext());
-		initData(); // 初始化数据
-		bindEvent(); // 绑定下拉刷新的事件
-		
+		initData();
+		pullToRefresh();
+	}
+	
+	
+	/**
+	 * 从数据库里面加载数据
+	 */
+	@SuppressWarnings("unchecked")
+	private void initData() {
+		ArrayList<HashMap<String, String>> mapList = rcSqlite.query(
+				"select * from recommend where studentNumber=?",
+				new String[] { user.getStudentNumber() });
+		try {
+			rcList = (ArrayList<Recommend>) AppUtil.hashMapToModel(
+					"com.gw.library.model.Recommend", mapList);
+
+			rcListAdapter = new RecommendList(getContext(), rcList);
+			listView.setAdapter(rcListAdapter);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	/**
+	 * 从服务器加载数据，供外部调用
+	 */
+	public void loadDataFromServer(){
 		if (!isLoaded) {// 如果是第一次进入页面，则开始从服务器上获取数据
 			listView.displayHeader();
 			HashMap<String, String> form = new HashMap<String, String>();
@@ -65,25 +93,11 @@ public class RecommendUi extends BaseFragment{
 			doTaskAsync(C.task.recommendList, C.api.recommendList, form);
 		}
 	}
-	
-	@SuppressWarnings("unchecked")
-	public void initData(){
-		ArrayList<HashMap<String, String>> mapList = rcSqlite.query(
-				"select * from recommend where studentNumber=?",
-				new String[] { user.getStudentNumber() });
-		try {
-			rcList = (ArrayList<Recommend>) AppUtil.hashMapToModel(
-					"com.gw.library.model.Recommend", mapList);
-			
-			rcListAdapter = new RecommendList(getContext(), rcList);
-			listView.setAdapter(rcListAdapter);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void bindEvent(){
+
+	/**
+	 * 下拉刷新
+	 */
+	private void pullToRefresh() {
 		//下拉刷新
 		listView.setonRefreshListener(new OnRefreshListener() {
 			
@@ -93,7 +107,7 @@ public class RecommendUi extends BaseFragment{
 				form.put("studentNumber", user.getStudentNumber());
 				form.put("password", user.getPassword());
 				form.put("schoolId", user.getSchoolId());
-//				form.put("listRows", String.valueOf(listRows));
+				form.put("listRows", String.valueOf(listRows));
 				doTaskAsync(C.task.recommendList, C.api.recommendList, form);
 			}
 		});
@@ -120,6 +134,9 @@ public class RecommendUi extends BaseFragment{
 		});
 	}
 	
+	/**
+	 * 异步线程完成之后的回调方法
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message){
@@ -200,6 +217,7 @@ public class RecommendUi extends BaseFragment{
 			
 			switch (msg.what) {
 			case BaseTask.LOAD_IMAGE:
+				debugMemory("image");
 				rcListAdapter.notifyDataSetChanged();
 				break;
 			}

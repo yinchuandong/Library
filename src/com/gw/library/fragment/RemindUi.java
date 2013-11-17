@@ -47,6 +47,12 @@ public class RemindUi extends BaseFragment{
 		initData(); // 初始化数据
 		pullToRefresh(); // 绑定下拉刷新的事件
 		
+	}
+	
+	/**
+	 * 从服务器加载数据，供外部调用
+	 */
+	public void loadDataFromServer(){
 		if (!isLoaded) {// 如果是第一次进入页面，则开始从服务器上获取数据
 			listView.displayHeader();
 			doTaskAsync(
@@ -62,7 +68,7 @@ public class RemindUi extends BaseFragment{
 	 * 从数据库里面加载数据
 	 */
 	@SuppressWarnings("unchecked")
-	public void initData() {
+	private void initData() {
 		ArrayList<HashMap<String, String>> mapList = rSqlite.query(
 				"select * from loan where studentNumber=?",
 				new String[] { user.getStudentNumber() });
@@ -126,7 +132,7 @@ public class RemindUi extends BaseFragment{
 	/**
 	 * 下拉刷新
 	 */
-	public void pullToRefresh() {
+	private void pullToRefresh() {
 		listView.setonRefreshListener(new OnRefreshListener() {
 			public void onRefresh() {
 				doTaskAsync(

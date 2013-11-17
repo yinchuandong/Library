@@ -80,7 +80,7 @@ public class RecommendList extends BaseList{
 		rcItem.titleView.setText(model.getTitle());
 //		rcItem.coverView.setImageResource(R.drawable.cover_1);
 		try {
-			Log.i("cover", model.getCover());
+			Log.i("RecommendList", model.getCover());
 			Bitmap cover = AppCache.getImage(model.getCover());
 			if (cover != null) {
 				rcItem.coverView.setImageBitmap(cover);
